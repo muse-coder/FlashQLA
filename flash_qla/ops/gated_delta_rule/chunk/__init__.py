@@ -1,33 +1,52 @@
 # Copyright (c) 2026 The Qwen team, Alibaba Group.
 # Licensed under The MIT License [see LICENSE for details]
 
+import os
+
 import torch
-import tilelang
 
-from flash_qla.utils import l2norm_fwd, l2norm_bwd, prepare_chunk_offsets
-from flash_qla.ops.utils import chunk_local_cumsum, group_reduce_vector
+from flash_qla.utils import input_guard, l2norm_bwd, l2norm_fwd
 
-if tilelang.contrib.nvcc.get_target_compute_version() == "9.0":
-    from .hopper import fused_gdr_fwd, fused_gdr_bwd, fused_gdr_h, kkt_solve
-    from .hopper import get_warmup_chunks, get_warmup_chunks_bidi, correct_initial_states, correct_terminal_states
-    from .hopper.cp_bwd import fused_gdr_dh_ws as fused_gdr_dh
+_IS_PPU = os.environ.get("FLASHQLA_BACKEND", "").lower() == "ppu"
+
+if _IS_PPU:
+    from .ppu import (
+        official_chunk_backward as _ppu_chunk_gated_delta_rule_bwd,
+        official_chunk_forward as _ppu_chunk_gated_delta_rule_fwd,
+        official_chunk_gated_delta_rule as _ppu_chunk_gated_delta_rule,
+        try_production_fastpath as _try_ppu_production_fastpath,
+    )
+
     CHUNK_SIZE = 64
-elif tilelang.contrib.nvcc.get_target_compute_version() in ["10.0", "10.3"]:
-    from .blackwell import fused_gdr_fwd, fused_gdr_bwd, fused_gdr_h, kkt_solve
-    from .blackwell import get_warmup_chunks, get_warmup_chunks_bidi, correct_initial_states, correct_terminal_states
-    from .blackwell.cp_bwd import fused_gdr_dh_ws as fused_gdr_dh
-    CHUNK_SIZE = 64
-elif tilelang.contrib.nvcc.get_target_compute_version() in ["12.0", "12.1"]:
-    from .blackwell_sm120 import fused_gdr_fwd, fused_gdr_h, kkt_solve
-    from .blackwell_sm120 import get_warmup_chunks, get_warmup_chunks_bidi, correct_initial_states, correct_terminal_states
-    fused_gdr_bwd = None
-    fused_gdr_dh = None
-    CHUNK_SIZE = 32
 else:
-    raise ValueError(f"FlashQLA now support sm90, sm100, sm103, sm120 and sm121 only. Found compute version: {tilelang.contrib.nvcc.get_target_compute_version()}")
-from .cp_context import intra_card_cp_preprocess, intra_card_cp_preprocess_bwd, _calc_cp_seqs, _create_cu_seqlens
+    import tilelang
 
-from flash_qla.utils import input_guard
+    from flash_qla.ops.utils import chunk_local_cumsum, group_reduce_vector
+
+    compute_version = tilelang.contrib.nvcc.get_target_compute_version()
+    if compute_version == "9.0":
+        from .hopper import fused_gdr_fwd, fused_gdr_bwd, fused_gdr_h, kkt_solve
+        from .hopper.cp_bwd import fused_gdr_dh_ws as fused_gdr_dh
+
+        CHUNK_SIZE = 64
+    elif compute_version in ["10.0", "10.3"]:
+        from .blackwell import fused_gdr_fwd, fused_gdr_bwd, fused_gdr_h, kkt_solve
+        from .blackwell.cp_bwd import fused_gdr_dh_ws as fused_gdr_dh
+
+        CHUNK_SIZE = 64
+    elif compute_version in ["12.0", "12.1"]:
+        from .blackwell_sm120 import fused_gdr_fwd, fused_gdr_h, kkt_solve
+
+        fused_gdr_bwd = None
+        fused_gdr_dh = None
+        CHUNK_SIZE = 32
+    else:
+        raise ValueError(
+            "FlashQLA now supports sm90, sm100, sm103, sm120 and sm121 "
+            f"only. Found compute version: {compute_version}"
+        )
+
+    from .cp_context import intra_card_cp_preprocess, intra_card_cp_preprocess_bwd
 
 
 def chunk_gated_delta_rule_fwd(
@@ -45,6 +64,22 @@ def chunk_gated_delta_rule_fwd(
     state_v_first: bool = False,
     enable_fwd_cp_cache: bool = False,
 ):
+    if _IS_PPU:
+        return _ppu_chunk_gated_delta_rule_fwd(
+            q=q,
+            k=k,
+            v=v,
+            g=g,
+            beta=beta,
+            scale=scale,
+            initial_state=initial_state,
+            cu_seqlens=cu_seqlens,
+            output_final_state=output_final_state,
+            output_h=output_h,
+            auto_cp=auto_cp,
+            state_v_first=state_v_first,
+            enable_fwd_cp_cache=enable_fwd_cp_cache,
+        )
     g = chunk_local_cumsum(
         g=g,
         cu_seqlens=cu_seqlens,
@@ -104,6 +139,23 @@ def chunk_gated_delta_rule_bwd(
     auto_cp: bool = True,
     cp_cache: tuple | None = None,
 ):
+    if _IS_PPU:
+        return _ppu_chunk_gated_delta_rule_bwd(
+            q=q,
+            k=k,
+            v=v,
+            g=g,
+            beta=beta,
+            A=A,
+            do=do,
+            dht=dht,
+            scale=scale,
+            initial_state=initial_state,
+            cu_seqlens=cu_seqlens,
+            state_v_first=state_v_first,
+            auto_cp=auto_cp,
+            cp_cache=cp_cache,
+        )
     if fused_gdr_bwd is None:
         raise NotImplementedError(
             "Backward pass is not implemented for SM120 (Blackwell)."
@@ -361,6 +413,39 @@ def chunk_gated_delta_rule(
             cu_seqlens=cu_seqlens
         )
     """
+    if _IS_PPU:
+        fast_result = _try_ppu_production_fastpath(
+            q=q,
+            k=k,
+            v=v,
+            g=g,
+            beta=beta,
+            scale=scale,
+            initial_state=initial_state,
+            output_final_state=output_final_state,
+            use_qk_l2norm_in_kernel=use_qk_l2norm_in_kernel,
+            cu_seqlens=cu_seqlens,
+            head_first=head_first,
+            state_v_first=state_v_first,
+        )
+        if fast_result is not None:
+            return fast_result
+        return _ppu_chunk_gated_delta_rule(
+            q=q,
+            k=k,
+            v=v,
+            g=g,
+            beta=beta,
+            scale=scale,
+            initial_state=initial_state,
+            output_final_state=output_final_state,
+            use_qk_l2norm_in_kernel=use_qk_l2norm_in_kernel,
+            cu_seqlens=cu_seqlens,
+            head_first=head_first,
+            state_v_first=state_v_first,
+            auto_cp=auto_cp,
+            enable_fwd_cp_cache=enable_fwd_cp_cache,
+        )
     assert q.dtype == k.dtype == v.dtype
     assert q.dtype == torch.bfloat16 or q.dtype == torch.float16, (
         "FlashQLA only supports bfloat16 and float16."

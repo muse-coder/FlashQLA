@@ -6,6 +6,7 @@ import subprocess
 from setuptools import setup, find_packages
 
 this_dir = os.path.dirname(os.path.abspath(__file__))
+is_ppu_build = os.getenv("FLASHQLA_BACKEND", "").lower() == "ppu"
 
 rev = os.getenv("QLA_VERSION_SUFFIX", "")
 if not rev:
@@ -22,12 +23,27 @@ setup(
     long_description=open("README.md", encoding="utf8").read(),
     long_description_content_type="text/markdown",
     packages=find_packages(),
+    package_data=(
+        {
+            "flash_qla.ops.gated_delta_rule.chunk.ppu": [
+                "*.so",
+                "csrc/*.cu",
+                "csrc/*.inc",
+            ]
+        }
+        if is_ppu_build
+        else {}
+    ),
     license="MIT",
     python_requires=">=3.10",
-    install_requires=[
-        "torch>=2.8",
-        "tilelang==0.1.9",
-        "apache-tvm-ffi==0.1.9",
-    ],
+    install_requires=(
+        ["torch>=2.8"]
+        if is_ppu_build
+        else [
+            "torch>=2.8",
+            "tilelang==0.1.9",
+            "apache-tvm-ffi==0.1.9",
+        ]
+    ),
     zip_safe=False,
 )

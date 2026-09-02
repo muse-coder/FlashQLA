@@ -5,10 +5,7 @@
 
 PyTorch validates that ``Function.backward`` returns exactly as many gradients
 as ``Function.forward`` received non-``ctx`` inputs; mismatches raise at
-``.backward()`` time.  ``tests/test_gdr.py`` invokes ``chunk_gated_delta_rule_fwd``
-and ``chunk_gated_delta_rule_bwd`` directly, bypassing the autograd path, so
-drift between the forward signature and the backward return tuple goes
-uncaught by the existing suite.
+``.backward()`` time.
 
 These tests parse the source files with ``ast`` instead of importing the
 modules so they run on CPU-only / non-Hopper machines.
@@ -20,6 +17,7 @@ from pathlib import Path
 
 REPO_ROOT = Path(__file__).resolve().parents[1]
 CHUNK_INIT = "flash_qla/ops/gated_delta_rule/chunk/__init__.py"
+PPU_INIT = "flash_qla/ops/gated_delta_rule/chunk/ppu/__init__.py"
 
 
 def _parse(rel_path: str) -> ast.Module:
@@ -31,6 +29,13 @@ def _get_class(module: ast.Module, name: str) -> ast.ClassDef:
         if isinstance(node, ast.ClassDef) and node.name == name:
             return node
     raise AssertionError(f"class {name!r} not found")
+
+
+def _get_function(module: ast.Module, name: str) -> ast.FunctionDef:
+    for node in module.body:
+        if isinstance(node, ast.FunctionDef) and node.name == name:
+            return node
+    raise AssertionError(f"function {name!r} not found")
 
 
 def _get_method(cls: ast.ClassDef, name: str) -> ast.FunctionDef:
@@ -64,6 +69,22 @@ def test_chunk_gated_delta_rule_grad_count_matches_forward_inputs():
         f"backward returns {n_grads} gradients but forward takes {n_inputs} non-ctx "
         f"inputs; PyTorch will raise a count-mismatch error at .backward() time."
     )
+
+
+def test_public_api_is_defined_only_by_shared_chunk_entry():
+    """Backend packages must not duplicate the public GDR signatures."""
+    chunk_module = _parse(CHUNK_INIT)
+    ppu_module = _parse(PPU_INIT)
+    for name in (
+        "chunk_gated_delta_rule_fwd",
+        "chunk_gated_delta_rule_bwd",
+        "chunk_gated_delta_rule",
+    ):
+        _get_function(chunk_module, name)
+        assert not any(
+            isinstance(node, ast.FunctionDef) and node.name == name
+            for node in ppu_module.body
+        ), f"PPU backend must not redefine shared public entry {name}"
 
 
 if __name__ == "__main__":
