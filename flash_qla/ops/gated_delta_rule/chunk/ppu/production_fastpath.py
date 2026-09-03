@@ -236,6 +236,8 @@ def _common_contract(
     tensors = (q, k, v, g, beta, initial_state, cu_seqlens)
     if any(not tensor.is_cuda or not tensor.is_contiguous() for tensor in tensors):
         return False
+    if any(tensor.device != q.device for tensor in tensors[1:]):
+        return False
     return torch.cuda.get_device_capability(q.device) == (8, 9)
 
 
@@ -326,13 +328,6 @@ def try_production_fastpath(
         state_v_first,
     )
     if (
-        _HOT_INPUTS is not None
-        and _HOT_OPTIONS == options
-        and all(reference() is actual for reference, actual in zip(_HOT_INPUTS, inputs))
-    ):
-        return _HOT_RUNNER(*inputs)
-
-    if (
         head_first
         or not state_v_first
         or not output_final_state
@@ -349,31 +344,37 @@ def try_production_fastpath(
     length = int(q.shape[1])
     requests = int(initial_state.shape[0])
     if length in _EXACT_LENGTHS and requests == 1:
-        if not _cu_matches(cu_seqlens, (0, length)):
-            return None
-        runner = _make_exact_runner(
+        expected = (0, length)
+        make_runner = lambda: _make_exact_runner(
             q, k, v, g, beta, initial_state, cu_seqlens
         )
-        _HOT_INPUTS = tuple(weakref.ref(tensor) for tensor in inputs)
-        _HOT_OPTIONS = options
-        _HOT_RUNNER = runner
-        return runner(*inputs)
-
-    if (
+    elif (
         length == _MIXED_LENGTH
         and requests == 256
         and g.dtype == torch.bfloat16
         and initial_state.dtype == torch.bfloat16
     ):
         expected = tuple(range(256)) + (_MIXED_LENGTH,)
-        if not _cu_matches(cu_seqlens, expected):
-            return None
-        runner = _make_mixed_runner(q, k, v, g, beta, initial_state)
-        _HOT_INPUTS = tuple(weakref.ref(tensor) for tensor in inputs)
-        _HOT_OPTIONS = options
-        _HOT_RUNNER = runner
-        return runner(*inputs)
-    return None
+        make_runner = lambda: _make_mixed_runner(
+            q, k, v, g, beta, initial_state
+        )
+    else:
+        return None
+
+    if not _cu_matches(cu_seqlens, expected):
+        return None
+    if (
+        _HOT_INPUTS is not None
+        and _HOT_OPTIONS == options
+        and all(reference() is actual for reference, actual in zip(_HOT_INPUTS, inputs))
+    ):
+        return _HOT_RUNNER(*inputs)
+
+    runner = make_runner()
+    _HOT_INPUTS = tuple(weakref.ref(tensor) for tensor in inputs)
+    _HOT_OPTIONS = options
+    _HOT_RUNNER = runner
+    return runner(*inputs)
 
 
 __all__ = ["try_production_fastpath"]

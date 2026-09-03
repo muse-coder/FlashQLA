@@ -1520,12 +1520,16 @@ def official_chunk_backward(
         h0 = initial_state
         terminal_grad = dht
         if state_v_first:
-            h0 = None if h0 is None else h0.transpose(-1, -2).contiguous()
+            h0 = None if h0 is None else h0.transpose(-1, -2)
             terminal_grad = (
                 None
                 if terminal_grad is None
-                else terminal_grad.transpose(-1, -2).contiguous()
+                else terminal_grad.transpose(-1, -2)
             )
+        h0 = None if h0 is None else h0.contiguous()
+        terminal_grad = (
+            None if terminal_grad is None else terminal_grad.contiguous()
+        )
         if auto_cp and cu_seqlens is not None:
             bounds = cu_seqlens.to(
                 device="cpu", dtype=torch.int64
@@ -1712,7 +1716,7 @@ def official_chunk_backward(
 
 def _l2norm_forward(x: torch.Tensor) -> tuple[torch.Tensor, torch.Tensor]:
     inv_norm = torch.rsqrt(
-        x.float().square().sum(dim=-1, keepdim=True).clamp_min(1e-12)
+        x.float().square().sum(dim=-1, keepdim=True) + 1e-6
     )
     return (x.float() * inv_norm).to(x.dtype), inv_norm
 
@@ -1893,6 +1897,11 @@ def official_chunk_gated_delta_rule(
         raise TypeError("q/k/v must be FP16 or BF16")
     if q.dtype != k.dtype or q.dtype != v.dtype:
         raise TypeError("q/k/v dtypes must match")
+    data_tensors = (q, k, v, g, beta) + (
+        () if initial_state is None else (initial_state,)
+    )
+    if any(tensor.device != q.device for tensor in data_tensors[1:]):
+        raise ValueError("q/k/v/g/beta/initial_state must use the same device")
     if v.shape[2] % k.shape[2]:
         raise ValueError("num_v_heads must be divisible by num_qk_heads")
     if cu_seqlens is not None:

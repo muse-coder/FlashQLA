@@ -270,7 +270,7 @@ def torch_chunk_dv_bwd(
         q = q.repeat_interleave(num_v_heads // num_k_heads, dim=2)
         k = k.repeat_interleave(num_v_heads // num_k_heads, dim=2)
 
-    scale = scale or head_dim_k ** (-0.5)
+    scale = head_dim_k ** (-0.5) if scale is None else scale
 
     q = pad_and_reshape(q, dim=1, chunk_size=chunk_size)  # [B, N, C, Hv, K]
     k = pad_and_reshape(k, dim=1, chunk_size=chunk_size)  # [B, N, C, Hv, K]
@@ -332,7 +332,7 @@ def torch_chunk_gdr_bwd(
         q = q.repeat_interleave(num_v_heads // num_k_heads, dim=2)
         k = k.repeat_interleave(num_v_heads // num_k_heads, dim=2)
 
-    scale = scale or head_dim_k ** (-0.5)
+    scale = head_dim_k ** (-0.5) if scale is None else scale
 
     q = pad_and_reshape(q, dim=1, chunk_size=chunk_size)  # [B, N, C, Hv, K]
     k = pad_and_reshape(k, dim=1, chunk_size=chunk_size)  # [B, N, C, Hv, K]
@@ -589,7 +589,7 @@ def torch_chunk_dqkwg_bwd(
     batch_size, num_tokens, num_k_heads, head_dim_k = k.shape
     _, _, num_v_heads, head_dim_v = do.shape
     head_repeat = num_v_heads // num_k_heads
-    scale = scale or head_dim_k ** (-0.5)
+    scale = head_dim_k ** (-0.5) if scale is None else scale
 
     head_major = (
         precomputed_dqkw is None
@@ -1217,7 +1217,7 @@ def torch_chunk_wy_bwd(
 
     # TODO: NOTE: GVA
     dk = dk.reshape((batch_size, -1, num_v_heads, head_dim_k))[:, :num_tokens]
-    dv = dv.reshape((batch_size, -1, num_v_heads, head_dim_k))[:, :num_tokens]
+    dv = dv.reshape((batch_size, -1, num_v_heads, head_dim_v))[:, :num_tokens]
     db = db.reshape((batch_size, -1, num_v_heads))[:, :num_tokens]
     dg = dg.reshape((batch_size, -1, num_v_heads))[:, :num_tokens]
     if cu_seqlens is not None:

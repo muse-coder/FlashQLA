@@ -136,6 +136,14 @@ def _pointer(tensor: torch.Tensor) -> ctypes.c_void_p:
     return ctypes.c_void_p(tensor.data_ptr())
 
 
+def _require_same_cuda_device(*tensors: torch.Tensor) -> None:
+    device = tensors[0].device
+    if not tensors[0].is_cuda or any(
+        not tensor.is_cuda or tensor.device != device for tensor in tensors[1:]
+    ):
+        raise ValueError("native PPU inputs must be CUDA tensors on the same device")
+
+
 def prepare_gate_beta(
     g: torch.Tensor,
     beta: torch.Tensor,
@@ -1082,6 +1090,7 @@ def prepare_backward_inputs_bf16_128(
     if not is_flash_qla_backward_cast_available():
         raise RuntimeError("PPU fused backward-input cast kernel is not built")
     tensors = (q, k, v, A, do)
+    _require_same_cuda_device(*tensors)
     if not all(t.dtype == torch.bfloat16 and t.is_contiguous() for t in tensors):
         raise ValueError("fused backward-input cast requires contiguous BF16 inputs")
     if q.shape != k.shape or q.ndim != 4 or q.shape[-1] != 128:
@@ -1230,6 +1239,7 @@ def flash_qla_cp_dh_backward_bf16_128(
     if not is_flash_qla_cp_dh_backward_available():
         raise RuntimeError("PPU AutoCP dH kernel is not built")
     tensors = (q, k, A, g_chunks, beta, do)
+    _require_same_cuda_device(*tensors)
     if not all(t.dtype == torch.float32 and t.is_contiguous() for t in tensors):
         raise ValueError("PPU AutoCP dH inputs must be contiguous FP32")
     if q.shape != k.shape or q.ndim != 4 or q.shape[-1] != 128:
@@ -1238,6 +1248,8 @@ def flash_qla_cp_dh_backward_bf16_128(
     if tokens % 64 or do.shape[:2] != (batch, tokens) or do.shape[-1] != 128:
         raise ValueError("dO must use a 64-aligned [B,T,Hv,128] shape")
     value_heads = do.shape[2]
+    if value_heads % q_heads:
+        raise ValueError("value heads must be divisible by Q/K heads")
     chunks = tokens // 64
     if A.shape != (batch, tokens, value_heads, 64):
         raise ValueError("A must use [B,T,Hv,64]")
@@ -1276,7 +1288,8 @@ def flash_qla_chunk_state_backward_bf16_128(
     """Run the official reverse state/dV recurrence in one PPU launch."""
     if not is_flash_qla_chunk_state_backward_available():
         raise RuntimeError("PPU reverse chunk-state kernel is not built")
-    tensors = (q, k, w, do, dv)
+    tensors = (q, k, w, g_chunks, do, dv)
+    _require_same_cuda_device(*tensors)
     if not all(t.dtype == torch.float32 and t.is_contiguous() for t in tensors):
         raise ValueError("PPU reverse chunk-state inputs must be contiguous FP32")
     if q.shape != k.shape or q.ndim != 4 or q.shape[-1] != 128:
@@ -1285,6 +1298,8 @@ def flash_qla_chunk_state_backward_bf16_128(
     if tokens % 64 or w.shape != do.shape or do.shape != dv.shape:
         raise ValueError("W/dO/dV must match with a 64-aligned token axis")
     value_heads = w.shape[2]
+    if value_heads % q_heads:
+        raise ValueError("value heads must be divisible by Q/K heads")
     chunks = tokens // 64
     if w.shape != (batch, tokens, value_heads, 128):
         raise ValueError("W/dO/dV must use [B,T,Hv,128]")
@@ -1304,6 +1319,7 @@ def flash_qla_chunk_state_backward_bf16_128(
         or not terminal_state_grad.is_contiguous()
     ):
         raise ValueError("terminal state grad must be contiguous FP32")
+    _require_same_cuda_device(q, terminal_state_grad)
     dh = torch.empty(
         batch, chunks, value_heads, 128, 128,
         dtype=torch.float32, device=q.device,
@@ -1341,6 +1357,7 @@ def flash_qla_chunk_state_backward_step_bf16_128(
     if not is_flash_qla_chunk_state_backward_step_available():
         raise RuntimeError("PPU reverse chunk-step kernel is not built")
     tensors = (q, k, w, g_chunks, do, dv, dstate, dh)
+    _require_same_cuda_device(*tensors)
     if not all(t.dtype == torch.float32 and t.is_contiguous() for t in tensors):
         raise ValueError("PPU reverse chunk-step inputs must be contiguous FP32")
     if q.shape != k.shape or q.ndim != 4 or q.shape[-1] != 128:
@@ -1349,7 +1366,11 @@ def flash_qla_chunk_state_backward_step_bf16_128(
     if tokens % 64 or not (w.shape == do.shape == dv.shape):
         raise ValueError("W/dO/dV must match with a 64-aligned token axis")
     value_heads = w.shape[2]
+    if value_heads % q_heads:
+        raise ValueError("value heads must be divisible by Q/K heads")
     chunks = tokens // 64
+    if w.shape != (batch, tokens, value_heads, 128):
+        raise ValueError("W/dO/dV must use [B,T,Hv,128]")
     if g_chunks.shape != (batch, value_heads, chunks, 64):
         raise ValueError("gate must use [B,Hv,C,64]")
     state_shape = (batch, value_heads, 128, 128)
@@ -1394,6 +1415,7 @@ def flash_qla_fused_state_dqkwg_backward_bf16_128(
     if not is_flash_qla_fused_state_dqkwg_backward_available():
         raise RuntimeError("PPU fused S/K/A backward kernel is not built")
     vectors = (q, k, w, do, v_corrected)
+    _require_same_cuda_device(*vectors, g_chunks, history)
     if not all(
         tensor.dtype == torch.float32 and tensor.is_contiguous()
         for tensor in vectors
@@ -1405,6 +1427,8 @@ def flash_qla_fused_state_dqkwg_backward_bf16_128(
     if tokens % 64 or not (w.shape == do.shape == v_corrected.shape):
         raise ValueError("W/dO/V' must match on a 64-aligned token axis")
     value_heads = w.shape[2]
+    if value_heads % q_heads:
+        raise ValueError("value heads must be divisible by Q/K heads")
     chunks = tokens // 64
     if w.shape != (batch, tokens, value_heads, 128):
         raise ValueError("W/dO/V' must use [B,T,Hv,128]")
@@ -1428,6 +1452,7 @@ def flash_qla_fused_state_dqkwg_backward_bf16_128(
         or not terminal_state_grad.is_contiguous()
     ):
         raise ValueError("terminal state grad must be contiguous FP32")
+    _require_same_cuda_device(q, terminal_state_grad)
     dq = torch.empty(
         batch, tokens, value_heads, 128,
         dtype=torch.float32, device=q.device,
@@ -1465,9 +1490,10 @@ def flash_qla_chunk_dv_backward_bf16_128(
     scale: float,
 ) -> torch.Tensor:
     """Compute the official causal intra-chunk dV seed in one PPU launch."""
-    tensors = (q, k, do)
+    tensors = (q, k, g_chunks, do)
     if not is_flash_qla_chunk_dv_backward_available():
         raise RuntimeError("PPU chunk-dV backward kernel is not built")
+    _require_same_cuda_device(*tensors)
     if not all(t.dtype == torch.float32 and t.is_contiguous() for t in tensors):
         raise ValueError("PPU chunk-dV inputs must be contiguous FP32")
     if q.shape != k.shape or q.ndim != 4 or q.shape[-1] != 128:
@@ -1476,6 +1502,8 @@ def flash_qla_chunk_dv_backward_bf16_128(
     if tokens % 64 or do.shape[:2] != (batch, tokens) or do.shape[-1] != 128:
         raise ValueError("dO must use a 64-aligned [B,T,Hv,128] shape")
     value_heads = do.shape[2]
+    if value_heads % q_heads:
+        raise ValueError("value heads must be divisible by Q/K heads")
     chunks = tokens // 64
     if g_chunks.shape != (batch, value_heads, chunks, 64):
         raise ValueError("gate must use [B,Hv,C,64]")
@@ -1509,6 +1537,7 @@ def flash_qla_chunk_dqkw_backward_bf16_128(
         raise RuntimeError("PPU chunk-dQKW backward kernel is not built")
     vectors = (do, v_corrected, dv)
     states = (history, dh)
+    _require_same_cuda_device(*vectors, *states, g_chunks)
     if not all(t.dtype == torch.float32 and t.is_contiguous() for t in vectors):
         raise ValueError("dO/V'/dV must be contiguous FP32")
     if not all(t.dtype == torch.float32 and t.is_contiguous() for t in states):
@@ -1559,6 +1588,7 @@ def flash_qla_chunk_dqkwg_backward_bf16_128(
         raise RuntimeError("PPU chunk-dQKWg backward kernel is not built")
     vectors = (q, k, do, v_corrected, dv)
     states = (history, dh)
+    _require_same_cuda_device(*vectors, *states, g_chunks)
     if not all(t.dtype == torch.float32 and t.is_contiguous() for t in vectors):
         raise ValueError("Q/K/dO/V'/dV must be contiguous FP32")
     if not all(t.dtype == torch.float32 and t.is_contiguous() for t in states):
@@ -1620,6 +1650,7 @@ def flash_qla_fused_wy_backward_128(
         raise RuntimeError("PPU fused WY-backward kernel is not built")
     vectors = (k, v, dw, du, dk1)
     scalars = (beta, g, dg1)
+    _require_same_cuda_device(*vectors, *scalars, A)
     if not all(t.dtype == torch.float32 and t.is_contiguous() for t in vectors):
         raise ValueError("fused WY vector inputs must be contiguous FP32")
     if not all(t.dtype == torch.float32 and t.is_contiguous() for t in scalars):
@@ -1678,6 +1709,7 @@ def flash_qla_wy_backward_preprocess_128(
         raise RuntimeError("PPU WY-backward kernels are not built")
     vectors = (dk_beta_g, dv_beta, k, v)
     scalars = (beta, g)
+    _require_same_cuda_device(*vectors, *scalars)
     if not all(t.dtype == torch.float32 and t.is_contiguous() for t in vectors):
         raise ValueError("WY vector inputs must be contiguous FP32")
     if not all(t.dtype == torch.float32 and t.is_contiguous() for t in scalars):
@@ -1731,6 +1763,7 @@ def flash_qla_wy_backward_postprocess_128(
     matrices = (dA, A)
     scalars = (beta, dg1, db, dg)
     tensors = vectors + matrices + scalars
+    _require_same_cuda_device(*tensors)
     if not all(t.dtype == torch.float32 and t.is_contiguous() for t in tensors):
         raise ValueError("WY postprocess inputs must be contiguous FP32")
     if not all(t.shape == k.shape for t in vectors[:-1]):
