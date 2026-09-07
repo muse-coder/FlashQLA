@@ -43,6 +43,34 @@ cd FlashQLA
 pip install -v .
 ```
 
+### PPU backend
+
+The PPU port follows the same public API and the revised FlashQLA chunk/KKT
+algebra. Build and run it by selecting the PPU backend explicitly:
+
+```bash
+FLASHQLA_BACKEND=ppu pip install -v .
+FLASHQLA_BACKEND=ppu python your_program.py
+```
+
+The PPU path implements the official chunk/KKT equations, GVA, variable-length
+inputs, V-first states, gate-driven AutoCP correction, forward-cache API, and
+an explicit official chunk backward that does not depend on unavailable PPU
+`bmm` autograd.
+`build_ppu.sh` builds HGGC kernels and, when a DeepGEMM-for-sail checkout is
+available, enables the PPU0015 CUTE/AIU KKT, fused forward, and AutoCP affine
+state kernels:
+
+```bash
+FLASHQLA_DEEP_GEMM_ROOT=/path/to/DeepGEMM-for-sail bash build_ppu.sh
+FLASHQLA_BACKEND=ppu python -m pytest tests/test_ppu_backend.py -q
+```
+
+The default build remains the TileLang CUDA backend. On PPU, contiguous BF16
+inference with `K=V=128`, a token count divisible by 64, and no requested state
+history uses the fused AIU path. Other supported inputs use the general PPU
+implementation behind the same API.
+
 ## Usage
 
 ### High-level API

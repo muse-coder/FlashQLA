@@ -5,7 +5,6 @@ from typing import Any
 from collections.abc import Callable
 
 import torch
-import tilelang
 
 
 def tensor_cache(fn: Callable[..., torch.Tensor]) -> Callable[..., torch.Tensor]:
@@ -29,8 +28,10 @@ def tensor_cache(fn: Callable[..., torch.Tensor]) -> Callable[..., torch.Tensor]
     @functools.wraps(fn)
     def wrapper(*args: Any, **kwargs: Any) -> Any:
         nonlocal cache_entries, dynamic_cache_size
-        assert torch.cuda.is_available()
-        is_capturing = torch.cuda.is_current_stream_capturing()
+        is_capturing = (
+            torch.cuda.is_available()
+            and torch.cuda.is_current_stream_capturing()
+        )
 
         for i, entry in enumerate(cache_entries):
             last_args, last_kwargs, last_result, is_static = entry
@@ -86,10 +87,13 @@ def prepare_chunk_indices(
     cu_seqlens: torch.LongTensor,
     chunk_size: int,
 ) -> torch.LongTensor:
+    chunks_per_sequence = (
+        prepare_lens(cu_seqlens) + chunk_size - 1
+    ) // chunk_size
     indices = torch.cat(
         [
             torch.arange(n)
-            for n in tilelang.cdiv(prepare_lens(cu_seqlens), chunk_size).tolist()
+            for n in chunks_per_sequence.tolist()
         ]
     )
     return torch.stack([indices.eq(0).cumsum(0) - 1, indices], 1).to(cu_seqlens)

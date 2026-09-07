@@ -2,14 +2,22 @@
 # Licensed under The MIT License [see LICENSE for details]
 
 import math
+import os
 
 import torch
-import tilelang
 
 from flash_qla.utils import tensor_cache
 
+_IS_PPU = os.environ.get("FLASHQLA_BACKEND", "").lower() == "ppu"
+
+if not _IS_PPU:
+    import tilelang
+
 ARCH = None
-if tilelang.contrib.nvcc.get_target_compute_version() == "9.0":
+if _IS_PPU:
+    from .ppu import get_warmup_chunks, get_warmup_chunks_bidi, fused_gdr_h, fused_gdr_dh, correct_initial_states, correct_terminal_states
+    from .ppu.ops import _auto_cp_backward_local_chunks, _auto_cp_max_local_chunks
+elif tilelang.contrib.nvcc.get_target_compute_version() == "9.0":
     from .hopper import get_warmup_chunks, get_warmup_chunks_bidi, fused_gdr_h, correct_initial_states, correct_terminal_states
     from .hopper.cp_bwd import fused_gdr_dh_ws as fused_gdr_dh
     ARCH = "SM90"
@@ -29,7 +37,8 @@ else:
     raise ValueError(f"FlashQLA now support sm90, sm100, sm103, sm120 and sm121 only. Found compute version: {tilelang.contrib.nvcc.get_target_compute_version()}")
 
 
-MULTI_PROCESSOR_COUNT = torch.cuda.get_device_properties().multi_processor_count
+if not _IS_PPU:
+    MULTI_PROCESSOR_COUNT = torch.cuda.get_device_properties().multi_processor_count
 
 
 @tensor_cache
@@ -38,8 +47,9 @@ def _create_cu_seqlens(
     num_tokens: int,
     device_idx: int,
 ):
+    device = "cpu" if _IS_PPU and device_idx is None else f"cuda:{device_idx}"
     return (
-        torch.arange((batch_size + 1), dtype=torch.int32, device=f"cuda:{device_idx}")
+        torch.arange((batch_size + 1), dtype=torch.int32, device=device)
         * num_tokens
     )
 
@@ -56,20 +66,27 @@ def _calc_cp_seqs(
     raw_cu_seqlens = raw_cu_seqlens.tolist()
     raw_batch_size = len(raw_cu_seqlens) - 1
     seqlens = [raw_cu_seqlens[i + 1] - raw_cu_seqlens[i] for i in range(raw_batch_size)]
-    num_chunks = [tilelang.cdiv(x, chunk_size) for x in seqlens]
+    if _IS_PPU:
+        num_chunks = [(x + chunk_size - 1) // chunk_size for x in seqlens]
+    else:
+        num_chunks = [tilelang.cdiv(x, chunk_size) for x in seqlens]
 
     # autocp
     H = num_v_heads
-    # Latency model: T = a·L_cp + b·(B·H·Lc/P) / L_cp + c
-    # Minimizing T yields the theoretical optimum: L_cp* ∝ √(B·H·Lc / P), where P = MULTI_PROCESSOR_COUNT, L_cp = max_local_chunks
-    # Scaled by empirical factor (3) and aligned to the nearest power of 2 for optimal SM scheduling & memory alignment.
+    if _IS_PPU:
+        selector = _auto_cp_backward_local_chunks if is_bwd else _auto_cp_max_local_chunks
+        max_local_chunks = selector(max(num_chunks), H, device)
+    else:
+        # Latency model: T = a·L_cp + b·(B·H·Lc/P) / L_cp + c
+        # Minimizing T yields the theoretical optimum: L_cp* ∝ √(B·H·Lc / P), where P = MULTI_PROCESSOR_COUNT, L_cp = max_local_chunks
+        # Scaled by empirical factor (3) and aligned to the nearest power of 2 for optimal SM scheduling & memory alignment.
 
-    max_local_chunks = 2 ** round(
-        math.log2(math.sqrt(H * sum(num_chunks) / MULTI_PROCESSOR_COUNT) * 3)
-    )
+        max_local_chunks = 2 ** round(
+            math.log2(math.sqrt(H * sum(num_chunks) / MULTI_PROCESSOR_COUNT) * 3)
+        )
 
-    # Set min to 4 to ensure multi-stage pipelining in fused_gdr;
-    max_local_chunks = max(max_local_chunks, 4)
+        # Set min to 4 to ensure multi-stage pipelining in fused_gdr;
+        max_local_chunks = max(max_local_chunks, 4)
 
     use_cp = False
     cp_cu_seqlens = []
@@ -105,7 +122,9 @@ def _calc_cp_seqs(
 
     Be = sum(num_chunks) / max(num_chunks)
 
-    if ARCH == "SM90" or ARCH == "SM120":
+    if _IS_PPU:
+        use_cp = any(chunks > max_local_chunks for chunks in num_chunks)
+    elif ARCH == "SM90" or ARCH == "SM120":
         use_cp = Be * H <= 40 or (Be * H <= 56 and max(num_chunks) >= 128)
     elif ARCH in ["SM100", "SM103"]:
         # SM100 uses separate thresholds for fwd and bwd:
@@ -172,7 +191,7 @@ def intra_card_cp_preprocess(
         raw_cu_seqlens=raw_cu_seqlens,
         chunk_size=chunk_size,
         num_v_heads=num_v_heads,
-        is_bwd=False,
+        is_bwd=_IS_PPU and enable_fwd_cp_cache,
     )
 
     if not use_cp:

@@ -30,7 +30,7 @@ def input_guard(
                     tensor = value
                     break
 
-        if tensor is not None:
+        if tensor is not None and tensor.is_cuda:
             ctx = torch.cuda.device(tensor.device.index)
         else:
             ctx = contextlib.nullcontext()

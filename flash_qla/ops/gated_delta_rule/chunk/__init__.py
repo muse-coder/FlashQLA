@@ -1,13 +1,21 @@
 # Copyright (c) 2026 The Qwen team, Alibaba Group.
 # Licensed under The MIT License [see LICENSE for details]
 
+import os
+
 import torch
-import tilelang
 
 from flash_qla.utils import l2norm_fwd, l2norm_bwd, prepare_chunk_offsets
-from flash_qla.ops.utils import chunk_local_cumsum, group_reduce_vector
 
-if tilelang.contrib.nvcc.get_target_compute_version() == "9.0":
+_IS_PPU = os.environ.get("FLASHQLA_BACKEND", "").lower() == "ppu"
+
+if not _IS_PPU:
+    import tilelang
+    from flash_qla.ops.utils import chunk_local_cumsum, group_reduce_vector
+
+if _IS_PPU:
+    from .ppu import CHUNK_SIZE, chunk_local_cumsum, fused_gdr_bwd, fused_gdr_dh, fused_gdr_fwd, fused_gdr_h, group_reduce_vector, kkt_solve
+elif tilelang.contrib.nvcc.get_target_compute_version() == "9.0":
     from .hopper import fused_gdr_fwd, fused_gdr_bwd, fused_gdr_h, kkt_solve
     from .hopper import get_warmup_chunks, get_warmup_chunks_bidi, correct_initial_states, correct_terminal_states
     from .hopper.cp_bwd import fused_gdr_dh_ws as fused_gdr_dh
