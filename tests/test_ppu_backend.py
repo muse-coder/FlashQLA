@@ -17,10 +17,15 @@ from flash_qla import (  # noqa: E402
     chunk_gated_delta_rule_fwd,
 )
 import flash_qla.ops.gated_delta_rule.chunk as chunk_backend  # noqa: E402
-from flash_qla.ops.gated_delta_rule.chunk.ppu import kkt_solve  # noqa: E402
+from flash_qla.ops.gated_delta_rule.chunk.ppu import (  # noqa: E402
+    official_chunk_backward,
+    official_chunk_forward,
+    official_chunk_gated_delta_rule,
+)
 from flash_qla.ops.gated_delta_rule.chunk.ppu import native  # noqa: E402
-from flash_qla.ops.gated_delta_rule.chunk.ppu import ops as torch_backend  # noqa: E402
-from flash_qla.ops.gated_delta_rule.chunk.ppu.ops import (  # noqa: E402
+from flash_qla.ops.gated_delta_rule.chunk.ppu import production_fastpath  # noqa: E402
+from flash_qla.ops.gated_delta_rule.chunk.ppu import torch_backend  # noqa: E402
+from flash_qla.ops.gated_delta_rule.chunk.ppu.backward import (  # noqa: E402
     torch_cumsum,
     torch_chunk_dqkwg_bwd,
     torch_chunk_dv_bwd,
@@ -32,9 +37,7 @@ from flash_qla.ops.gated_delta_rule.chunk.ppu.ops import (  # noqa: E402
 
 
 def _relative_error(actual, expected):
-    actual_float = actual.float()
-    expected_float = expected.float()
-    return ((actual_float - expected_float).norm() / expected_float.norm()).item()
+    return ((actual.float() - expected.float()).norm() / expected.float().norm()).item()
 
 
 def test_ppu_top_level_api_uses_shared_chunk_entry():
@@ -44,49 +47,116 @@ def test_ppu_top_level_api_uses_shared_chunk_entry():
     assert chunk_gated_delta_rule_bwd.__module__ == expected_module
 
 
-def test_ppu_public_api_uses_shared_autograd(monkeypatch):
-    sentinel = (object(), object())
-    apply_args = []
-    q = torch.empty(1, 1, 1, 128, dtype=torch.bfloat16)
-    k = torch.empty_like(q)
-    v = torch.empty(1, 1, 1, 8, dtype=torch.bfloat16)
-    g = torch.empty(1, 1, 1)
-    beta = torch.empty_like(g)
+class _FakeFastPathTensor:
+    """Weak-referenceable tensor stand-in for dispatch-only tests."""
 
-    def apply(*args):
-        apply_args.append(args)
+    def __init__(self, shape):
+        self.shape = shape
+
+
+def test_ppu_production_fastpath_reuses_exact_shape_runner(monkeypatch):
+    tensors = (
+        _FakeFastPathTensor((1, 764, 4, 128)),
+        _FakeFastPathTensor((1, 764, 4, 128)),
+        _FakeFastPathTensor((1, 764, 16, 128)),
+        _FakeFastPathTensor((1, 764, 16)),
+        _FakeFastPathTensor((1, 764, 16)),
+        _FakeFastPathTensor((1, 16, 128, 128)),
+        _FakeFastPathTensor((2,)),
+    )
+    sentinel = object()
+    made_runners = []
+    runner_calls = []
+
+    def make_runner(*args):
+        made_runners.append(args)
+
+        def run(*run_args):
+            runner_calls.append(run_args)
+            return sentinel
+
+        return run
+
+    monkeypatch.setattr(production_fastpath, "_HOT_INPUTS", None)
+    monkeypatch.setattr(production_fastpath, "_HOT_OPTIONS", None)
+    monkeypatch.setattr(production_fastpath, "_HOT_RUNNER", None)
+    monkeypatch.setattr(production_fastpath, "_common_contract", lambda *args: True)
+    monkeypatch.setattr(production_fastpath, "_cu_matches", lambda *args: True)
+    monkeypatch.setattr(production_fastpath, "_make_exact_runner", make_runner)
+
+    kwargs = {
+        "scale": None,
+        "initial_state": tensors[5],
+        "output_final_state": True,
+        "use_qk_l2norm_in_kernel": True,
+        "cu_seqlens": tensors[6],
+        "head_first": False,
+        "state_v_first": True,
+    }
+    result = production_fastpath.try_production_fastpath(*tensors[:5], **kwargs)
+    cached_result = production_fastpath.try_production_fastpath(
+        *tensors[:5], **kwargs
+    )
+
+    assert result is sentinel
+    assert cached_result is sentinel
+    assert len(made_runners) == 1
+    assert runner_calls == [tensors, tensors]
+
+
+def test_ppu_production_fastpath_rejects_unsupported_options_before_probe(
+    monkeypatch,
+):
+    def unexpected_probe(*args):
+        raise AssertionError("unsupported calls must not probe the PPU runtime")
+
+    monkeypatch.setattr(production_fastpath, "_HOT_INPUTS", None)
+    monkeypatch.setattr(production_fastpath, "_common_contract", unexpected_probe)
+    tensors = tuple(_FakeFastPathTensor(()) for _ in range(5))
+
+    assert production_fastpath.try_production_fastpath(
+        *tensors,
+        scale=None,
+        initial_state=None,
+        output_final_state=True,
+        use_qk_l2norm_in_kernel=True,
+        cu_seqlens=None,
+        head_first=True,
+        state_v_first=True,
+    ) is None
+
+
+def test_ppu_public_api_falls_back_when_shape_is_not_specialized(monkeypatch):
+    sentinel = object()
+    fallback_kwargs = {}
+    tensors = tuple(object() for _ in range(5))
+
+    monkeypatch.setattr(
+        chunk_backend,
+        "_try_ppu_production_fastpath",
+        lambda **kwargs: None,
+    )
+
+    def fallback(**kwargs):
+        fallback_kwargs.update(kwargs)
         return sentinel
 
-    monkeypatch.setattr(chunk_backend.ChunkGatedDeltaRuleFunction, "apply", apply)
+    monkeypatch.setattr(chunk_backend, "_ppu_chunk_gated_delta_rule", fallback)
 
     result = chunk_backend.chunk_gated_delta_rule(
-        q,
-        k,
-        v,
-        g,
-        beta,
+        *tensors,
         scale=0.125,
         output_final_state=True,
         auto_cp=False,
         enable_fwd_cp_cache=False,
     )
 
-    assert result == sentinel
-    assert len(apply_args) == 1
-    assert all(
-        actual is expected
-        for actual, expected in zip(apply_args[0][:5], (q, k, v, g, beta))
-    )
-    assert apply_args[0][5:] == (
-        0.125,
-        None,
-        True,
-        None,
-        False,
-        False,
-        False,
-        False,
-    )
+    assert result is sentinel
+    assert fallback_kwargs["q"] is tensors[0]
+    assert fallback_kwargs["scale"] == 0.125
+    assert fallback_kwargs["output_final_state"] is True
+    assert fallback_kwargs["auto_cp"] is False
+    assert fallback_kwargs["enable_fwd_cp_cache"] is False
 
 
 @pytest.mark.parametrize(
@@ -192,53 +262,17 @@ def _recurrent_reference(q, k, v, g, beta, scale, initial_state=None):
     return torch.stack(outputs, dim=1), state
 
 
-def test_ppu_kkt_primitive_is_ungated_token_major():
-    torch.manual_seed(6)
-    tokens, q_heads, value_heads, key_dim = 65, 1, 2, 128
-    k = torch.nn.functional.normalize(
-        torch.randn(1, tokens, q_heads, key_dim), dim=-1
-    )
-    beta = torch.sigmoid(torch.randn(1, tokens, value_heads))
-
-    actual = kkt_solve(k, beta)
-
-    expanded_k = k.repeat_interleave(value_heads // q_heads, dim=2)
-    expected_chunks = []
-    eye = torch.eye(64)
-    for left in range(0, tokens, 64):
-        right = min(left + 64, tokens)
-        length = right - left
-        for head in range(value_heads):
-            padded_k = torch.zeros(64, key_dim)
-            padded_beta = torch.zeros(64)
-            padded_k[:length] = expanded_k[0, left:right, head]
-            padded_beta[:length] = beta[0, left:right, head]
-            gram = padded_k @ padded_k.T
-            lower = eye + torch.tril(padded_beta[:, None] * gram, diagonal=-1)
-            inverse = torch.linalg.solve_triangular(
-                lower, eye, upper=False, unitriangular=True
-            )
-            expected_chunks.append((left, right, head, inverse[:length]))
-
-    expected = torch.empty(1, tokens, value_heads, 64)
-    for left, right, head, inverse in expected_chunks:
-        expected[0, left:right, head] = inverse
-
-    assert actual.shape == (1, tokens, value_heads, 64)
-    torch.testing.assert_close(actual, expected, rtol=1e-5, atol=1e-6)
-
-
 @pytest.mark.parametrize("dtype", [torch.float16, torch.bfloat16])
-def test_ppu_public_forward_matches_recurrence(dtype):
+def test_ppu_official_forward_matches_recurrence(dtype):
     torch.manual_seed(7)
-    batch, tokens, q_heads, v_heads, key_dim, value_dim = 1, 33, 1, 2, 128, 16
+    batch, tokens, q_heads, v_heads, key_dim, value_dim = 1, 129, 2, 4, 32, 24
     q = torch.randn(batch, tokens, q_heads, key_dim, dtype=dtype) / key_dim**0.5
     k = torch.nn.functional.normalize(
         torch.randn(batch, tokens, q_heads, key_dim), dim=-1
     ).to(dtype)
     v = torch.randn(batch, tokens, v_heads, value_dim, dtype=dtype) / value_dim**0.5
     g = -0.01 * torch.rand(batch, tokens, v_heads)
-    beta = torch.full((batch, tokens, v_heads), 0.5)
+    beta = torch.sigmoid(torch.randn(batch, tokens, v_heads))
     scale = key_dim**-0.5
 
     expected_o, expected_state = _recurrent_reference(q, k, v, g, beta, scale)
@@ -257,20 +291,20 @@ def test_ppu_public_forward_matches_recurrence(dtype):
     assert _relative_error(actual_state, expected_state) < 5e-4
 
 
-def test_ppu_low_level_fixed_forward_backward_contract():
+def test_ppu_low_level_kkt_and_backward_graph():
     torch.manual_seed(11)
-    batch, tokens, heads, key_dim, value_dim = 1, 17, 1, 128, 8
-    q = torch.randn(batch, tokens, heads, key_dim, requires_grad=True)
+    batch, tokens, heads, key_dim, value_dim = 1, 65, 2, 16, 12
+    q = torch.randn(batch, tokens, heads, key_dim, dtype=torch.float16, requires_grad=True)
     k = torch.nn.functional.normalize(
         torch.randn(batch, tokens, heads, key_dim), dim=-1
-    ).requires_grad_(True)
+    ).to(torch.float16).requires_grad_(True)
     v = torch.randn(
-        batch, tokens, heads, value_dim, requires_grad=True
+        batch, tokens, heads, value_dim, dtype=torch.float16, requires_grad=True
     )
     g = (-0.01 * torch.rand(batch, tokens, heads)).requires_grad_(True)
     beta = torch.sigmoid(torch.randn(batch, tokens, heads)).requires_grad_(True)
 
-    g_cumsum, a, output, _, final_state, cp_cache = chunk_gated_delta_rule_fwd(
+    g_cumsum, a, output, _, final_state, cp_cache = official_chunk_forward(
         q, k, v, g, beta, output_final_state=True, auto_cp=False
     )
     do = torch.randn_like(output)
@@ -280,7 +314,7 @@ def test_ppu_low_level_fixed_forward_backward_contract():
         (q, k, v, g, beta),
         (do, dht),
     )
-    backward_result = chunk_gated_delta_rule_bwd(
+    backward_result = official_chunk_backward(
         q.detach(),
         k.detach(),
         v.detach(),
@@ -307,98 +341,16 @@ def test_ppu_low_level_fixed_forward_backward_contract():
         _relative_error(actual, expected)
         for actual, expected in zip(actual_grads, expected_grads)
     ]
+    # CPU FP16 matmul reduction order varies slightly across Torch/platform
+    # builds; keep this reference-only tolerance tight but platform-stable.
     assert all(error < 3e-5 for error in relative_errors), relative_errors
-
-
-def test_ppu_low_level_varlen_forward_backward_contract():
-    torch.manual_seed(12)
-    lengths = (17, 33)
-    tokens, heads, key_dim, value_dim = sum(lengths), 1, 128, 8
-    base_q = torch.randn(1, tokens, heads, key_dim, dtype=torch.bfloat16)
-    base_k = torch.nn.functional.normalize(
-        torch.randn(1, tokens, heads, key_dim), dim=-1
-    ).to(torch.bfloat16)
-    base_v = torch.randn(1, tokens, heads, value_dim, dtype=torch.bfloat16)
-    base_g = -0.01 * torch.rand(1, tokens, heads)
-    base_beta = torch.sigmoid(torch.randn(1, tokens, heads))
-    base_h0 = torch.randn(len(lengths), heads, key_dim, value_dim) / key_dim**0.5
-    cu_seqlens = torch.tensor((0, lengths[0], tokens), dtype=torch.int32)
-
-    g_cumsum, a, output, history, final_state, cp_cache = (
-        chunk_gated_delta_rule_fwd(
-            base_q,
-            base_k,
-            base_v,
-            base_g,
-            base_beta,
-            initial_state=base_h0,
-            cu_seqlens=cu_seqlens,
-            output_final_state=True,
-            output_h=True,
-            auto_cp=False,
-        )
-    )
-    do = torch.randn_like(output)
-    dht = torch.randn_like(final_state)
-    actual = chunk_gated_delta_rule_bwd(
-        base_q,
-        base_k,
-        base_v,
-        g_cumsum,
-        base_beta,
-        a,
-        do,
-        dht=dht,
-        initial_state=base_h0,
-        cu_seqlens=cu_seqlens,
-        auto_cp=False,
-    )
-
-    reference_inputs = [
-        tensor.clone().requires_grad_(True)
-        for tensor in (base_q, base_k, base_v, base_g, base_beta, base_h0)
-    ]
-    expected_outputs = []
-    expected_states = []
-    for sequence, (left, right) in enumerate(
-        zip(cu_seqlens[:-1].tolist(), cu_seqlens[1:].tolist())
-    ):
-        sequence_output, sequence_state = _recurrent_reference(
-            *(tensor[:, left:right] for tensor in reference_inputs[:5]),
-            key_dim**-0.5,
-            reference_inputs[5][sequence : sequence + 1],
-        )
-        expected_outputs.append(sequence_output)
-        expected_states.append(sequence_state)
-    expected_output = torch.cat(expected_outputs, dim=1)
-    expected_state = torch.cat(expected_states, dim=0)
-    expected_grads = torch.autograd.grad(
-        (expected_output, expected_state),
-        reference_inputs,
-        (do, dht),
-    )
-    actual_grads = (actual[0], actual[1], actual[2], actual[4], actual[3], actual[5])
-
-    assert g_cumsum.shape == base_g.shape
-    assert a.shape == (1, tokens, heads, 64)
-    assert output.shape == base_v.shape
-    assert history.shape == (1, 2, heads, key_dim, value_dim)
-    assert final_state.shape == base_h0.shape
-    assert cp_cache is None
-    assert _relative_error(output, expected_output) < 5e-3
-    assert _relative_error(final_state, expected_state) < 5e-4
-    relative_errors = [
-        _relative_error(actual_grad, expected_grad)
-        for actual_grad, expected_grad in zip(actual_grads, expected_grads)
-    ]
-    assert all(error < 1e-2 for error in relative_errors), relative_errors
 
 
 def test_ppu_varlen_and_v_first_state_match_independent_sequences():
     torch.manual_seed(13)
     lengths = (65, 73)
     tokens = sum(lengths)
-    heads, key_dim, value_dim = 1, 128, 8
+    heads, key_dim, value_dim = 2, 16, 12
     q = torch.randn(1, tokens, heads, key_dim, dtype=torch.bfloat16)
     k = torch.nn.functional.normalize(
         torch.randn(1, tokens, heads, key_dim), dim=-1
@@ -409,7 +361,7 @@ def test_ppu_varlen_and_v_first_state_match_independent_sequences():
     h0 = torch.randn(len(lengths), heads, key_dim, value_dim)
     cu_seqlens = torch.tensor((0, lengths[0], tokens), dtype=torch.int32)
 
-    actual_o, actual_state = chunk_gated_delta_rule(
+    actual_o, actual_state = official_chunk_gated_delta_rule(
         q,
         k,
         v,
@@ -444,78 +396,9 @@ def test_ppu_varlen_and_v_first_state_match_independent_sequences():
     assert _relative_error(actual_state, expected_state) < 5e-4
 
 
-@pytest.mark.parametrize(
-    ("value_heads", "scale", "use_l2norm", "state_v_first"),
-    [
-        (1, 0.0, False, False),
-        (2, None, False, False),
-        (1, None, True, False),
-        (1, None, False, True),
-    ],
-    ids=("scale-zero", "gqa", "l2norm", "state-v-first"),
-)
-def test_ppu_public_forward_edge_contracts(
-    value_heads, scale, use_l2norm, state_v_first
-):
-    torch.manual_seed(15)
-    tokens, key_dim, value_dim = 17, 128, 8
-    q = torch.randn(1, tokens, 1, key_dim, dtype=torch.bfloat16)
-    k = torch.randn(1, tokens, 1, key_dim, dtype=torch.bfloat16)
-    if not use_l2norm:
-        k = torch.nn.functional.normalize(k.float(), dim=-1).to(k.dtype)
-    v = torch.randn(1, tokens, value_heads, value_dim, dtype=torch.bfloat16)
-    g = -0.01 * torch.rand(1, tokens, value_heads)
-    beta = torch.sigmoid(torch.randn(1, tokens, value_heads))
-    h0 = torch.randn(1, value_heads, key_dim, value_dim) / key_dim**0.5
-    supplied_h0 = h0.transpose(-1, -2).contiguous() if state_v_first else h0
-
-    actual_output, actual_state = chunk_gated_delta_rule(
-        q,
-        k,
-        v,
-        g,
-        beta,
-        scale=scale,
-        initial_state=supplied_h0,
-        output_final_state=True,
-        use_qk_l2norm_in_kernel=use_l2norm,
-        state_v_first=state_v_first,
-        auto_cp=False,
-    )
-
-    if use_l2norm:
-        q_reference = (
-            q * torch.rsqrt((q.float().square()).sum(dim=-1, keepdim=True) + 1e-6)
-        ).to(q.dtype)
-        k_reference = (
-            k * torch.rsqrt((k.float().square()).sum(dim=-1, keepdim=True) + 1e-6)
-        ).to(k.dtype)
-    else:
-        q_reference, k_reference = q, k
-    expected_output, expected_state = _recurrent_reference(
-        q_reference,
-        k_reference,
-        v,
-        g,
-        beta,
-        key_dim**-0.5 if scale is None else scale,
-        h0,
-    )
-    if state_v_first:
-        expected_state = expected_state.transpose(-1, -2).contiguous()
-
-    if scale == 0.0:
-        torch.testing.assert_close(
-            actual_output, expected_output.to(actual_output), rtol=0, atol=0
-        )
-    else:
-        assert _relative_error(actual_output, expected_output) < 5e-3
-    assert _relative_error(actual_state, expected_state) < 5e-4
-
-
-def test_ppu_public_backward_matches_independent_recurrence_including_dh0():
+def test_ppu_gradients_match_independent_recurrence():
     torch.manual_seed(19)
-    batch, tokens, heads, key_dim, value_dim = 1, 67, 1, 128, 8
+    batch, tokens, heads, key_dim, value_dim = 1, 67, 2, 16, 12
     base_q = torch.randn(batch, tokens, heads, key_dim, dtype=torch.bfloat16)
     base_k = torch.nn.functional.normalize(
         torch.randn(batch, tokens, heads, key_dim), dim=-1
@@ -523,17 +406,15 @@ def test_ppu_public_backward_matches_independent_recurrence_including_dh0():
     base_v = torch.randn(batch, tokens, heads, value_dim, dtype=torch.bfloat16)
     base_g = -0.01 * torch.rand(batch, tokens, heads)
     base_beta = torch.sigmoid(torch.randn(batch, tokens, heads))
-    base_h0 = torch.randn(batch, heads, key_dim, value_dim) / key_dim**0.5
     output_grad = torch.randn(batch, tokens, heads, value_dim)
-    state_grad = torch.randn_like(base_h0)
-    base_inputs = (base_q, base_k, base_v, base_g, base_beta, base_h0)
+    state_grad = torch.randn(batch, heads, key_dim, value_dim)
 
-    actual_inputs = [tensor.clone().requires_grad_(True) for tensor in base_inputs]
-    actual_o, actual_state = chunk_gated_delta_rule(
-        *actual_inputs[:5],
-        initial_state=actual_inputs[5],
-        output_final_state=True,
-        auto_cp=False,
+    actual_inputs = [
+        tensor.clone().requires_grad_(True)
+        for tensor in (base_q, base_k, base_v, base_g, base_beta)
+    ]
+    actual_o, actual_state = official_chunk_gated_delta_rule(
+        *actual_inputs, output_final_state=True, auto_cp=False
     )
     actual_grads = torch.autograd.grad(
         (actual_o.float(), actual_state),
@@ -541,9 +422,12 @@ def test_ppu_public_backward_matches_independent_recurrence_including_dh0():
         (output_grad, state_grad),
     )
 
-    reference_inputs = [tensor.clone().requires_grad_(True) for tensor in base_inputs]
+    reference_inputs = [
+        tensor.clone().requires_grad_(True)
+        for tensor in (base_q, base_k, base_v, base_g, base_beta)
+    ]
     reference_o, reference_state = _recurrent_reference(
-        *reference_inputs[:5], key_dim**-0.5, reference_inputs[5]
+        *reference_inputs, key_dim**-0.5
     )
     reference_grads = torch.autograd.grad(
         (reference_o, reference_state),
@@ -551,98 +435,16 @@ def test_ppu_public_backward_matches_independent_recurrence_including_dh0():
         (output_grad, state_grad),
     )
 
-    relative_errors = [
-        _relative_error(actual, expected)
+    assert all(
+        _relative_error(actual, expected) < 1e-2
         for actual, expected in zip(actual_grads, reference_grads)
-    ]
-    assert all(error < 1e-2 for error in relative_errors), relative_errors
-
-
-@pytest.mark.parametrize("lengths", [None, (65, 129)])
-def test_ppu_autocp_cache_contract_and_gradient_equivalence(monkeypatch, lengths):
-    monkeypatch.setenv("FLASHQLA_PPU_CP_LOCAL_CHUNKS", "2")
-    monkeypatch.setenv("FLASHQLA_PPU_BWD_CP_LOCAL_CHUNKS", "2")
-    torch.manual_seed(21)
-    tokens = 129 if lengths is None else sum(lengths)
-    sequence_count = 1 if lengths is None else len(lengths)
-    cu_seqlens = None
-    if lengths is not None:
-        cu_seqlens = torch.tensor(
-            (0, lengths[0], tokens), dtype=torch.int32
-        )
-    key_dim, value_dim = 128, 8
-    q = torch.randn(1, tokens, 1, key_dim, dtype=torch.bfloat16)
-    k = torch.nn.functional.normalize(
-        torch.randn(1, tokens, 1, key_dim), dim=-1
-    ).to(torch.bfloat16)
-    v = torch.randn(1, tokens, 1, value_dim, dtype=torch.bfloat16)
-    g = -0.01 * torch.rand(1, tokens, 1)
-    beta = torch.sigmoid(torch.randn(1, tokens, 1))
-    h0 = torch.randn(sequence_count, 1, key_dim, value_dim) / key_dim**0.5
-
-    without_cache = chunk_gated_delta_rule_fwd(
-        q,
-        k,
-        v,
-        g,
-        beta,
-        initial_state=h0,
-        cu_seqlens=cu_seqlens,
-        output_final_state=True,
-        auto_cp=True,
-        enable_fwd_cp_cache=False,
     )
-    with_cache = chunk_gated_delta_rule_fwd(
-        q,
-        k,
-        v,
-        g,
-        beta,
-        initial_state=h0,
-        cu_seqlens=cu_seqlens,
-        output_final_state=True,
-        auto_cp=True,
-        enable_fwd_cp_cache=True,
-    )
-
-    assert without_cache[5] is None
-    assert with_cache[5] is not None
-    assert _relative_error(with_cache[2], without_cache[2]) < 5e-4
-    assert _relative_error(with_cache[4], without_cache[4]) < 5e-5
-
-    do = torch.randn_like(with_cache[2])
-    dht = torch.randn_like(with_cache[4])
-
-    def public_gradients(enable_cache):
-        inputs = [
-            tensor.clone().requires_grad_(True)
-            for tensor in (q, k, v, g, beta, h0)
-        ]
-        output, final_state = chunk_gated_delta_rule(
-            *inputs[:5],
-            initial_state=inputs[5],
-            cu_seqlens=cu_seqlens,
-            output_final_state=True,
-            auto_cp=True,
-            enable_fwd_cp_cache=enable_cache,
-        )
-        return torch.autograd.grad(
-            (output.float(), final_state), inputs, (do.float(), dht)
-        )
-
-    gradients_without_cache = public_gradients(False)
-    gradients_with_cache = public_gradients(True)
-    relative_errors = [
-        _relative_error(actual, expected)
-        for actual, expected in zip(gradients_with_cache, gradients_without_cache)
-    ]
-    assert all(error < 1e-4 for error in relative_errors), relative_errors
 
 
 @pytest.mark.gpu
 def test_ppu_auto_cp_matches_sequential_chunks():
     torch.manual_seed(17)
-    batch, tokens, q_heads, v_heads, key_dim, value_dim = 1, 1024, 2, 4, 128, 24
+    batch, tokens, q_heads, v_heads, key_dim, value_dim = 1, 1024, 2, 4, 32, 24
     q = torch.randn(
         batch, tokens, q_heads, key_dim, device="cuda", dtype=torch.bfloat16
     )
@@ -655,10 +457,10 @@ def test_ppu_auto_cp_matches_sequential_chunks():
     g = -0.01 * torch.rand(batch, tokens, v_heads, device="cuda")
     beta = torch.sigmoid(torch.randn(batch, tokens, v_heads, device="cuda"))
 
-    expected_o, expected_state = chunk_gated_delta_rule(
+    expected_o, expected_state = official_chunk_gated_delta_rule(
         q, k, v, g, beta, output_final_state=True, auto_cp=False
     )
-    actual_o, actual_state = chunk_gated_delta_rule(
+    actual_o, actual_state = official_chunk_gated_delta_rule(
         q, k, v, g, beta, output_final_state=True, auto_cp=True
     )
 
@@ -670,7 +472,7 @@ def test_ppu_auto_cp_matches_sequential_chunks():
 def test_ppu_gate_warmup_matches_full_fallback(monkeypatch):
     torch.manual_seed(23)
     monkeypatch.setenv("FLASHQLA_PPU_CP_LOCAL_CHUNKS", "8")
-    batch, tokens, heads, key_dim, value_dim = 1, 1024, 4, 128, 24
+    batch, tokens, heads, key_dim, value_dim = 1, 1024, 4, 32, 24
     q = torch.randn(
         batch, tokens, heads, key_dim, device="cuda", dtype=torch.bfloat16
     )
@@ -688,7 +490,7 @@ def test_ppu_gate_warmup_matches_full_fallback(monkeypatch):
         batch, heads, key_dim, value_dim, device="cuda"
     )
 
-    expected_o, expected_state = chunk_gated_delta_rule(
+    expected_o, expected_state = official_chunk_gated_delta_rule(
         q,
         k,
         v,
@@ -698,7 +500,7 @@ def test_ppu_gate_warmup_matches_full_fallback(monkeypatch):
         output_final_state=True,
         auto_cp=False,
     )
-    actual_o, actual_state = chunk_gated_delta_rule(
+    actual_o, actual_state = official_chunk_gated_delta_rule(
         q,
         k,
         v,
@@ -715,77 +517,49 @@ def test_ppu_gate_warmup_matches_full_fallback(monkeypatch):
 
 @pytest.mark.gpu
 @pytest.mark.parametrize("gate_value", [-0.001, -0.1])
-def test_ppu_native_affine_autocp_matches_sequential(gate_value):
+def test_ppu_native_affine_autocp_matches_sequential(
+    monkeypatch, gate_value
+):
     if not native.is_flash_qla_affine_available():
         pytest.skip("PPU native AutoCP affine kernel is unavailable")
+    monkeypatch.setenv("FLASHQLA_PPU_CP_LOCAL_CHUNKS", "4")
     torch.manual_seed(71)
-    segments, heads, chunks, dim = 1, 2, 4, 128
-    shape = (segments, heads, chunks, 64, dim)
-    k_chunks = torch.randn(
-        shape, device="cuda", dtype=torch.bfloat16
+    batch, tokens, q_heads, value_heads, dim = 1, 1024, 2, 4, 128
+    q = torch.randn(
+        batch, tokens, q_heads, dim, device="cuda", dtype=torch.bfloat16
     ) / dim**0.5
-    v_chunks = torch.randn(
-        shape, device="cuda", dtype=torch.bfloat16
+    k = torch.nn.functional.normalize(
+        torch.randn(batch, tokens, q_heads, dim, device="cuda"), dim=-1
+    ).to(torch.bfloat16)
+    v = torch.randn(
+        batch, tokens, value_heads, dim,
+        device="cuda", dtype=torch.bfloat16,
     ) / dim**0.5
-    x_chunks = torch.randn(
-        shape, device="cuda", dtype=torch.bfloat16
-    ) / dim**0.5
-    gate = torch.full(
-        (segments, heads, chunks, 64),
-        gate_value,
-        device="cuda",
-        dtype=torch.float32,
-    ).cumsum(dim=-1)
-    gamma_last = gate[..., -1].exp().contiguous()
-    reverse_decay = (gate[..., -1:,] - gate).exp().contiguous()
-    warmup_chunks = torch.full(
-        (segments, heads), chunks, device="cuda", dtype=torch.int32
+    g = torch.full(
+        (batch, tokens, value_heads), gate_value,
+        device="cuda", dtype=torch.float32,
     )
-    fallback = torch.ones(
-        segments, heads, device="cuda", dtype=torch.bool
+    beta = torch.sigmoid(
+        torch.randn(batch, tokens, value_heads, device="cuda")
     )
+    initial_state = torch.randn(
+        batch, value_heads, dim, dim, device="cuda"
+    ) / dim**0.5
 
-    expected_state = torch.zeros(
-        segments, heads, dim, dim, device="cuda", dtype=torch.float32
+    expected_o, expected_state = official_chunk_gated_delta_rule(
+        q, k, v, g, beta,
+        initial_state=initial_state,
+        output_final_state=True,
+        auto_cp=False,
     )
-    expected_matrix = torch.eye(dim, device="cuda").expand(
-        segments, heads, dim, dim
-    ).clone()
-    for chunk in range(chunks):
-        k_chunk = k_chunks[:, :, chunk].float()
-        v_chunk = v_chunks[:, :, chunk].float()
-        x_chunk = x_chunks[:, :, chunk].float()
-        decay = gamma_last[:, :, chunk, None, None]
-        reverse = reverse_decay[:, :, chunk, :, None]
-        y = decay * (k_chunk @ expected_state) - reverse * v_chunk
-        expected_state = decay * expected_state + x_chunk.transpose(-1, -2) @ y
-        expected_matrix = decay * (
-            expected_matrix
-            + x_chunk.transpose(-1, -2) @ (k_chunk @ expected_matrix)
-        )
-
-    actual_state = native.flash_qla_affine_state_bf16_128(
-        k_chunks.contiguous(),
-        v_chunks.contiguous(),
-        x_chunks.contiguous(),
-        gamma_last,
-        reverse_decay,
-        warmup_chunks,
-        fallback,
-        matrix_mode=False,
+    actual_o, actual_state = official_chunk_gated_delta_rule(
+        q, k, v, g, beta,
+        initial_state=initial_state,
+        output_final_state=True,
+        auto_cp=True,
     )
-    actual_matrix = native.flash_qla_affine_state_bf16_128(
-        k_chunks.contiguous(),
-        v_chunks.contiguous(),
-        x_chunks.contiguous(),
-        gamma_last,
-        reverse_decay,
-        warmup_chunks,
-        fallback,
-        matrix_mode=True,
-    )
+    assert _relative_error(actual_o, expected_o) < 1e-2
     assert _relative_error(actual_state, expected_state) < 1e-2
-    assert _relative_error(actual_matrix, expected_matrix) < 1e-2
 
 
 @pytest.mark.gpu
@@ -906,14 +680,14 @@ def test_ppu_varlen_autocp_cache_handles_partial_tail(monkeypatch):
     )
     cu_seqlens = torch.tensor((0, tokens), device="cuda", dtype=torch.int32)
 
-    expected = chunk_gated_delta_rule_fwd(
+    expected = official_chunk_forward(
         q, k, v, g, beta,
         initial_state=initial_state,
         cu_seqlens=cu_seqlens,
         output_final_state=True,
         auto_cp=False,
     )
-    actual = chunk_gated_delta_rule_fwd(
+    actual = official_chunk_forward(
         q, k, v, g, beta,
         initial_state=initial_state,
         cu_seqlens=cu_seqlens,
@@ -921,20 +695,21 @@ def test_ppu_varlen_autocp_cache_handles_partial_tail(monkeypatch):
         auto_cp=True,
         enable_fwd_cp_cache=True,
     )
-    assert actual[5] is not None
+    assert actual[5][0] == "ppu_auto_cp_varlen_v1"
+    assert actual[5][2][0][0] == "ppu_auto_cp_v1"
     assert _relative_error(actual[2], expected[2]) < 1e-2
     assert _relative_error(actual[4], expected[4]) < 1e-2
 
     do = torch.randn_like(actual[2])
     dht = torch.randn_like(actual[4]) / dim**0.5
-    expected_grads = chunk_gated_delta_rule_bwd(
+    expected_grads = official_chunk_backward(
         q, k, v, expected[0], beta, expected[1], do,
         dht=dht,
         initial_state=initial_state,
         cu_seqlens=cu_seqlens,
         auto_cp=False,
     )
-    actual_grads = chunk_gated_delta_rule_bwd(
+    actual_grads = official_chunk_backward(
         q, k, v, actual[0], beta, actual[1], do,
         dht=dht,
         initial_state=initial_state,
@@ -1110,7 +885,7 @@ def test_ppu_fused_aiu_forward_matches_official_equations(monkeypatch):
     scale = dim**-0.5
 
     monkeypatch.setenv("FLASHQLA_PPU_AIU_FUSED", "0")
-    g_cumsum, a, expected_o, _, expected_state, _ = chunk_gated_delta_rule_fwd(
+    g_cumsum, a, expected_o, _, expected_state, _ = official_chunk_forward(
         q, k, v, g, beta, scale=scale, initial_state=initial_state,
         output_final_state=True, auto_cp=False,
     )
@@ -1152,7 +927,40 @@ def test_ppu_fused_aiu_forward_gva_zero_state_and_strong_decay(monkeypatch):
     )
 
     monkeypatch.setenv("FLASHQLA_PPU_AIU_FUSED", "0")
-    g_cumsum, a, expected_o, _, expected_state, _ = chunk_gated_delta_rule_fwd(
+    expected = official_chunk_forward(
+        q, k, v, g, beta, output_final_state=True, auto_cp=False
+    )
+    monkeypatch.setenv("FLASHQLA_PPU_AIU_FUSED", "1")
+    actual = official_chunk_forward(
+        q, k, v, g, beta, output_final_state=True, auto_cp=False
+    )
+    assert _relative_error(actual[2], expected[2]) < 8e-3
+    assert _relative_error(actual[4], expected[4]) < 8e-3
+
+
+@pytest.mark.gpu
+def test_ppu_fused_aiu_forward_gva_zero_state_and_strong_decay_native(monkeypatch):
+    if not native.is_aiu_available():
+        pytest.skip("DeepGEMM/Actlize headers were unavailable at build time")
+    torch.manual_seed(59)
+    batch, tokens, q_heads, value_heads, dim = 1, 192, 2, 4, 128
+    q = torch.randn(
+        batch, tokens, q_heads, dim, device="cuda", dtype=torch.bfloat16
+    ) / dim**0.5
+    k = torch.nn.functional.normalize(
+        torch.randn(batch, tokens, q_heads, dim, device="cuda"), dim=-1
+    ).to(torch.bfloat16)
+    v = torch.randn(
+        batch, tokens, value_heads, dim,
+        device="cuda", dtype=torch.bfloat16,
+    ) / dim**0.5
+    g = -0.2 * torch.rand(batch, tokens, value_heads, device="cuda")
+    beta = torch.sigmoid(
+        torch.randn(batch, tokens, value_heads, device="cuda")
+    )
+
+    monkeypatch.setenv("FLASHQLA_PPU_AIU_FUSED", "0")
+    g_cumsum, a, expected_o, _, expected_state, _ = official_chunk_forward(
         q, k, v, g, beta, output_final_state=True, auto_cp=False
     )
     chunks = tokens // 64

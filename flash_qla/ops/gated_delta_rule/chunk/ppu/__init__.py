@@ -1,31 +1,16 @@
-"""PPU primitives for the shared FlashQLA chunk entry point."""
+"""PPU implementation hooks for the shared FlashQLA chunk entry point."""
 
-from .ops import (
+from .production_fastpath import try_production_fastpath
+from .torch_backend import (
     CHUNK_SIZE,
-    chunk_local_cumsum,
-    correct_initial_states,
-    correct_terminal_states,
-    fused_gdr_bwd,
-    fused_gdr_dh,
-    fused_gdr_fwd,
-    fused_gdr_h,
-    get_warmup_chunks,
-    get_warmup_chunks_bidi,
-    group_reduce_vector,
-    kkt_solve,
+    official_chunk_backward,
+    official_chunk_forward,
+    official_chunk_gated_delta_rule,
 )
-
 __all__ = [
     "CHUNK_SIZE",
-    "chunk_local_cumsum",
-    "group_reduce_vector",
-    "kkt_solve",
-    "fused_gdr_fwd",
-    "fused_gdr_h",
-    "fused_gdr_bwd",
-    "fused_gdr_dh",
-    "get_warmup_chunks",
-    "get_warmup_chunks_bidi",
-    "correct_initial_states",
-    "correct_terminal_states",
+    "official_chunk_backward",
+    "official_chunk_forward",
+    "official_chunk_gated_delta_rule",
+    "try_production_fastpath",
 ]

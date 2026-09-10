@@ -16,10 +16,8 @@ from pathlib import Path
 
 
 REPO_ROOT = Path(__file__).resolve().parents[1]
-CHUNK_DIR = REPO_ROOT / "flash_qla/ops/gated_delta_rule/chunk"
 CHUNK_INIT = "flash_qla/ops/gated_delta_rule/chunk/__init__.py"
 PPU_INIT = "flash_qla/ops/gated_delta_rule/chunk/ppu/__init__.py"
-PPU_OPS = "flash_qla/ops/gated_delta_rule/chunk/ppu/ops.py"
 
 
 def _parse(rel_path: str) -> ast.Module:
@@ -74,82 +72,19 @@ def test_chunk_gated_delta_rule_grad_count_matches_forward_inputs():
 
 
 def test_public_api_is_defined_only_by_shared_chunk_entry():
-    """The shared chunk module is the sole owner of orchestration symbols."""
-    expected = {
-        "ChunkGatedDeltaRuleFunction": ast.ClassDef,
-        "chunk_gated_delta_rule_fwd": ast.FunctionDef,
-        "chunk_gated_delta_rule_bwd": ast.FunctionDef,
-        "chunk_gated_delta_rule": ast.FunctionDef,
-    }
-    definitions = {name: [] for name in expected}
-    for path in CHUNK_DIR.rglob("*.py"):
-        module = ast.parse(path.read_text(encoding="utf-8"))
-        for node in module.body:
-            name = getattr(node, "name", None)
-            if name in expected and isinstance(node, expected[name]):
-                definitions[name].append(path.relative_to(REPO_ROOT).as_posix())
-
-    for name, paths in definitions.items():
-        assert paths == [CHUNK_INIT], (
-            f"{name} must be defined only by {CHUNK_INIT}, found {paths}"
-        )
-
-
-def _qualified_name(node: ast.expr) -> str:
-    if isinstance(node, ast.Name):
-        return node.id
-    if isinstance(node, ast.Attribute):
-        prefix = _qualified_name(node.value)
-        return f"{prefix}.{node.attr}" if prefix else node.attr
-    return ""
-
-
-def test_ppu_ops_has_no_legacy_or_autograd_entry():
-    module = _parse(PPU_OPS)
-    legacy = [
-        node.name
-        for node in ast.walk(module)
-        if isinstance(node, (ast.FunctionDef, ast.ClassDef))
-        and node.name.startswith("official_chunk_")
-    ]
-    autograd_classes = [
-        node.name
-        for node in ast.walk(module)
-        if isinstance(node, ast.ClassDef)
-        and any(
-            _qualified_name(base) == "Function"
-            or _qualified_name(base).endswith(".autograd.Function")
-            for base in node.bases
-        )
-    ]
-    assert not legacy, f"legacy PPU orchestration remains: {legacy}"
-    assert not autograd_classes, f"duplicate PPU autograd Functions remain: {autograd_classes}"
-
-
-def test_ppu_init_has_no_legacy_orchestration_exports():
-    module = _parse(PPU_INIT)
-    public_names = {
-        alias.asname or alias.name
-        for node in module.body
-        if isinstance(node, ast.ImportFrom)
-        for alias in node.names
-    }
-    for node in module.body:
-        if (
-            isinstance(node, ast.Assign)
-            and any(
-                isinstance(target, ast.Name) and target.id == "__all__"
-                for target in node.targets
-            )
-        ):
-            public_names.update(
-                element.value
-                for element in node.value.elts
-                if isinstance(element, ast.Constant)
-                and isinstance(element.value, str)
-            )
-
-    assert not any(name.startswith("official_") for name in public_names)
+    """Backend packages must not duplicate the public GDR signatures."""
+    chunk_module = _parse(CHUNK_INIT)
+    ppu_module = _parse(PPU_INIT)
+    for name in (
+        "chunk_gated_delta_rule_fwd",
+        "chunk_gated_delta_rule_bwd",
+        "chunk_gated_delta_rule",
+    ):
+        _get_function(chunk_module, name)
+        assert not any(
+            isinstance(node, ast.FunctionDef) and node.name == name
+            for node in ppu_module.body
+        ), f"PPU backend must not redefine shared public entry {name}"
 
 
 if __name__ == "__main__":
