@@ -40,6 +40,31 @@ def _relative_error(actual, expected):
     return ((actual.float() - expected.float()).norm() / expected.float().norm()).item()
 
 
+def test_ppu_official_forward_returns_gate_weighted_kkt():
+    generator = torch.Generator().manual_seed(773)
+    keys = torch.nn.functional.normalize(
+        torch.randn(1, 64, 1, 8, generator=generator), dim=-1
+    ).to(torch.bfloat16)
+    zeros = torch.zeros_like(keys)
+    gate = torch.full((1, 64, 1), -0.03)
+    beta = torch.full_like(gate, 0.2)
+    _, actual, _, _, _, _ = official_chunk_forward(
+        zeros, keys, zeros, gate, beta, auto_cp=False
+    )
+
+    k = keys[0, :, 0].float()
+    eye = torch.eye(64)
+    system = eye + torch.tril(beta[0, :, 0, None] * (k @ k.T), diagonal=-1)
+    inverse = torch.linalg.solve_triangular(
+        system, eye, upper=False, unitriangular=True
+    )
+    prefix = gate[0, :, 0].cumsum(0)
+    expected = (
+        torch.tril(torch.exp(prefix[:, None] - prefix[None, :])) * inverse
+    ).to(torch.bfloat16)
+    torch.testing.assert_close(actual[0, :, 0], expected, rtol=0, atol=0)
+
+
 def test_ppu_top_level_api_uses_shared_chunk_entry():
     expected_module = "flash_qla.ops.gated_delta_rule.chunk"
     assert chunk_gated_delta_rule.__module__ == expected_module
@@ -894,8 +919,8 @@ def test_ppu_fused_aiu_forward_matches_official_equations(monkeypatch):
         q,
         k,
         v,
-        torch_backend._weight_kkt_chunks(a, g_cumsum, 64)
-        .to(torch.bfloat16).contiguous(),
+        # official_chunk_forward already returns gate-weighted A.
+        a.permute(0, 2, 1, 3).reshape(batch, heads, chunks, 64, 64).contiguous(),
         g_cumsum.permute(0, 2, 1).reshape(batch, heads, chunks, 64).contiguous(),
         beta.permute(0, 2, 1).reshape(batch, heads, chunks, 64).contiguous(),
         initial_state.contiguous(),
@@ -968,8 +993,10 @@ def test_ppu_fused_aiu_forward_gva_zero_state_and_strong_decay_native(monkeypatc
         q,
         k,
         v,
-        torch_backend._weight_kkt_chunks(a, g_cumsum, 64)
-        .to(torch.bfloat16).contiguous(),
+        # official_chunk_forward already returns gate-weighted A.
+        a.permute(0, 2, 1, 3).reshape(
+            batch, value_heads, chunks, 64, 64
+        ).contiguous(),
         g_cumsum.permute(0, 2, 1).reshape(
             batch, value_heads, chunks, 64
         ).contiguous(),
