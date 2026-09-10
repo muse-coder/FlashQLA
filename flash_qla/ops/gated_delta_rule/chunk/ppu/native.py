@@ -909,7 +909,12 @@ def flash_qla_fused_forward_bf16_128(
     initial_state: torch.Tensor | None,
     scale: float,
 ) -> tuple[torch.Tensor, torch.Tensor]:
-    """Run the official chunk-64 forward recurrence in one PPU AIU launch."""
+    """Run the official chunk-64 forward recurrence in one PPU AIU launch.
+
+    ``a_chunks`` must be gated A = tril(exp(G_row - G_col)) * A0, where
+    A0 is the ungated inverse returned by public ``kkt_solve``. The kernel
+    applies beta itself, but does not apply this gate factor to A again.
+    """
     if not is_flash_qla_fused_available():
         raise RuntimeError("fused PPU FlashQLA kernel is not built")
     if not (q.dtype == k.dtype == v.dtype == a_chunks.dtype == torch.bfloat16):

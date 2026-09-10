@@ -155,6 +155,9 @@ struct FlashQlaAiuKktInverse {
       const int column = get<1>(coordinate);
       gram[row * kChunk + column] = accum(index);
     }
+    // Fragment ownership differs from the linear traversal below. A warp may
+    // consume another warp's Gram entries, so publish the whole tile first.
+    __syncthreads();
     const int vector_base = group * kChunk;
     for (int linear = thread; linear < kChunk * kChunk;
          linear += blockDim.x) {

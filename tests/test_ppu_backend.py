@@ -1073,6 +1073,25 @@ def test_ppu_gated_strided_aiu_kkt_matches_official_a():
 
 
 @pytest.mark.gpu
+@pytest.mark.parametrize("tokens", [1024, 8192])
+def test_ppu_gated_strided_aiu_kkt_is_repeatable(tokens):
+    if not native.is_gated_strided_kkt_available():
+        pytest.skip("PPU gated strided AIU KKT kernel is unavailable")
+    torch.manual_seed(773)
+    keys = torch.nn.functional.normalize(
+        torch.randn(1, tokens, 4, 128, device="cuda"), dim=-1
+    ).to(torch.bfloat16)
+    beta = torch.rand(1, 16, tokens // 64, 64, device="cuda")
+    gate = (-0.03 * torch.rand_like(beta)).cumsum(dim=-1).contiguous()
+    expected = native.aiu_kkt_solve_bf16_128_strided_gated(keys, beta, gate)
+    # Multiple blocks and repeated launches expose cross-warp shared-memory
+    # ordering errors that a single tolerance-based oracle comparison can miss.
+    for _ in range(12):
+        actual = native.aiu_kkt_solve_bf16_128_strided_gated(keys, beta, gate)
+        torch.testing.assert_close(actual, expected, rtol=0, atol=0)
+
+
+@pytest.mark.gpu
 def test_ppu_fused_aiu_forward_matches_official_equations(monkeypatch):
     if not native.is_aiu_available():
         pytest.skip("DeepGEMM/Actlize headers were unavailable at build time")
@@ -1100,7 +1119,8 @@ def test_ppu_fused_aiu_forward_matches_official_equations(monkeypatch):
         q,
         k,
         v,
-        a.permute(0, 2, 1, 3).reshape(batch, heads, chunks, 64, 64).contiguous(),
+        torch_backend._weight_kkt_chunks(a, g_cumsum, 64)
+        .to(torch.bfloat16).contiguous(),
         g_cumsum.permute(0, 2, 1).reshape(batch, heads, chunks, 64).contiguous(),
         beta.permute(0, 2, 1).reshape(batch, heads, chunks, 64).contiguous(),
         initial_state.contiguous(),
@@ -1111,7 +1131,7 @@ def test_ppu_fused_aiu_forward_matches_official_equations(monkeypatch):
 
 
 @pytest.mark.gpu
-def test_ppu_fused_aiu_forward_gva_zero_state_and_strong_decay():
+def test_ppu_fused_aiu_forward_gva_zero_state_and_strong_decay(monkeypatch):
     if not native.is_aiu_available():
         pytest.skip("DeepGEMM/Actlize headers were unavailable at build time")
     torch.manual_seed(59)
@@ -1131,6 +1151,7 @@ def test_ppu_fused_aiu_forward_gva_zero_state_and_strong_decay():
         torch.randn(batch, tokens, value_heads, device="cuda")
     )
 
+    monkeypatch.setenv("FLASHQLA_PPU_AIU_FUSED", "0")
     g_cumsum, a, expected_o, _, expected_state, _ = chunk_gated_delta_rule_fwd(
         q, k, v, g, beta, output_final_state=True, auto_cp=False
     )
@@ -1139,9 +1160,8 @@ def test_ppu_fused_aiu_forward_gva_zero_state_and_strong_decay():
         q,
         k,
         v,
-        a.permute(0, 2, 1, 3).reshape(
-            batch, value_heads, chunks, 64, 64
-        ).contiguous(),
+        torch_backend._weight_kkt_chunks(a, g_cumsum, 64)
+        .to(torch.bfloat16).contiguous(),
         g_cumsum.permute(0, 2, 1).reshape(
             batch, value_heads, chunks, 64
         ).contiguous(),
