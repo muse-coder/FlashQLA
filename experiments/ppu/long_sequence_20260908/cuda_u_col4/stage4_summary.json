@@ -1,0 +1,490 @@
+{
+  "candidate_sha256": "9e82b0b77f8e4e831a9df2f15b4f2f1aedf34fc0c6d038f4523af6c3b0c7bc57",
+  "control_sha256": "7968fe26cbb269c930e070943d5b907fb1df1446631d55581cac17b01b0eb9e8",
+  "bounded_job_id": "dv_6b1dd8c299a7",
+  "bounded_status": "PASS",
+  "full_scope_status": "PASS",
+  "primitive_cases": 8,
+  "primitive_pass": true,
+  "max_oracle_relative_l2": 0.005607015948959898,
+  "max_carry_relative_l2": 0.005615506786574918,
+  "raw_bit_mismatches": 0,
+  "raw_bit_elements_compared": 10487083008,
+  "signed_zero_bit_mismatches": 0,
+  "gdn_wins": 0,
+  "required_native_lowering_pass": true,
+  "rows": [
+    {
+      "shape_id": "3",
+      "input_kwargs": {
+        "tokens": 131072,
+        "hq": 2,
+        "hv": 8,
+        "seqlens": [
+          131072
+        ],
+        "state_dtype": "float32",
+        "g_dtype": "float32",
+        "nonzero_state": true,
+        "gate_mode": "blog75"
+      },
+      "control_us": 18859.840393066406,
+      "candidate_us": 18027.18448638916,
+      "gdn_us": 6124.395132064819,
+      "whole_speedup": 1.0461889047236363,
+      "state_speedup": 1.0482141697913792,
+      "basis_speedup": 1.101121464980867,
+      "control_stage_us": {
+        "prepare": 751.198,
+        "inverse": 3066.7075,
+        "basis": 4462.7495,
+        "state_scan": 9252.25,
+        "outputs": 1454.6819999999989
+      },
+      "candidate_stage_us": {
+        "prepare": 752.298,
+        "inverse": 3062.3125,
+        "basis": 4052.9129999999996,
+        "state_scan": 8826.679,
+        "outputs": 1462.2270000000008
+      },
+      "raw_bit_mismatch_elements": 0,
+      "raw_bit_total_elements": 806092800,
+      "signed_zero_bit_mismatch_elements": 0,
+      "max_abs": 0.0,
+      "max_control_relative_l2": 0.0,
+      "correct": true,
+      "traces_complete": true,
+      "basis_gate": true,
+      "whole_state_gate": true,
+      "performance_gate": true
+    },
+    {
+      "shape_id": "7",
+      "input_kwargs": {
+        "tokens": 131072,
+        "hq": 4,
+        "hv": 16,
+        "seqlens": [
+          131072
+        ],
+        "state_dtype": "float32",
+        "g_dtype": "float32",
+        "nonzero_state": true,
+        "gate_mode": "blog75"
+      },
+      "control_us": 28715.240478515625,
+      "candidate_us": 27451.300621032715,
+      "gdn_us": 6715.595006942749,
+      "whole_speedup": 1.046042986266177,
+      "state_speedup": 1.0458921395712597,
+      "basis_speedup": 1.1020146778682074,
+      "control_stage_us": {
+        "prepare": 1549.7024999999999,
+        "inverse": 6073.594,
+        "basis": 9005.173,
+        "state_scan": 9038.204,
+        "outputs": 2989.2839999999997
+      },
+      "candidate_stage_us": {
+        "prepare": 1547.8625000000002,
+        "inverse": 6079.978999999999,
+        "basis": 8171.5545,
+        "state_scan": 8641.621500000001,
+        "outputs": 2984.469000000001
+      },
+      "raw_bit_mismatch_elements": 0,
+      "raw_bit_total_elements": 1612185600,
+      "signed_zero_bit_mismatch_elements": 0,
+      "max_abs": 0.0,
+      "max_control_relative_l2": 0.0,
+      "correct": true,
+      "traces_complete": true,
+      "basis_gate": true,
+      "whole_state_gate": true,
+      "performance_gate": true
+    },
+    {
+      "shape_id": "tail_32769",
+      "input_kwargs": {
+        "tokens": 32769,
+        "hq": 2,
+        "hv": 8,
+        "seqlens": [
+          16385,
+          16384
+        ],
+        "state_dtype": "bfloat16",
+        "g_dtype": "bfloat16",
+        "nonzero_state": true,
+        "gate_mode": "weak"
+      },
+      "control_us": 3617.6449060440063,
+      "candidate_us": 3442.7149295806885,
+      "gdn_us": 876.6700029373169,
+      "whole_speedup": 1.0508116355961612,
+      "state_speedup": 1.0447946707901972,
+      "basis_speedup": 1.1133436195299118,
+      "control_stage_us": {
+        "prepare": 187.1805,
+        "inverse": 763.8135,
+        "basis": 1145.8654999999999,
+        "state_scan": 1136.466,
+        "outputs": 355.99699999999984
+      },
+      "candidate_stage_us": {
+        "prepare": 186.9055,
+        "inverse": 762.644,
+        "basis": 1029.2109999999998,
+        "state_scan": 1087.741,
+        "outputs": 355.7270000000001
+      },
+      "raw_bit_mismatch_elements": 0,
+      "raw_bit_total_elements": 202905600,
+      "signed_zero_bit_mismatch_elements": 0,
+      "max_abs": 0.0,
+      "max_control_relative_l2": 0.0,
+      "correct": true,
+      "traces_complete": true,
+      "basis_gate": true,
+      "whole_state_gate": true,
+      "performance_gate": true
+    },
+    {
+      "shape_id": "128k_hv64",
+      "input_kwargs": {
+        "tokens": 131072,
+        "hq": 16,
+        "hv": 64,
+        "seqlens": [
+          131072
+        ],
+        "state_dtype": "float32",
+        "g_dtype": "float32",
+        "nonzero_state": true,
+        "gate_mode": "blog75"
+      },
+      "control_us": 115059.84497070312,
+      "candidate_us": 109771.8391418457,
+      "gdn_us": 26887.919425964355,
+      "whole_speedup": 1.0481726995757477,
+      "state_speedup": 1.053392965507594,
+      "basis_speedup": 1.1051638285837158,
+      "control_stage_us": {
+        "prepare": 5762.3189999999995,
+        "inverse": 24432.228,
+        "basis": 36735.985499999995,
+        "state_scan": 36732.509000000005,
+        "outputs": 11330.292000000001
+      },
+      "candidate_stage_us": {
+        "prepare": 5760.103999999999,
+        "inverse": 24426.178,
+        "basis": 33240.307499999995,
+        "state_scan": 34870.661,
+        "outputs": 11326.561999999998
+      },
+      "raw_bit_mismatch_elements": 0,
+      "raw_bit_total_elements": 6448742400,
+      "signed_zero_bit_mismatch_elements": 0,
+      "max_abs": 0.0,
+      "max_control_relative_l2": 0.0,
+      "correct": true,
+      "traces_complete": true,
+      "basis_gate": true,
+      "whole_state_gate": true,
+      "performance_gate": true
+    },
+    {
+      "shape_id": "small64",
+      "input_kwargs": {
+        "tokens": 64,
+        "hq": 2,
+        "hv": 8,
+        "seqlens": [
+          64
+        ],
+        "state_dtype": "bfloat16",
+        "g_dtype": "bfloat16",
+        "nonzero_state": true,
+        "gate_mode": "weak"
+      },
+      "control_us": 86.84000000357628,
+      "candidate_us": 86.95999905467033,
+      "gdn_us": 27.285000309348106,
+      "whole_speedup": 0.9986200660947729,
+      "state_speedup": 1.0540184453227928,
+      "basis_speedup": 1.0079229989868297,
+      "control_stage_us": {
+        "prepare": 24.210500000000003,
+        "inverse": 23.46,
+        "basis": 24.870500000000007,
+        "state_scan": 8.0,
+        "outputs": 4.734999999999999
+      },
+      "candidate_stage_us": {
+        "prepare": 24.275000000000006,
+        "inverse": 22.795499999999997,
+        "basis": 24.674999999999983,
+        "state_scan": 7.590000000000003,
+        "outputs": 4.900000000000006
+      },
+      "raw_bit_mismatch_elements": 0,
+      "raw_bit_total_elements": 1179648,
+      "signed_zero_bit_mismatch_elements": 0,
+      "max_abs": 0.0,
+      "max_control_relative_l2": 0.0,
+      "correct": true,
+      "traces_complete": true,
+      "basis_gate": true,
+      "whole_state_gate": true,
+      "performance_gate": true
+    },
+    {
+      "shape_id": "packed_tail65",
+      "input_kwargs": {
+        "tokens": 65,
+        "hq": 2,
+        "hv": 8,
+        "seqlens": [
+          1,
+          64
+        ],
+        "state_dtype": "bfloat16",
+        "g_dtype": "bfloat16",
+        "nonzero_state": true,
+        "gate_mode": "weak"
+      },
+      "control_us": 88.88499811291695,
+      "candidate_us": 88.67499977350235,
+      "gdn_us": 26.439999230206013,
+      "whole_speedup": 1.0023681797569888,
+      "state_speedup": 1.0131438274322353,
+      "basis_speedup": 1.0060378929835512,
+      "control_stage_us": {
+        "prepare": 24.074999999999996,
+        "inverse": 23.740000000000002,
+        "basis": 24.159999999999982,
+        "state_scan": 8.054999999999993,
+        "outputs": 5.055000000000007
+      },
+      "candidate_stage_us": {
+        "prepare": 24.285000000000004,
+        "inverse": 23.990499999999997,
+        "basis": 24.015,
+        "state_scan": 7.950500000000005,
+        "outputs": 5.060000000000002
+      },
+      "raw_bit_mismatch_elements": 0,
+      "raw_bit_total_elements": 1972224,
+      "signed_zero_bit_mismatch_elements": 0,
+      "max_abs": 0.0,
+      "max_control_relative_l2": 0.0,
+      "correct": true,
+      "traces_complete": true,
+      "basis_gate": true,
+      "whole_state_gate": true,
+      "performance_gate": true
+    },
+    {
+      "shape_id": "zero_128k",
+      "input_kwargs": {
+        "tokens": 131072,
+        "hq": 2,
+        "hv": 8,
+        "gate_mode": "zero",
+        "g_dtype": "float32",
+        "state_dtype": "float32",
+        "nonzero_state": true,
+        "seqlens": [
+          131072
+        ]
+      },
+      "control_us": 19150.434494018555,
+      "candidate_us": 18231.115341186523,
+      "gdn_us": 6121.54483795166,
+      "whole_speedup": 1.0504258316415325,
+      "state_speedup": 1.0482245352447752,
+      "basis_speedup": 1.1010441710620733,
+      "control_stage_us": {
+        "prepare": 759.0535,
+        "inverse": 3061.4,
+        "basis": 4465.1415,
+        "state_scan": 9258.9495,
+        "outputs": 1455.4220000000005
+      },
+      "candidate_stage_us": {
+        "prepare": 757.3889999999999,
+        "inverse": 3063.4799999999996,
+        "basis": 4055.37,
+        "state_scan": 8832.983,
+        "outputs": 1453.532000000001
+      },
+      "raw_bit_mismatch_elements": 0,
+      "raw_bit_total_elements": 806092800,
+      "signed_zero_bit_mismatch_elements": 0,
+      "max_abs": 0.0,
+      "max_control_relative_l2": 0.0,
+      "correct": true,
+      "traces_complete": true,
+      "basis_gate": true,
+      "whole_state_gate": true,
+      "performance_gate": true
+    },
+    {
+      "shape_id": "decay_32k",
+      "input_kwargs": {
+        "tokens": 32768,
+        "hq": 2,
+        "hv": 8,
+        "gate_mode": "default",
+        "g_dtype": "float32",
+        "state_dtype": "float32",
+        "nonzero_state": true,
+        "seqlens": [
+          32768
+        ]
+      },
+      "control_us": 4815.219879150391,
+      "candidate_us": 4576.820135116577,
+      "gdn_us": 1551.5649914741516,
+      "whole_speedup": 1.0520885105806634,
+      "state_speedup": 1.0590148506730541,
+      "basis_speedup": 1.1111829660647017,
+      "control_stage_us": {
+        "prepare": 198.62599999999998,
+        "inverse": 756.8589999999999,
+        "basis": 1134.0449999999998,
+        "state_scan": 2330.5115,
+        "outputs": 346.80150000000003
+      },
+      "candidate_stage_us": {
+        "prepare": 197.3065,
+        "inverse": 757.0735,
+        "basis": 1020.5745,
+        "state_scan": 2200.6409999999996,
+        "outputs": 345.7660000000001
+      },
+      "raw_bit_mismatch_elements": 0,
+      "raw_bit_total_elements": 202113024,
+      "signed_zero_bit_mismatch_elements": 0,
+      "max_abs": 0.0,
+      "max_control_relative_l2": 0.0,
+      "correct": true,
+      "traces_complete": true,
+      "basis_gate": true,
+      "whole_state_gate": true,
+      "performance_gate": true
+    },
+    {
+      "shape_id": "packed_32k_hv16",
+      "input_kwargs": {
+        "tokens": 32768,
+        "hq": 4,
+        "hv": 16,
+        "gate_mode": "blog75",
+        "g_dtype": "float32",
+        "state_dtype": "float32",
+        "nonzero_state": true,
+        "seqlens": [
+          24576,
+          8192
+        ]
+      },
+      "control_us": 7219.404935836792,
+      "candidate_us": 6879.305124282837,
+      "gdn_us": 1706.3350081443787,
+      "whole_speedup": 1.0494381053623363,
+      "state_speedup": 1.0484035124058986,
+      "basis_speedup": 1.1074752591534474,
+      "control_stage_us": {
+        "prepare": 385.8025,
+        "inverse": 1513.882,
+        "basis": 2265.4010000000003,
+        "state_scan": 2282.7005,
+        "outputs": 703.5540000000001
+      },
+      "candidate_stage_us": {
+        "prepare": 388.87199999999996,
+        "inverse": 1511.6619999999998,
+        "basis": 2045.5545,
+        "state_scan": 2177.3110000000006,
+        "outputs": 712.8429999999998
+      },
+      "raw_bit_mismatch_elements": 0,
+      "raw_bit_total_elements": 405798912,
+      "signed_zero_bit_mismatch_elements": 0,
+      "max_abs": 0.0,
+      "max_control_relative_l2": 0.0,
+      "correct": true,
+      "traces_complete": true,
+      "basis_gate": true,
+      "whole_state_gate": true,
+      "performance_gate": true
+    }
+  ],
+  "gate_diagnostic": {
+    "case": "3",
+    "seed": 1701,
+    "candidate_executes_autocp": false,
+    "actual_g_bits_sha256": "3ac3d3b4ecddae36db5b1f6673d6d5881772b046220ef1c7b3ab54e61ff00eba",
+    "scope": "Read-only timing-excluded mathematical diagnostic. Fixed64chunk partitions are hypothetical, not the AutoCP heuristic output and not executed by this CUDA candidate. Chunk sums use float64, not official GPU chunk-prefix/warmup float32 reduction; no official warmup bit-equivalence claim. Last partition ht_mask suppresses preprocessing and its fallback is not needed/undefined in that main branch. Output chunks are not skipped."
+  },
+  "canonical_changed": false,
+  "best_changed": false,
+  "quality_gate": "PASS",
+  "quality_gate_scope": "All declared primitive/raw-bit, bounded9case whole/state/basis/native-lowering gates, and full113 correctness/carry/immutability/per-stage-completeness passed. Overall GDN objective remains unmet.",
+  "full_audits": [
+    {
+      "source_sha256": "9e82b0b77f8e4e831a9df2f15b4f2f1aedf34fc0c6d038f4523af6c3b0c7bc57",
+      "job_id": "dv_be6c7c1160d0",
+      "gateway_status": "succeeded",
+      "command_exit_code": 1,
+      "expected_shapes": 54,
+      "complete": true,
+      "correct_shapes": 54,
+      "baseline_correct_shapes": 54,
+      "gdn_wins": 0,
+      "all_traces_complete": true,
+      "max_oracle_relative_l2": 0.005616472104520575,
+      "max_carry_relative_l2": 0.005617765237654669,
+      "correctness_scope_passed": true,
+      "performance_goal_met": false,
+      "artifact_sha256": "bcf11f3106feb5bd837d3f8a65f03b0bcd7bf694d37a61be94fe2825a4db5300",
+      "artifact_source_hashes_verified": true,
+      "event_speedup_range": [
+        0.24294343524600312,
+        0.34766686561998283
+      ]
+    },
+    {
+      "source_sha256": "9e82b0b77f8e4e831a9df2f15b4f2f1aedf34fc0c6d038f4523af6c3b0c7bc57",
+      "job_id": "dv_a1873d7cc90f",
+      "gateway_status": "succeeded",
+      "command_exit_code": 1,
+      "expected_shapes": 59,
+      "complete": true,
+      "correct_shapes": 59,
+      "baseline_correct_shapes": 59,
+      "gdn_wins": 0,
+      "all_traces_complete": true,
+      "max_oracle_relative_l2": 0.005581630083017037,
+      "max_carry_relative_l2": 0.0056254837465677535,
+      "correctness_scope_passed": true,
+      "performance_goal_met": false,
+      "artifact_sha256": "a6660fc15c8da9d202518e0813e6605735b42e9b3fb0ee2b040bb59f90d4fb93",
+      "artifact_source_hashes_verified": true,
+      "event_speedup_range": [
+        0.24987426408585597,
+        0.3795071916411765
+      ]
+    }
+  ],
+  "full_correct_shapes": 113,
+  "full_gdn_wins": 0,
+  "max_full_oracle_relative_l2": 0.005616472104520575,
+  "max_full_carry_relative_l2": 0.0056254837465677535,
+  "overall_goal_met": false,
+  "new_gpu_jobs_after_full_audit": false,
+  "committed_by_validator": false
+}

@@ -1,0 +1,458 @@
+{
+  "format_version": 1,
+  "archived_on": "2026-09-10",
+  "source_run": "flashqla_long_20260908",
+  "best_audited_experiment": "cuda_u_col4",
+  "best_source_commit": "a7110d3f2803732035b98df1c0dc03417f39c686",
+  "public_dispatch_integrated": false,
+  "files": [
+    {
+      "file": "cuda_ktd_natural/kernel.py",
+      "source": "cuda_ktd_natural/kernel.py",
+      "source_revision": "3266b326ab84dfc606b7000941d7fddf73ef54cb",
+      "sha256": "d2a12745625851896e836088c63e1ac8cbf06b19282498f72bab582fa71bb503",
+      "bytes": 16098
+    },
+    {
+      "file": "cuda_ktd_natural/kernel.cu",
+      "source": "cuda_ktd_natural/kernel.cu",
+      "source_revision": "3266b326ab84dfc606b7000941d7fddf73ef54cb",
+      "sha256": "aba127d26711fa68973a7e0139bdaa866243431344436758c7f466de93dbab29",
+      "bytes": 14882
+    },
+    {
+      "file": "cuda_ktd_natural/input.py",
+      "source": "cuda_ktd_natural/input.py",
+      "source_revision": "3266b326ab84dfc606b7000941d7fddf73ef54cb",
+      "sha256": "46b956d04865a0a51b484e04df88093449adb14a15fb4064ff6e317d11b5cb14",
+      "bytes": 1525
+    },
+    {
+      "file": "cuda_ktd_natural/oracle.py",
+      "source": "cuda_ktd_natural/oracle.py",
+      "source_revision": "3266b326ab84dfc606b7000941d7fddf73ef54cb",
+      "sha256": "3c544a3c18ca63bc67a6f049a54eaa544a4708eaaa167d5bdc1ab7879e8a1b0c",
+      "bytes": 2585
+    },
+    {
+      "file": "cuda_ktd_natural/public_shapes.json",
+      "source": "cuda_ktd_natural/public_shapes.json",
+      "source_revision": "3266b326ab84dfc606b7000941d7fddf73ef54cb",
+      "sha256": "2335ec3d95208155ea223b11e44aa6bd85d20ad1ee811a2635ec3792d945cc0a",
+      "bytes": 2439
+    },
+    {
+      "file": "cuda_ktd_natural/validation_report.md",
+      "source": "cuda_ktd_natural/validation_report.md",
+      "source_revision": "3266b326ab84dfc606b7000941d7fddf73ef54cb",
+      "sha256": "f170c2bb5442fc0a9b8a3d5337a36399512eb98476810759a7cdac0dbb1e31d5",
+      "bytes": 5058
+    },
+    {
+      "file": "cuda_ktd_vector/kernel.py",
+      "source": "cuda_ktd_vector/kernel.py",
+      "source_revision": "7e79119b0ee2e664f9478b894ff24feeb768eb6e",
+      "sha256": "7968fe26cbb269c930e070943d5b907fb1df1446631d55581cac17b01b0eb9e8",
+      "bytes": 16650
+    },
+    {
+      "file": "cuda_ktd_vector/kernel.cu",
+      "source": "cuda_ktd_vector/kernel.cu",
+      "source_revision": "7e79119b0ee2e664f9478b894ff24feeb768eb6e",
+      "sha256": "e746a17af923e07e2eb2875a72cbf2b9f909ed3e7e54584e0f559567337589a9",
+      "bytes": 15412
+    },
+    {
+      "file": "cuda_ktd_vector/input.py",
+      "source": "cuda_ktd_vector/input.py",
+      "source_revision": null,
+      "sha256": "46b956d04865a0a51b484e04df88093449adb14a15fb4064ff6e317d11b5cb14",
+      "bytes": 1525
+    },
+    {
+      "file": "cuda_ktd_vector/oracle.py",
+      "source": "cuda_ktd_vector/oracle.py",
+      "source_revision": null,
+      "sha256": "3c544a3c18ca63bc67a6f049a54eaa544a4708eaaa167d5bdc1ab7879e8a1b0c",
+      "bytes": 2585
+    },
+    {
+      "file": "cuda_ktd_vector/public_shapes.json",
+      "source": "cuda_ktd_vector/public_shapes.json",
+      "source_revision": null,
+      "sha256": "2335ec3d95208155ea223b11e44aa6bd85d20ad1ee811a2635ec3792d945cc0a",
+      "bytes": 2439
+    },
+    {
+      "file": "cuda_ktd_vector/validation_report.md",
+      "source": "cuda_ktd_vector/validation_report.md",
+      "source_revision": "7e79119b0ee2e664f9478b894ff24feeb768eb6e",
+      "sha256": "cb0087297a2a245d94ab652a4fdfe9dd9bd61ce9ac3da73af8beb468ca2e17b6",
+      "bytes": 4023
+    },
+    {
+      "file": "cuda_residual_pairs/kernel.py",
+      "source": "cuda_residual_pairs/kernel.py",
+      "source_revision": "97c695a32f5d794db238ba950e86a93bca5e3ef1",
+      "sha256": "f81f7b2e92f1a273b1564e3a955f3a0769e25d37a36bafbd8b4c8f8ea9d088df",
+      "bytes": 16303
+    },
+    {
+      "file": "cuda_residual_pairs/kernel.cu",
+      "source": "cuda_residual_pairs/kernel.cu",
+      "source_revision": "97c695a32f5d794db238ba950e86a93bca5e3ef1",
+      "sha256": "3e6d6731fdf19fd0b8fd23cc19f4c51cf5ea16d7e453de8c66cc8b917230c91d",
+      "bytes": 15075
+    },
+    {
+      "file": "cuda_residual_pairs/input.py",
+      "source": "cuda_residual_pairs/input.py",
+      "source_revision": "97c695a32f5d794db238ba950e86a93bca5e3ef1",
+      "sha256": "46b956d04865a0a51b484e04df88093449adb14a15fb4064ff6e317d11b5cb14",
+      "bytes": 1525
+    },
+    {
+      "file": "cuda_residual_pairs/oracle.py",
+      "source": "cuda_residual_pairs/oracle.py",
+      "source_revision": "97c695a32f5d794db238ba950e86a93bca5e3ef1",
+      "sha256": "3c544a3c18ca63bc67a6f049a54eaa544a4708eaaa167d5bdc1ab7879e8a1b0c",
+      "bytes": 2585
+    },
+    {
+      "file": "cuda_residual_pairs/public_shapes.json",
+      "source": "cuda_residual_pairs/public_shapes.json",
+      "source_revision": "97c695a32f5d794db238ba950e86a93bca5e3ef1",
+      "sha256": "2335ec3d95208155ea223b11e44aa6bd85d20ad1ee811a2635ec3792d945cc0a",
+      "bytes": 2439
+    },
+    {
+      "file": "cuda_residual_pairs/validation_report.md",
+      "source": "cuda_residual_pairs/validation_report.md",
+      "source_revision": "97c695a32f5d794db238ba950e86a93bca5e3ef1",
+      "sha256": "2321260eae83fa9311c360661ad7f0c997e635175ab10d6db52bb614ee439586",
+      "bytes": 4804
+    },
+    {
+      "file": "cuda_u_col4/kernel.py",
+      "source": "cuda_u_col4/kernel.py",
+      "source_revision": "a7110d3f2803732035b98df1c0dc03417f39c686",
+      "sha256": "9e82b0b77f8e4e831a9df2f15b4f2f1aedf34fc0c6d038f4523af6c3b0c7bc57",
+      "bytes": 17031
+    },
+    {
+      "file": "cuda_u_col4/kernel.cu",
+      "source": "cuda_u_col4/kernel.cu",
+      "source_revision": "a7110d3f2803732035b98df1c0dc03417f39c686",
+      "sha256": "0e85e7244df37265bd45e79e339e2fbab2fc7d19c6f5bc41ce94e800e2810c61",
+      "bytes": 15789
+    },
+    {
+      "file": "cuda_u_col4/input.py",
+      "source": "cuda_u_col4/input.py",
+      "source_revision": "a7110d3f2803732035b98df1c0dc03417f39c686",
+      "sha256": "46b956d04865a0a51b484e04df88093449adb14a15fb4064ff6e317d11b5cb14",
+      "bytes": 1525
+    },
+    {
+      "file": "cuda_u_col4/oracle.py",
+      "source": "cuda_u_col4/oracle.py",
+      "source_revision": "a7110d3f2803732035b98df1c0dc03417f39c686",
+      "sha256": "3c544a3c18ca63bc67a6f049a54eaa544a4708eaaa167d5bdc1ab7879e8a1b0c",
+      "bytes": 2585
+    },
+    {
+      "file": "cuda_u_col4/public_shapes.json",
+      "source": "cuda_u_col4/public_shapes.json",
+      "source_revision": "a7110d3f2803732035b98df1c0dc03417f39c686",
+      "sha256": "2335ec3d95208155ea223b11e44aa6bd85d20ad1ee811a2635ec3792d945cc0a",
+      "bytes": 2439
+    },
+    {
+      "file": "cuda_u_col4/validation_report.md",
+      "source": "cuda_u_col4/validation_report.md",
+      "source_revision": "a7110d3f2803732035b98df1c0dc03417f39c686",
+      "sha256": "176fcb012b08cb05ea6d7c1c8fff2bc30ba6713a290ce50492b69c72783035db",
+      "bytes": 8932
+    },
+    {
+      "file": "cuda_u_col4/baseline.py",
+      "source": "cuda_u_col4/baseline.py",
+      "source_revision": "a7110d3f2803732035b98df1c0dc03417f39c686",
+      "sha256": "ec9850025f2ee990352cf8ae683cce41b13841725c1b4ecd96ec756a5fece707",
+      "bytes": 86833
+    },
+    {
+      "file": "cuda_u_col4/control.py",
+      "source": "cuda_u_col4/control.py",
+      "source_revision": "a7110d3f2803732035b98df1c0dc03417f39c686",
+      "sha256": "7968fe26cbb269c930e070943d5b907fb1df1446631d55581cac17b01b0eb9e8",
+      "bytes": 16650
+    },
+    {
+      "file": "cuda_u_col4/control.cu",
+      "source": "cuda_u_col4/control.cu",
+      "source_revision": "a7110d3f2803732035b98df1c0dc03417f39c686",
+      "sha256": "e746a17af923e07e2eb2875a72cbf2b9f909ed3e7e54584e0f559567337589a9",
+      "bytes": 15412
+    },
+    {
+      "file": "cuda_u_col4/bounded_report.md",
+      "source": "cuda_u_col4/bounded_report.md",
+      "source_revision": "a7110d3f2803732035b98df1c0dc03417f39c686",
+      "sha256": "ef38acdc43b737ed9b87698365b010d6542fa2f977c4e9361fac3f45f8ef9661",
+      "bytes": 5496
+    },
+    {
+      "file": "cuda_u_col4/gate_report.md",
+      "source": "cuda_u_col4/gate_report.md",
+      "source_revision": "a7110d3f2803732035b98df1c0dc03417f39c686",
+      "sha256": "30b60da4bda300aba7882f0ac9ecc21d259abbdd5d209ae3128a3ce89c11646f",
+      "bytes": 2120
+    },
+    {
+      "file": "cuda_u_col4/artifact_verification.json",
+      "source": "cuda_u_col4/artifact_verification.json",
+      "source_revision": "a7110d3f2803732035b98df1c0dc03417f39c686",
+      "sha256": "c65c013310b3fa7e86bcc467751361799cddb293b924be8126a8a8e0ac3ec883",
+      "bytes": 761
+    },
+    {
+      "file": "cuda_u_col4/raw_artifact_audit.json",
+      "source": "cuda_u_col4/raw_artifact_audit.json",
+      "source_revision": "a7110d3f2803732035b98df1c0dc03417f39c686",
+      "sha256": "f473850949f9f5b8e01883bd5fa14d85f726276d9a1ed535c0b1b3b63e1bb663",
+      "bytes": 2915
+    },
+    {
+      "file": "cuda_u_col4/stage4_summary.json",
+      "source": "cuda_u_col4/stage4_summary.json",
+      "source_revision": "a7110d3f2803732035b98df1c0dc03417f39c686",
+      "sha256": "be8c26db51cc7986f42a573ca73ef519f2e4796465b096aec437342acc63aa0d",
+      "bytes": 15241
+    },
+    {
+      "file": "cuda_gate_autocp/rejected/kernel.py",
+      "source": "cuda_gate_autocp/rejected/kernel.py",
+      "source_revision": "63dd5a2ebc937db114eb94e70cbba29eac033026",
+      "sha256": "0258256c6dfcb9775e61a2275f72c046bf7579a42cb749ba514f94e909f29481",
+      "bytes": 27276
+    },
+    {
+      "file": "cuda_gate_autocp/rejected/kernel.cu",
+      "source": "cuda_gate_autocp/rejected/kernel.cu",
+      "source_revision": "63dd5a2ebc937db114eb94e70cbba29eac033026",
+      "sha256": "dacbc9a039ece4fedac6a3afe915d5a1bc7f945648b9f053e697461f58a3cc54",
+      "bytes": 25782
+    },
+    {
+      "file": "cuda_residual_fusion/rejected/kernel.py",
+      "source": "cuda_residual_fusion/rejected/kernel.py",
+      "source_revision": "d91042fc9fc3348e772491a5ecad3e9096c3c905",
+      "sha256": "abe884c27c2be1929899405f9c3587af942e64dd4e16954ff1c3a29e7d7a8c7d",
+      "bytes": 15250
+    },
+    {
+      "file": "cuda_residual_fusion/rejected/kernel.cu",
+      "source": "cuda_residual_fusion/rejected/kernel.cu",
+      "source_revision": "d91042fc9fc3348e772491a5ecad3e9096c3c905",
+      "sha256": "817033c736a58e64510bdab14ee1b4f90c7c35e1422078c767c536705cda2fd9",
+      "bytes": 14019
+    },
+    {
+      "file": "cuda_structured_inverse/rejected/kernel.py",
+      "source": "cuda_structured_inverse/rejected/kernel.py",
+      "source_revision": "122e8b9556adb39a25479e771e91508e459ec06e",
+      "sha256": "efe6ae121c12ee5fdd9db5e542e88205c66dabc6353ab1e4fea79f6d8c03c237",
+      "bytes": 19349
+    },
+    {
+      "file": "cuda_structured_inverse/rejected/kernel.cu",
+      "source": "cuda_structured_inverse/rejected/kernel.cu",
+      "source_revision": "122e8b9556adb39a25479e771e91508e459ec06e",
+      "sha256": "113407231cd8af0487b2d970658816004376c2217ce6e0b2bcd28988fc63fd02",
+      "bytes": 18041
+    },
+    {
+      "file": "cuda_structural_rebuild/kernel.py",
+      "source": "cuda_structural_rebuild/kernel.py",
+      "source_revision": null,
+      "sha256": "c346e4300c6cac5349bfb805918847d79131fe8e3e05a60f94a70e87d97587e4",
+      "bytes": 26704
+    },
+    {
+      "file": "cuda_structural_rebuild/kernel.cu",
+      "source": "cuda_structural_rebuild/kernel.cu",
+      "source_revision": null,
+      "sha256": "c04fc96c0c5d0f8e49918e5d63299a7aac79b0b30970fe3e40d4eeae4043c943",
+      "bytes": 25212
+    },
+    {
+      "file": "cuda_structural_rebuild/control.py",
+      "source": "cuda_structural_rebuild/control.py",
+      "source_revision": null,
+      "sha256": "9e82b0b77f8e4e831a9df2f15b4f2f1aedf34fc0c6d038f4523af6c3b0c7bc57",
+      "bytes": 17031
+    },
+    {
+      "file": "cuda_structural_rebuild/input.py",
+      "source": "cuda_structural_rebuild/input.py",
+      "source_revision": null,
+      "sha256": "46b956d04865a0a51b484e04df88093449adb14a15fb4064ff6e317d11b5cb14",
+      "bytes": 1525
+    },
+    {
+      "file": "cuda_structural_rebuild/oracle.py",
+      "source": "cuda_structural_rebuild/oracle.py",
+      "source_revision": null,
+      "sha256": "3c544a3c18ca63bc67a6f049a54eaa544a4708eaaa167d5bdc1ab7879e8a1b0c",
+      "bytes": 2585
+    },
+    {
+      "file": "cuda_structural_rebuild/public_shapes.json",
+      "source": "cuda_structural_rebuild/public_shapes.json",
+      "source_revision": null,
+      "sha256": "657e02fc83518312cb5c676a4ee9b35c32b83b5f674aa3824565f3b0a05b5519",
+      "bytes": 3012
+    },
+    {
+      "file": "cuda_structural_rebuild/long_shapes.json",
+      "source": "cuda_structural_rebuild/long_shapes.json",
+      "source_revision": null,
+      "sha256": "fdc550e3702c9126f4e841a6f1602d3085e21522f858e1ad33a229742920a13a",
+      "bytes": 15150
+    },
+    {
+      "file": "cuda_structural_rebuild/original_shapes.json",
+      "source": "cuda_structural_rebuild/original_shapes.json",
+      "source_revision": null,
+      "sha256": "857ace774980c40fb05295057dd7cb4b1092308f66142ba9a6c14840ae9b6e47",
+      "bytes": 15106
+    },
+    {
+      "file": "cuda_structural_rebuild/original_input.py",
+      "source": "cuda_structural_rebuild/original_input.py",
+      "source_revision": null,
+      "sha256": "a7989fcce0bedb376777e19b2e87eeb9c5f6486106efa72e907021ec9cd76645",
+      "bytes": 1454
+    },
+    {
+      "file": "cuda_structural_rebuild/reports/compiled_resources_validation.md",
+      "source": "cuda_structural_rebuild/reports/compiled_resources_validation.md",
+      "source_revision": null,
+      "sha256": "1c99ad705a61c5e20a86be74ec85d57c3269eab769886e9c96fa543d5b0af71d",
+      "bytes": 2672
+    },
+    {
+      "file": "cuda_structural_rebuild/reports/summary_cta512_performance_validation.md",
+      "source": "cuda_structural_rebuild/reports/summary_cta512_performance_validation.md",
+      "source_revision": null,
+      "sha256": "a81c5b4121a17e2882fdb9fa7cf8873ddce363bc2d96a70d568d2f342fde2591",
+      "bytes": 2580
+    },
+    {
+      "file": "cuda_structural_rebuild/reports/summary_cta512_primitives_validation.md",
+      "source": "cuda_structural_rebuild/reports/summary_cta512_primitives_validation.md",
+      "source_revision": null,
+      "sha256": "81f0ea057cec122819115896cdad87466c4857a69fb95da7135067e517b1967c",
+      "bytes": 2652
+    },
+    {
+      "file": "cuda_u_col4/evidence/u_col4_full_audit/summary.json",
+      "source": "u_col4_full_audit/summary.json",
+      "source_revision": null,
+      "sha256": "66f94318b2ab0fbf5e2c0a4996755f2896eec2fde93377e1abe5d37006bcf8bf",
+      "bytes": 104534
+    },
+    {
+      "file": "cuda_u_col4/evidence/u_col4_full_audit/acceptance.json",
+      "source": "u_col4_full_audit/acceptance.json",
+      "source_revision": null,
+      "sha256": "0bfcabebc4bad8e9e5ff2ac7eb063706cdbea9c2e9023cbfa5e3cffe126ca066",
+      "bytes": 569693
+    },
+    {
+      "file": "cuda_u_col4/evidence/u_col4_full_audit/artifact_verification.json",
+      "source": "u_col4_full_audit/artifact_verification.json",
+      "source_revision": null,
+      "sha256": "7f05b1178413fa63741c82200cffe4885d21405ee89456ae4b891f6dd39ca52a",
+      "bytes": 754
+    },
+    {
+      "file": "cuda_u_col4/evidence/u_col4_full_audit/shapes.json",
+      "source": "u_col4_full_audit/shapes.json",
+      "source_revision": null,
+      "sha256": "fdc550e3702c9126f4e841a6f1602d3085e21522f858e1ad33a229742920a13a",
+      "bytes": 15150
+    },
+    {
+      "file": "cuda_u_col4/evidence/u_col4_regression59/summary.json",
+      "source": "u_col4_regression59/summary.json",
+      "source_revision": null,
+      "sha256": "3531d270feefef47caf002ec5ca69e8f353603a7d91936a2d333bf7e189820fb",
+      "bytes": 116113
+    },
+    {
+      "file": "cuda_u_col4/evidence/u_col4_regression59/acceptance.json",
+      "source": "u_col4_regression59/acceptance.json",
+      "source_revision": null,
+      "sha256": "266a46bd83099b09ce26c277c87fe2f6e5d2f10972c2074dc1774e41f3a4e0aa",
+      "bytes": 629891
+    },
+    {
+      "file": "cuda_u_col4/evidence/u_col4_regression59/artifact_verification.json",
+      "source": "u_col4_regression59/artifact_verification.json",
+      "source_revision": null,
+      "sha256": "70fde36a75d3d3053b3a515249b65f20ed5acea568efb4954e5d3490238da618",
+      "bytes": 754
+    },
+    {
+      "file": "cuda_u_col4/evidence/u_col4_regression59/shapes.json",
+      "source": "u_col4_regression59/shapes.json",
+      "source_revision": null,
+      "sha256": "857ace774980c40fb05295057dd7cb4b1092308f66142ba9a6c14840ae9b6e47",
+      "bytes": 15106
+    }
+  ],
+  "embedded_cuda_checks": [
+    {
+      "python": "cuda_gate_autocp/rejected/kernel.py",
+      "embedded_cuda_sha256": "dacbc9a039ece4fedac6a3afe915d5a1bc7f945648b9f053e697461f58a3cc54",
+      "matches_adjacent_cu": true
+    },
+    {
+      "python": "cuda_ktd_natural/kernel.py",
+      "embedded_cuda_sha256": "aba127d26711fa68973a7e0139bdaa866243431344436758c7f466de93dbab29",
+      "matches_adjacent_cu": true
+    },
+    {
+      "python": "cuda_ktd_vector/kernel.py",
+      "embedded_cuda_sha256": "e746a17af923e07e2eb2875a72cbf2b9f909ed3e7e54584e0f559567337589a9",
+      "matches_adjacent_cu": true
+    },
+    {
+      "python": "cuda_residual_fusion/rejected/kernel.py",
+      "embedded_cuda_sha256": "817033c736a58e64510bdab14ee1b4f90c7c35e1422078c767c536705cda2fd9",
+      "matches_adjacent_cu": true
+    },
+    {
+      "python": "cuda_residual_pairs/kernel.py",
+      "embedded_cuda_sha256": "3e6d6731fdf19fd0b8fd23cc19f4c51cf5ea16d7e453de8c66cc8b917230c91d",
+      "matches_adjacent_cu": true
+    },
+    {
+      "python": "cuda_structural_rebuild/kernel.py",
+      "embedded_cuda_sha256": "c04fc96c0c5d0f8e49918e5d63299a7aac79b0b30970fe3e40d4eeae4043c943",
+      "matches_adjacent_cu": true
+    },
+    {
+      "python": "cuda_structured_inverse/rejected/kernel.py",
+      "embedded_cuda_sha256": "113407231cd8af0487b2d970658816004376c2217ce6e0b2bcd28988fc63fd02",
+      "matches_adjacent_cu": true
+    },
+    {
+      "python": "cuda_u_col4/kernel.py",
+      "embedded_cuda_sha256": "0e85e7244df37265bd45e79e339e2fbab2fc7d19c6f5bc41ce94e800e2810c61",
+      "matches_adjacent_cu": true
+    }
+  ]
+}

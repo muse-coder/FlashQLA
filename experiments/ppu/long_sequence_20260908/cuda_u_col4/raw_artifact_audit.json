@@ -1,0 +1,110 @@
+{
+  "cases": [
+    {
+      "case": "distinct_fragment_tags",
+      "checks": {
+        "producer_old": true,
+        "producer_new": true,
+        "quartet_old": true,
+        "quartet_new": true,
+        "subtract": true,
+        "global_bf16": true,
+        "shared_bf16": true
+      },
+      "sha256": "a37dd36b463effb2671e6be63171ddbfe7240f22e359778e69b57b828f8b884c"
+    },
+    {
+      "case": "finite_random",
+      "checks": {
+        "producer_old": true,
+        "producer_new": true,
+        "quartet_old": true,
+        "quartet_new": true,
+        "subtract": true,
+        "global_bf16": true,
+        "shared_bf16": true
+      },
+      "sha256": "e032597184bc47e6f1d36975cce723ca1647cd506b47f086e3366221f586fa2a"
+    },
+    {
+      "case": "mixed_sign",
+      "checks": {
+        "producer_old": true,
+        "producer_new": true,
+        "quartet_old": true,
+        "quartet_new": true,
+        "subtract": true,
+        "global_bf16": true,
+        "shared_bf16": true
+      },
+      "sha256": "6d4119b945a5a8e33b0cf2cd52f888c1ff0f00bd46de3ce60d7ea525b87ba50a"
+    },
+    {
+      "case": "cancellation",
+      "checks": {
+        "producer_old": true,
+        "producer_new": true,
+        "quartet_old": true,
+        "quartet_new": true,
+        "subtract": true,
+        "global_bf16": true,
+        "shared_bf16": true
+      },
+      "sha256": "121b130acd479a1fe39c598759f561057adb8a018f9b8110b448a244cf673492"
+    },
+    {
+      "case": "signed_zero_subnormal_ties",
+      "checks": {
+        "producer_old": true,
+        "producer_new": true,
+        "quartet_old": true,
+        "quartet_new": true,
+        "subtract": true,
+        "global_bf16": true,
+        "shared_bf16": true
+      },
+      "sha256": "81b34f555c84e7cc0e4d4a8035b745d09b4dc691a606b9a51b935b25130c9386"
+    },
+    {
+      "case": "tail1",
+      "checks": {
+        "producer_old": true,
+        "producer_new": true,
+        "quartet_old": true,
+        "quartet_new": true,
+        "subtract": true,
+        "global_bf16": true,
+        "shared_bf16": true
+      },
+      "sha256": "f2f1e87f66725832c17f87180f4729892df2ad10f486d1e44fa608cba6677b11"
+    },
+    {
+      "case": "tail63",
+      "checks": {
+        "producer_old": true,
+        "producer_new": true,
+        "quartet_old": true,
+        "quartet_new": true,
+        "subtract": true,
+        "global_bf16": true,
+        "shared_bf16": true
+      },
+      "sha256": "0b1809e55def4140ed9f390e5424347a38b78ab60c66dd521b1fa0d8d4a883ee"
+    },
+    {
+      "case": "tail64",
+      "checks": {
+        "producer_old": true,
+        "producer_new": true,
+        "quartet_old": true,
+        "quartet_new": true,
+        "subtract": true,
+        "global_bf16": true,
+        "shared_bf16": true
+      },
+      "sha256": "17f6042d9aa22f34db526302c95170a6daa46e0ce0cef50247e09c37bfd47493"
+    }
+  ],
+  "passed": true,
+  "gate_actual_bits_hash_verified": true
+}

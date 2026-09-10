@@ -1,0 +1,19 @@
+{
+  "job_id": "dv_6b1dd8c299a7",
+  "status": "succeeded",
+  "exit_code": 0,
+  "artifacts": [
+    {
+      "name": "workspace/layout_artifacts.tar.gz",
+      "sha256": "3c96198aa478c3b03e1db006d244523ee511354ea82a12aaac7a111875e70a3d",
+      "source_sha256": {
+        "kernel.py": "9e82b0b77f8e4e831a9df2f15b4f2f1aedf34fc0c6d038f4523af6c3b0c7bc57",
+        "control.py": "7968fe26cbb269c930e070943d5b907fb1df1446631d55581cac17b01b0eb9e8",
+        "layout_probe.cu": "735dfbe60813fcf7728156b472b2f955eab8a82edd2bf745a1d2145f5fa9f47d",
+        "layout_probe.py": "81577ca86379460d38eba6997de6d82b86af267b59d3818031762bfa2790633c",
+        "validate.py": "f8fec3d61c51c4a5d1ae5133cd25905350df38f1f924c54960cf3a9bdc7ca2fa"
+      },
+      "verified": true
+    }
+  ]
+}

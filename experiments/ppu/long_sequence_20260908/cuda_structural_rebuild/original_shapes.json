@@ -1,0 +1,854 @@
+{
+  "0": {
+    "init_kwargs": {},
+    "input_kwargs": {
+      "tokens": 64,
+      "hq": 4,
+      "hv": 16,
+      "seqlens": [
+        64
+      ],
+      "state_dtype": "bfloat16",
+      "g_dtype": "bfloat16",
+      "nonzero_state": true
+    }
+  },
+  "1": {
+    "init_kwargs": {},
+    "input_kwargs": {
+      "tokens": 128,
+      "hq": 4,
+      "hv": 16,
+      "seqlens": [
+        128
+      ],
+      "state_dtype": "bfloat16",
+      "g_dtype": "bfloat16",
+      "nonzero_state": true
+    }
+  },
+  "2": {
+    "init_kwargs": {},
+    "input_kwargs": {
+      "tokens": 256,
+      "hq": 4,
+      "hv": 16,
+      "seqlens": [
+        256
+      ],
+      "state_dtype": "bfloat16",
+      "g_dtype": "bfloat16",
+      "nonzero_state": true
+    }
+  },
+  "3": {
+    "init_kwargs": {},
+    "input_kwargs": {
+      "tokens": 512,
+      "hq": 4,
+      "hv": 16,
+      "seqlens": [
+        512
+      ],
+      "state_dtype": "bfloat16",
+      "g_dtype": "bfloat16",
+      "nonzero_state": true
+    }
+  },
+  "4": {
+    "init_kwargs": {},
+    "input_kwargs": {
+      "tokens": 764,
+      "hq": 4,
+      "hv": 16,
+      "seqlens": [
+        764
+      ],
+      "state_dtype": "bfloat16",
+      "g_dtype": "bfloat16",
+      "nonzero_state": true
+    }
+  },
+  "5": {
+    "init_kwargs": {},
+    "input_kwargs": {
+      "tokens": 1024,
+      "hq": 4,
+      "hv": 16,
+      "seqlens": [
+        1024
+      ],
+      "state_dtype": "bfloat16",
+      "g_dtype": "bfloat16",
+      "nonzero_state": true
+    }
+  },
+  "6": {
+    "init_kwargs": {},
+    "input_kwargs": {
+      "tokens": 1280,
+      "hq": 4,
+      "hv": 16,
+      "seqlens": [
+        1280
+      ],
+      "state_dtype": "bfloat16",
+      "g_dtype": "bfloat16",
+      "nonzero_state": true
+    }
+  },
+  "7": {
+    "init_kwargs": {},
+    "input_kwargs": {
+      "tokens": 2048,
+      "hq": 4,
+      "hv": 16,
+      "seqlens": [
+        2048
+      ],
+      "state_dtype": "bfloat16",
+      "g_dtype": "bfloat16",
+      "nonzero_state": true
+    }
+  },
+  "8": {
+    "init_kwargs": {},
+    "input_kwargs": {
+      "tokens": 4096,
+      "hq": 4,
+      "hv": 16,
+      "seqlens": [
+        4096
+      ],
+      "state_dtype": "bfloat16",
+      "g_dtype": "bfloat16",
+      "nonzero_state": true
+    }
+  },
+  "9": {
+    "init_kwargs": {},
+    "input_kwargs": {
+      "tokens": 8192,
+      "hq": 4,
+      "hv": 16,
+      "seqlens": [
+        8192
+      ],
+      "state_dtype": "bfloat16",
+      "g_dtype": "bfloat16",
+      "nonzero_state": true
+    }
+  },
+  "10": {
+    "init_kwargs": {},
+    "input_kwargs": {
+      "tokens": 15360,
+      "hq": 4,
+      "hv": 16,
+      "seqlens": [
+        15360
+      ],
+      "state_dtype": "bfloat16",
+      "g_dtype": "bfloat16",
+      "nonzero_state": true
+    }
+  },
+  "11": {
+    "init_kwargs": {},
+    "input_kwargs": {
+      "tokens": 32768,
+      "hq": 4,
+      "hv": 16,
+      "seqlens": [
+        32768
+      ],
+      "state_dtype": "bfloat16",
+      "g_dtype": "bfloat16",
+      "nonzero_state": true
+    }
+  },
+  "12": {
+    "init_kwargs": {},
+    "input_kwargs": {
+      "tokens": 64,
+      "hq": 4,
+      "hv": 16,
+      "seqlens": [
+        64
+      ],
+      "state_dtype": "float32",
+      "g_dtype": "bfloat16",
+      "nonzero_state": true
+    }
+  },
+  "13": {
+    "init_kwargs": {},
+    "input_kwargs": {
+      "tokens": 128,
+      "hq": 4,
+      "hv": 16,
+      "seqlens": [
+        128
+      ],
+      "state_dtype": "float32",
+      "g_dtype": "bfloat16",
+      "nonzero_state": true
+    }
+  },
+  "14": {
+    "init_kwargs": {},
+    "input_kwargs": {
+      "tokens": 256,
+      "hq": 4,
+      "hv": 16,
+      "seqlens": [
+        256
+      ],
+      "state_dtype": "float32",
+      "g_dtype": "bfloat16",
+      "nonzero_state": true
+    }
+  },
+  "15": {
+    "init_kwargs": {},
+    "input_kwargs": {
+      "tokens": 512,
+      "hq": 4,
+      "hv": 16,
+      "seqlens": [
+        512
+      ],
+      "state_dtype": "float32",
+      "g_dtype": "bfloat16",
+      "nonzero_state": true
+    }
+  },
+  "16": {
+    "init_kwargs": {},
+    "input_kwargs": {
+      "tokens": 764,
+      "hq": 4,
+      "hv": 16,
+      "seqlens": [
+        764
+      ],
+      "state_dtype": "float32",
+      "g_dtype": "bfloat16",
+      "nonzero_state": true
+    }
+  },
+  "17": {
+    "init_kwargs": {},
+    "input_kwargs": {
+      "tokens": 1024,
+      "hq": 4,
+      "hv": 16,
+      "seqlens": [
+        1024
+      ],
+      "state_dtype": "float32",
+      "g_dtype": "bfloat16",
+      "nonzero_state": true
+    }
+  },
+  "18": {
+    "init_kwargs": {},
+    "input_kwargs": {
+      "tokens": 1280,
+      "hq": 4,
+      "hv": 16,
+      "seqlens": [
+        1280
+      ],
+      "state_dtype": "float32",
+      "g_dtype": "bfloat16",
+      "nonzero_state": true
+    }
+  },
+  "19": {
+    "init_kwargs": {},
+    "input_kwargs": {
+      "tokens": 2048,
+      "hq": 4,
+      "hv": 16,
+      "seqlens": [
+        2048
+      ],
+      "state_dtype": "float32",
+      "g_dtype": "bfloat16",
+      "nonzero_state": true
+    }
+  },
+  "20": {
+    "init_kwargs": {},
+    "input_kwargs": {
+      "tokens": 4096,
+      "hq": 4,
+      "hv": 16,
+      "seqlens": [
+        4096
+      ],
+      "state_dtype": "float32",
+      "g_dtype": "bfloat16",
+      "nonzero_state": true
+    }
+  },
+  "21": {
+    "init_kwargs": {},
+    "input_kwargs": {
+      "tokens": 8192,
+      "hq": 4,
+      "hv": 16,
+      "seqlens": [
+        8192
+      ],
+      "state_dtype": "float32",
+      "g_dtype": "bfloat16",
+      "nonzero_state": true
+    }
+  },
+  "22": {
+    "init_kwargs": {},
+    "input_kwargs": {
+      "tokens": 15360,
+      "hq": 4,
+      "hv": 16,
+      "seqlens": [
+        15360
+      ],
+      "state_dtype": "float32",
+      "g_dtype": "bfloat16",
+      "nonzero_state": true
+    }
+  },
+  "23": {
+    "init_kwargs": {},
+    "input_kwargs": {
+      "tokens": 32768,
+      "hq": 4,
+      "hv": 16,
+      "seqlens": [
+        32768
+      ],
+      "state_dtype": "float32",
+      "g_dtype": "bfloat16",
+      "nonzero_state": true
+    }
+  },
+  "24": {
+    "init_kwargs": {},
+    "input_kwargs": {
+      "tokens": 1024,
+      "hq": 2,
+      "hv": 8,
+      "seqlens": [
+        1024
+      ],
+      "state_dtype": "bfloat16",
+      "g_dtype": "bfloat16",
+      "nonzero_state": true
+    }
+  },
+  "25": {
+    "init_kwargs": {},
+    "input_kwargs": {
+      "tokens": 1024,
+      "hq": 4,
+      "hv": 16,
+      "seqlens": [
+        1024
+      ],
+      "state_dtype": "bfloat16",
+      "g_dtype": "bfloat16",
+      "nonzero_state": true
+    }
+  },
+  "26": {
+    "init_kwargs": {},
+    "input_kwargs": {
+      "tokens": 1024,
+      "hq": 4,
+      "hv": 8,
+      "seqlens": [
+        1024
+      ],
+      "state_dtype": "bfloat16",
+      "g_dtype": "bfloat16",
+      "nonzero_state": true
+    }
+  },
+  "27": {
+    "init_kwargs": {},
+    "input_kwargs": {
+      "tokens": 1024,
+      "hq": 8,
+      "hv": 16,
+      "seqlens": [
+        1024
+      ],
+      "state_dtype": "bfloat16",
+      "g_dtype": "bfloat16",
+      "nonzero_state": true
+    }
+  },
+  "28": {
+    "init_kwargs": {},
+    "input_kwargs": {
+      "tokens": 1024,
+      "hq": 8,
+      "hv": 24,
+      "seqlens": [
+        1024
+      ],
+      "state_dtype": "bfloat16",
+      "g_dtype": "bfloat16",
+      "nonzero_state": true
+    }
+  },
+  "29": {
+    "init_kwargs": {},
+    "input_kwargs": {
+      "tokens": 1024,
+      "hq": 8,
+      "hv": 32,
+      "seqlens": [
+        1024
+      ],
+      "state_dtype": "bfloat16",
+      "g_dtype": "bfloat16",
+      "nonzero_state": true
+    }
+  },
+  "30": {
+    "init_kwargs": {},
+    "input_kwargs": {
+      "tokens": 1024,
+      "hq": 16,
+      "hv": 16,
+      "seqlens": [
+        1024
+      ],
+      "state_dtype": "bfloat16",
+      "g_dtype": "bfloat16",
+      "nonzero_state": true
+    }
+  },
+  "31": {
+    "init_kwargs": {},
+    "input_kwargs": {
+      "tokens": 1024,
+      "hq": 16,
+      "hv": 32,
+      "seqlens": [
+        1024
+      ],
+      "state_dtype": "bfloat16",
+      "g_dtype": "bfloat16",
+      "nonzero_state": true
+    }
+  },
+  "32": {
+    "init_kwargs": {},
+    "input_kwargs": {
+      "tokens": 1024,
+      "hq": 16,
+      "hv": 48,
+      "seqlens": [
+        1024
+      ],
+      "state_dtype": "bfloat16",
+      "g_dtype": "bfloat16",
+      "nonzero_state": true
+    }
+  },
+  "33": {
+    "init_kwargs": {},
+    "input_kwargs": {
+      "tokens": 1024,
+      "hq": 16,
+      "hv": 64,
+      "seqlens": [
+        1024
+      ],
+      "state_dtype": "bfloat16",
+      "g_dtype": "bfloat16",
+      "nonzero_state": true
+    }
+  },
+  "34": {
+    "init_kwargs": {},
+    "input_kwargs": {
+      "tokens": 1024,
+      "hq": 32,
+      "hv": 32,
+      "seqlens": [
+        1024
+      ],
+      "state_dtype": "bfloat16",
+      "g_dtype": "bfloat16",
+      "nonzero_state": true
+    }
+  },
+  "35": {
+    "init_kwargs": {},
+    "input_kwargs": {
+      "tokens": 1024,
+      "hq": 2,
+      "hv": 8,
+      "seqlens": [
+        1024
+      ],
+      "state_dtype": "float32",
+      "g_dtype": "bfloat16",
+      "nonzero_state": true
+    }
+  },
+  "36": {
+    "init_kwargs": {},
+    "input_kwargs": {
+      "tokens": 1024,
+      "hq": 4,
+      "hv": 16,
+      "seqlens": [
+        1024
+      ],
+      "state_dtype": "float32",
+      "g_dtype": "bfloat16",
+      "nonzero_state": true
+    }
+  },
+  "37": {
+    "init_kwargs": {},
+    "input_kwargs": {
+      "tokens": 1024,
+      "hq": 4,
+      "hv": 8,
+      "seqlens": [
+        1024
+      ],
+      "state_dtype": "float32",
+      "g_dtype": "bfloat16",
+      "nonzero_state": true
+    }
+  },
+  "38": {
+    "init_kwargs": {},
+    "input_kwargs": {
+      "tokens": 1024,
+      "hq": 8,
+      "hv": 16,
+      "seqlens": [
+        1024
+      ],
+      "state_dtype": "float32",
+      "g_dtype": "bfloat16",
+      "nonzero_state": true
+    }
+  },
+  "39": {
+    "init_kwargs": {},
+    "input_kwargs": {
+      "tokens": 1024,
+      "hq": 8,
+      "hv": 24,
+      "seqlens": [
+        1024
+      ],
+      "state_dtype": "float32",
+      "g_dtype": "bfloat16",
+      "nonzero_state": true
+    }
+  },
+  "40": {
+    "init_kwargs": {},
+    "input_kwargs": {
+      "tokens": 1024,
+      "hq": 8,
+      "hv": 32,
+      "seqlens": [
+        1024
+      ],
+      "state_dtype": "float32",
+      "g_dtype": "bfloat16",
+      "nonzero_state": true
+    }
+  },
+  "41": {
+    "init_kwargs": {},
+    "input_kwargs": {
+      "tokens": 1024,
+      "hq": 16,
+      "hv": 16,
+      "seqlens": [
+        1024
+      ],
+      "state_dtype": "float32",
+      "g_dtype": "bfloat16",
+      "nonzero_state": true
+    }
+  },
+  "42": {
+    "init_kwargs": {},
+    "input_kwargs": {
+      "tokens": 1024,
+      "hq": 16,
+      "hv": 32,
+      "seqlens": [
+        1024
+      ],
+      "state_dtype": "float32",
+      "g_dtype": "bfloat16",
+      "nonzero_state": true
+    }
+  },
+  "43": {
+    "init_kwargs": {},
+    "input_kwargs": {
+      "tokens": 1024,
+      "hq": 16,
+      "hv": 48,
+      "seqlens": [
+        1024
+      ],
+      "state_dtype": "float32",
+      "g_dtype": "bfloat16",
+      "nonzero_state": true
+    }
+  },
+  "44": {
+    "init_kwargs": {},
+    "input_kwargs": {
+      "tokens": 1024,
+      "hq": 16,
+      "hv": 64,
+      "seqlens": [
+        1024
+      ],
+      "state_dtype": "float32",
+      "g_dtype": "bfloat16",
+      "nonzero_state": true
+    }
+  },
+  "45": {
+    "init_kwargs": {},
+    "input_kwargs": {
+      "tokens": 1024,
+      "hq": 32,
+      "hv": 32,
+      "seqlens": [
+        1024
+      ],
+      "state_dtype": "float32",
+      "g_dtype": "bfloat16",
+      "nonzero_state": true
+    }
+  },
+  "46": {
+    "init_kwargs": {},
+    "input_kwargs": {
+      "tokens": 8192,
+      "hq": 4,
+      "hv": 16,
+      "seqlens": [
+        8192
+      ],
+      "state_dtype": "bfloat16",
+      "g_dtype": "bfloat16",
+      "nonzero_state": true
+    }
+  },
+  "47": {
+    "init_kwargs": {},
+    "input_kwargs": {
+      "tokens": 8192,
+      "hq": 4,
+      "hv": 16,
+      "seqlens": [
+        2730,
+        5462
+      ],
+      "state_dtype": "bfloat16",
+      "g_dtype": "bfloat16",
+      "nonzero_state": true
+    }
+  },
+  "48": {
+    "init_kwargs": {},
+    "input_kwargs": {
+      "tokens": 8192,
+      "hq": 4,
+      "hv": 16,
+      "seqlens": [
+        819,
+        1638,
+        2457,
+        3278
+      ],
+      "state_dtype": "bfloat16",
+      "g_dtype": "bfloat16",
+      "nonzero_state": true
+    }
+  },
+  "49": {
+    "init_kwargs": {},
+    "input_kwargs": {
+      "tokens": 8192,
+      "hq": 4,
+      "hv": 16,
+      "seqlens": [
+        227,
+        455,
+        682,
+        910,
+        1137,
+        1365,
+        1592,
+        1824
+      ],
+      "state_dtype": "bfloat16",
+      "g_dtype": "bfloat16",
+      "nonzero_state": true
+    }
+  },
+  "50": {
+    "init_kwargs": {},
+    "input_kwargs": {
+      "tokens": 8192,
+      "hq": 4,
+      "hv": 16,
+      "seqlens": [
+        8192
+      ],
+      "state_dtype": "float32",
+      "g_dtype": "bfloat16",
+      "nonzero_state": true
+    }
+  },
+  "51": {
+    "init_kwargs": {},
+    "input_kwargs": {
+      "tokens": 8192,
+      "hq": 4,
+      "hv": 16,
+      "seqlens": [
+        2730,
+        5462
+      ],
+      "state_dtype": "float32",
+      "g_dtype": "bfloat16",
+      "nonzero_state": true
+    }
+  },
+  "52": {
+    "init_kwargs": {},
+    "input_kwargs": {
+      "tokens": 8192,
+      "hq": 4,
+      "hv": 16,
+      "seqlens": [
+        819,
+        1638,
+        2457,
+        3278
+      ],
+      "state_dtype": "float32",
+      "g_dtype": "bfloat16",
+      "nonzero_state": true
+    }
+  },
+  "53": {
+    "init_kwargs": {},
+    "input_kwargs": {
+      "tokens": 8192,
+      "hq": 4,
+      "hv": 16,
+      "seqlens": [
+        227,
+        455,
+        682,
+        910,
+        1137,
+        1365,
+        1592,
+        1824
+      ],
+      "state_dtype": "float32",
+      "g_dtype": "bfloat16",
+      "nonzero_state": true
+    }
+  },
+  "54": {
+    "init_kwargs": {},
+    "input_kwargs": {
+      "tokens": 128,
+      "hq": 4,
+      "hv": 16,
+      "seqlens": [
+        128
+      ],
+      "state_dtype": "bfloat16",
+      "g_dtype": "bfloat16",
+      "nonzero_state": false
+    }
+  },
+  "55": {
+    "init_kwargs": {},
+    "input_kwargs": {
+      "tokens": 4096,
+      "hq": 4,
+      "hv": 16,
+      "seqlens": [
+        4096
+      ],
+      "state_dtype": "float32",
+      "g_dtype": "float32",
+      "nonzero_state": true,
+      "gate_mode": "zero"
+    }
+  },
+  "56": {
+    "init_kwargs": {},
+    "input_kwargs": {
+      "tokens": 4096,
+      "hq": 4,
+      "hv": 16,
+      "seqlens": [
+        4096
+      ],
+      "state_dtype": "float32",
+      "g_dtype": "float32",
+      "nonzero_state": true,
+      "gate_mode": "weak"
+    }
+  },
+  "57": {
+    "init_kwargs": {},
+    "input_kwargs": {
+      "tokens": 4096,
+      "hq": 4,
+      "hv": 16,
+      "seqlens": [
+        4096
+      ],
+      "state_dtype": "float32",
+      "g_dtype": "float32",
+      "nonzero_state": true,
+      "gate_mode": "strong"
+    }
+  },
+  "58": {
+    "init_kwargs": {},
+    "input_kwargs": {
+      "tokens": 4096,
+      "hq": 4,
+      "hv": 16,
+      "seqlens": [
+        4096
+      ],
+      "state_dtype": "float32",
+      "g_dtype": "float32",
+      "nonzero_state": true,
+      "gate_mode": "mixed"
+    }
+  }
+}

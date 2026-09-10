@@ -1,0 +1,14 @@
+{
+  "job_id": "dv_be6c7c1160d0",
+  "sha256": "bcf11f3106feb5bd837d3f8a65f03b0bcd7bf694d37a61be94fe2825a4db5300",
+  "gateway_stdout_and_metadata_hashes_verified": true,
+  "source_hashes": {
+    "candidate.py": "9e82b0b77f8e4e831a9df2f15b4f2f1aedf34fc0c6d038f4523af6c3b0c7bc57",
+    "baseline.py": "ec9850025f2ee990352cf8ae683cce41b13841725c1b4ecd96ec756a5fece707",
+    "oracle.py": "3c544a3c18ca63bc67a6f049a54eaa544a4708eaaa167d5bdc1ab7879e8a1b0c",
+    "input.py": "46b956d04865a0a51b484e04df88093449adb14a15fb4064ff6e317d11b5cb14",
+    "shapes.json": "fdc550e3702c9126f4e841a6f1602d3085e21522f858e1ad33a229742920a13a",
+    "run.py": "fc0b830b927879ab5cde6e98c8179346f510a8c764c3c9048d46f8e6ba22632f"
+  },
+  "per_stage_arrays_retained_all_cases": true
+}

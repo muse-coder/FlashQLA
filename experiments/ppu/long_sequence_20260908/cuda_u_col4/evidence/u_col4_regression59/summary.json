@@ -1,0 +1,4534 @@
+{
+  "source_sha256": "9e82b0b77f8e4e831a9df2f15b4f2f1aedf34fc0c6d038f4523af6c3b0c7bc57",
+  "job_id": "dv_a1873d7cc90f",
+  "gateway_status": "succeeded",
+  "command_exit_code": 1,
+  "expected_shapes": 59,
+  "complete": true,
+  "correct_shapes": 59,
+  "baseline_correct_shapes": 59,
+  "gdn_wins": 0,
+  "all_traces_complete": true,
+  "max_oracle_relative_l2": 0.005581630083017037,
+  "max_carry_relative_l2": 0.0056254837465677535,
+  "correctness_scope_passed": true,
+  "performance_goal_met": false,
+  "artifact_sha256": "a6660fc15c8da9d202518e0813e6605735b42e9b3fb0ee2b040bb59f90d4fb93",
+  "artifact_source_hashes_verified": true,
+  "event_speedup_range": [
+    0.24987426408585597,
+    0.3795071916411765
+  ],
+  "rows": [
+    {
+      "shape_id": "0",
+      "input_kwargs": {
+        "tokens": 64,
+        "hq": 4,
+        "hv": 16,
+        "seqlens": [
+          64
+        ],
+        "state_dtype": "bfloat16",
+        "g_dtype": "bfloat16",
+        "nonzero_state": true
+      },
+      "candidate_us": 90.00999853014946,
+      "gdn_us": 27.32000034302473,
+      "gdn_speedup": 0.303521839675108,
+      "correct": true,
+      "baseline_correct": true,
+      "traces_complete": true,
+      "stage_median_us": {
+        "prepare": 28.619,
+        "inverse": 22.844999999999985,
+        "basis": 23.139500000000012,
+        "state_scan": 7.884999999999991,
+        "outputs": 4.780000000000001,
+        "gdr_prologue": 18.809499999999993,
+        "gdr_scan2": 7.519999999999996
+      },
+      "stage_raw_samples_us": {
+        "prepare": [
+          31.60899999999998,
+          28.839,
+          28.170000000000016,
+          28.399
+        ],
+        "inverse": [
+          22.839999999999975,
+          22.849999999999994,
+          22.769000000000005,
+          22.960000000000008
+        ],
+        "basis": [
+          23.410000000000025,
+          23.150000000000006,
+          22.72999999999999,
+          23.12900000000002
+        ],
+        "state_scan": [
+          7.949999999999989,
+          7.819999999999993,
+          8.200000000000017,
+          7.810000000000002
+        ],
+        "outputs": [
+          4.819000000000017,
+          4.800000000000011,
+          4.699999999999989,
+          4.759999999999991
+        ],
+        "gdr_prologue": [
+          20.9399999999996,
+          18.599999999999994,
+          18.42,
+          19.01899999999999
+        ],
+        "gdr_scan2": [
+          7.230000000000473,
+          7.699999999999989,
+          7.340000000000003,
+          7.980000000000004
+        ]
+      },
+      "previous_7968_event_us": 91.52000024914742,
+      "cross_run_7968_speedup": 1.0167759331591608,
+      "cross_run_note": "Separate allocations/jobs; not a paired performance acceptance claim."
+    },
+    {
+      "shape_id": "1",
+      "input_kwargs": {
+        "tokens": 128,
+        "hq": 4,
+        "hv": 16,
+        "seqlens": [
+          128
+        ],
+        "state_dtype": "bfloat16",
+        "g_dtype": "bfloat16",
+        "nonzero_state": true
+      },
+      "candidate_us": 100.24499893188477,
+      "gdn_us": 29.784999787807465,
+      "gdn_speedup": 0.2971220520242212,
+      "correct": true,
+      "baseline_correct": true,
+      "traces_complete": true,
+      "stage_median_us": {
+        "prepare": 31.025000000000006,
+        "inverse": 24.759,
+        "basis": 25.625,
+        "state_scan": 11.340000000000003,
+        "outputs": 6.534999999999997,
+        "gdr_prologue": 19.144999999999996,
+        "gdr_scan2": 10.379000000000005
+      },
+      "stage_raw_samples_us": {
+        "prepare": [
+          31.180000000000007,
+          30.659999999999997,
+          30.870000000000005,
+          31.77000000000001
+        ],
+        "inverse": [
+          24.66900000000001,
+          25.0,
+          24.349999999999994,
+          24.84899999999999
+        ],
+        "basis": [
+          25.78,
+          25.680000000000007,
+          24.839,
+          25.569999999999993
+        ],
+        "state_scan": [
+          11.350000000000023,
+          11.419000000000011,
+          11.219999999999999,
+          11.329999999999984
+        ],
+        "outputs": [
+          6.579999999999984,
+          6.460000000000008,
+          6.569999999999993,
+          6.5
+        ],
+        "gdr_prologue": [
+          20.02000000000001,
+          18.290000000000006,
+          18.989999999999995,
+          19.299999999999997
+        ],
+        "gdr_scan2": [
+          10.079999999999984,
+          10.429000000000002,
+          10.439999999999998,
+          10.329000000000008
+        ]
+      },
+      "previous_7968_event_us": 101.18500143289566,
+      "cross_run_7968_speedup": 1.009377051334497,
+      "cross_run_note": "Separate allocations/jobs; not a paired performance acceptance claim."
+    },
+    {
+      "shape_id": "2",
+      "input_kwargs": {
+        "tokens": 256,
+        "hq": 4,
+        "hv": 16,
+        "seqlens": [
+          256
+        ],
+        "state_dtype": "bfloat16",
+        "g_dtype": "bfloat16",
+        "nonzero_state": true
+      },
+      "candidate_us": 111.37999966740608,
+      "gdn_us": 35.234998911619186,
+      "gdn_speedup": 0.3163494255417048,
+      "correct": true,
+      "baseline_correct": true,
+      "traces_complete": true,
+      "stage_median_us": {
+        "prepare": 30.659499999999994,
+        "inverse": 25.265,
+        "basis": 26.379999999999995,
+        "state_scan": 18.174999999999997,
+        "outputs": 8.760000000000005,
+        "gdr_prologue": 18.470000000000006,
+        "gdr_scan2": 16.054999999999993
+      },
+      "stage_raw_samples_us": {
+        "prepare": [
+          29.978999999999985,
+          31.009,
+          32.489000000000004,
+          30.309999999999988
+        ],
+        "inverse": [
+          25.310000000000002,
+          25.189999999999998,
+          25.22,
+          25.679000000000002
+        ],
+        "basis": [
+          26.680000000000007,
+          26.310000000000002,
+          25.789999999999992,
+          26.44999999999999
+        ],
+        "state_scan": [
+          18.319999999999993,
+          18.400000000000006,
+          17.819999999999993,
+          18.03
+        ],
+        "outputs": [
+          8.849999999999994,
+          8.859999999999985,
+          8.669999999999987,
+          8.670000000000016
+        ],
+        "gdr_prologue": [
+          20.509000000000015,
+          18.41000000000001,
+          18.319999999999993,
+          18.53
+        ],
+        "gdr_scan2": [
+          15.801000000000016,
+          16.168999999999997,
+          16.099999999999994,
+          16.00999999999999
+        ]
+      },
+      "previous_7968_event_us": 112.98500001430511,
+      "cross_run_7968_speedup": 1.0144101306490552,
+      "cross_run_note": "Separate allocations/jobs; not a paired performance acceptance claim."
+    },
+    {
+      "shape_id": "3",
+      "input_kwargs": {
+        "tokens": 512,
+        "hq": 4,
+        "hv": 16,
+        "seqlens": [
+          512
+        ],
+        "state_dtype": "bfloat16",
+        "g_dtype": "bfloat16",
+        "nonzero_state": true
+      },
+      "candidate_us": 155.92499822378159,
+      "gdn_us": 46.25000059604645,
+      "gdn_speedup": 0.2966169704851882,
+      "correct": true,
+      "baseline_correct": true,
+      "traces_complete": true,
+      "stage_median_us": {
+        "prepare": 32.0145,
+        "inverse": 30.900000000000006,
+        "basis": 45.769999999999996,
+        "state_scan": 31.205000000000013,
+        "outputs": 13.480000000000004,
+        "gdr_prologue": 18.81499999999999,
+        "gdr_scan2": 26.92450000000001
+      },
+      "stage_raw_samples_us": {
+        "prepare": [
+          32.20899999999999,
+          32.78,
+          31.820000000000007,
+          30.790000000000006
+        ],
+        "inverse": [
+          31.099999999999994,
+          30.900000000000006,
+          30.84899999999999,
+          30.900000000000006
+        ],
+        "basis": [
+          46.05000000000001,
+          44.69,
+          47.860000000000014,
+          45.48999999999998
+        ],
+        "state_scan": [
+          30.950000000000017,
+          31.140000000000015,
+          31.27000000000001,
+          31.53
+        ],
+        "outputs": [
+          13.539999999999992,
+          13.370000000000005,
+          13.449999999999989,
+          13.51000000000002
+        ],
+        "gdr_prologue": [
+          19.999999999999986,
+          18.809999999999988,
+          18.5,
+          18.819999999999993
+        ],
+        "gdr_scan2": [
+          26.810000000000002,
+          26.900000000000006,
+          26.97,
+          26.949000000000012
+        ]
+      },
+      "previous_7968_event_us": 160.34499555826187,
+      "cross_run_7968_speedup": 1.0283469449083256,
+      "cross_run_note": "Separate allocations/jobs; not a paired performance acceptance claim."
+    },
+    {
+      "shape_id": "4",
+      "input_kwargs": {
+        "tokens": 764,
+        "hq": 4,
+        "hv": 16,
+        "seqlens": [
+          764
+        ],
+        "state_dtype": "bfloat16",
+        "g_dtype": "bfloat16",
+        "nonzero_state": true
+      },
+      "candidate_us": 212.15999871492386,
+      "gdn_us": 58.93999896943569,
+      "gdn_speedup": 0.2778091974285523,
+      "correct": true,
+      "baseline_correct": true,
+      "traces_complete": true,
+      "stage_median_us": {
+        "prepare": 32.86999999999999,
+        "inverse": 58.709500000000006,
+        "basis": 53.134,
+        "state_scan": 46.494999999999976,
+        "outputs": 18.684500000000014,
+        "gdr_prologue": 20.86,
+        "gdr_scan2": 37.69950000000001
+      },
+      "stage_raw_samples_us": {
+        "prepare": [
+          33.35000000000001,
+          32.19900000000001,
+          32.609999999999985,
+          33.129999999999995
+        ],
+        "inverse": [
+          59.130000000000024,
+          58.55000000000001,
+          58.869,
+          58.139999999999986
+        ],
+        "basis": [
+          52.90899999999999,
+          52.77000000000001,
+          54.650000000000006,
+          53.35900000000001
+        ],
+        "state_scan": [
+          47.170000000000016,
+          46.79999999999998,
+          46.07000000000002,
+          46.18999999999997
+        ],
+        "outputs": [
+          18.52000000000004,
+          18.65900000000005,
+          18.75999999999999,
+          18.70999999999998
+        ],
+        "gdr_prologue": [
+          21.519999999999996,
+          20.700000000000003,
+          20.92,
+          20.799999999999997
+        ],
+        "gdr_scan2": [
+          37.75,
+          37.82000000000001,
+          37.639999999999986,
+          37.649000000000015
+        ]
+      },
+      "previous_7968_event_us": 216.5200039744377,
+      "cross_run_7968_speedup": 1.020550552818264,
+      "cross_run_note": "Separate allocations/jobs; not a paired performance acceptance claim."
+    },
+    {
+      "shape_id": "5",
+      "input_kwargs": {
+        "tokens": 1024,
+        "hq": 4,
+        "hv": 16,
+        "seqlens": [
+          1024
+        ],
+        "state_dtype": "bfloat16",
+        "g_dtype": "bfloat16",
+        "nonzero_state": true
+      },
+      "candidate_us": 254.39999997615814,
+      "gdn_us": 70.00000029802322,
+      "gdn_speedup": 0.27515723390166463,
+      "correct": true,
+      "baseline_correct": true,
+      "traces_complete": true,
+      "stage_median_us": {
+        "prepare": 32.975,
+        "inverse": 58.28500000000001,
+        "basis": 72.705,
+        "state_scan": 63.38499999999999,
+        "outputs": 24.975000000000023,
+        "gdr_prologue": 21.000000000000007,
+        "gdr_scan2": 48.31
+      },
+      "stage_raw_samples_us": {
+        "prepare": [
+          32.35000000000001,
+          32.69,
+          33.579999999999984,
+          33.260000000000005
+        ],
+        "inverse": [
+          58.46000000000001,
+          58.110000000000014,
+          58.76999999999998,
+          58.05000000000001
+        ],
+        "basis": [
+          75.03000000000003,
+          72.57,
+          72.43,
+          72.84
+        ],
+        "state_scan": [
+          63.39999999999998,
+          63.370000000000005,
+          65.15000000000003,
+          62.69
+        ],
+        "outputs": [
+          25.140000000000043,
+          25.20999999999998,
+          24.810000000000002,
+          24.69999999999999
+        ],
+        "gdr_prologue": [
+          21.909999999999997,
+          20.85000000000001,
+          20.480000000000004,
+          21.150000000000006
+        ],
+        "gdr_scan2": [
+          48.22999999999999,
+          48.31999999999999,
+          48.44,
+          48.30000000000001
+        ]
+      },
+      "previous_7968_event_us": 260.9799951314926,
+      "cross_run_7968_speedup": 1.0258647608331413,
+      "cross_run_note": "Separate allocations/jobs; not a paired performance acceptance claim."
+    },
+    {
+      "shape_id": "6",
+      "input_kwargs": {
+        "tokens": 1280,
+        "hq": 4,
+        "hv": 16,
+        "seqlens": [
+          1280
+        ],
+        "state_dtype": "bfloat16",
+        "g_dtype": "bfloat16",
+        "nonzero_state": true
+      },
+      "candidate_us": 308.4950000047684,
+      "gdn_us": 85.50500124692917,
+      "gdn_speedup": 0.2771681915285743,
+      "correct": true,
+      "baseline_correct": true,
+      "traces_complete": true,
+      "stage_median_us": {
+        "prepare": 34.25,
+        "inverse": 79.39,
+        "basis": 78.03,
+        "state_scan": 83.89000000000001,
+        "outputs": 29.130500000000012,
+        "gdr_prologue": 25.785000000000004,
+        "gdr_scan2": 59.35450000000001
+      },
+      "stage_raw_samples_us": {
+        "prepare": [
+          34.480000000000004,
+          33.56,
+          34.019999999999996,
+          35.510000000000005
+        ],
+        "inverse": [
+          78.44,
+          80.34,
+          81.16999999999999,
+          78.41999999999999
+        ],
+        "basis": [
+          78.28999999999999,
+          78.04999999999998,
+          78.01000000000002,
+          76.77000000000001
+        ],
+        "state_scan": [
+          82.80000000000001,
+          84.02000000000004,
+          83.75999999999999,
+          84.15899999999999
+        ],
+        "outputs": [
+          29.590000000000032,
+          28.75999999999999,
+          29.110000000000014,
+          29.15100000000001
+        ],
+        "gdr_prologue": [
+          26.700000000000003,
+          25.739999999999995,
+          25.830000000000013,
+          24.971000000000004
+        ],
+        "gdr_scan2": [
+          59.369,
+          59.34000000000002,
+          59.650000000000006,
+          59.129000000000005
+        ]
+      },
+      "previous_7968_event_us": 319.94999945163727,
+      "cross_run_7968_speedup": 1.0371318804087322,
+      "cross_run_note": "Separate allocations/jobs; not a paired performance acceptance claim."
+    },
+    {
+      "shape_id": "7",
+      "input_kwargs": {
+        "tokens": 2048,
+        "hq": 4,
+        "hv": 16,
+        "seqlens": [
+          2048
+        ],
+        "state_dtype": "bfloat16",
+        "g_dtype": "bfloat16",
+        "nonzero_state": true
+      },
+      "candidate_us": 467.179998755455,
+      "gdn_us": 120.54000049829483,
+      "gdn_speedup": 0.2580161839535245,
+      "correct": true,
+      "baseline_correct": true,
+      "traces_complete": true,
+      "stage_median_us": {
+        "prepare": 38.9,
+        "inverse": 107.92,
+        "basis": 129.7745,
+        "state_scan": 140.19999999999996,
+        "outputs": 47.065,
+        "gdr_prologue": 28.055,
+        "gdr_scan2": 91.49000000000001
+      },
+      "stage_raw_samples_us": {
+        "prepare": [
+          38.08,
+          40.230000000000004,
+          39.239999999999995,
+          38.56
+        ],
+        "inverse": [
+          107.03999999999999,
+          108.5,
+          107.34,
+          108.59
+        ],
+        "basis": [
+          129.72000000000003,
+          130.43000000000004,
+          127.46000000000001,
+          129.82899999999998
+        ],
+        "state_scan": [
+          140.10999999999996,
+          139.50000000000006,
+          140.28999999999996,
+          140.31999999999994
+        ],
+        "outputs": [
+          46.870000000000005,
+          47.25999999999999,
+          47.89999999999998,
+          46.851
+        ],
+        "gdr_prologue": [
+          29.870000000000005,
+          27.69999999999999,
+          27.849999999999994,
+          28.260000000000005
+        ],
+        "gdr_scan2": [
+          91.52000000000001,
+          91.46,
+          91.419,
+          91.55
+        ]
+      },
+      "previous_7968_event_us": 490.325003862381,
+      "cross_run_7968_speedup": 1.0495419435091038,
+      "cross_run_note": "Separate allocations/jobs; not a paired performance acceptance claim."
+    },
+    {
+      "shape_id": "8",
+      "input_kwargs": {
+        "tokens": 4096,
+        "hq": 4,
+        "hv": 16,
+        "seqlens": [
+          4096
+        ],
+        "state_dtype": "bfloat16",
+        "g_dtype": "bfloat16",
+        "nonzero_state": true
+      },
+      "candidate_us": 866.2900030612946,
+      "gdn_us": 233.1100031733513,
+      "gdn_speedup": 0.26909003030115486,
+      "correct": true,
+      "baseline_correct": true,
+      "traces_complete": true,
+      "stage_median_us": {
+        "prepare": 59.815000000000005,
+        "inverse": 188.91,
+        "basis": 244.2745,
+        "state_scan": 275.495,
+        "outputs": 90.185,
+        "gdr_prologue": 53.849999999999994,
+        "gdr_scan2": 178.21
+      },
+      "stage_raw_samples_us": {
+        "prepare": [
+          59.68000000000001,
+          58.06999999999999,
+          59.95,
+          60.019999999999996
+        ],
+        "inverse": [
+          189.70999999999998,
+          188.95999999999998,
+          188.86,
+          187.79999999999998
+        ],
+        "basis": [
+          244.50999999999993,
+          243.85000000000002,
+          244.55999999999995,
+          244.03900000000004
+        ],
+        "state_scan": [
+          275.39,
+          277.4000000000001,
+          273.72,
+          275.6
+        ],
+        "outputs": [
+          89.62,
+          91.32999999999993,
+          89.88,
+          90.49000000000001
+        ],
+        "gdr_prologue": [
+          55.028999999999996,
+          53.120000000000005,
+          53.84,
+          53.859999999999985
+        ],
+        "gdr_scan2": [
+          177.73800000000003,
+          178.0,
+          178.42000000000002,
+          179.329
+        ]
+      },
+      "previous_7968_event_us": 900.38001537323,
+      "cross_run_7968_speedup": 1.0393517323199717,
+      "cross_run_note": "Separate allocations/jobs; not a paired performance acceptance claim."
+    },
+    {
+      "shape_id": "9",
+      "input_kwargs": {
+        "tokens": 8192,
+        "hq": 4,
+        "hv": 16,
+        "seqlens": [
+          8192
+        ],
+        "state_dtype": "bfloat16",
+        "g_dtype": "bfloat16",
+        "nonzero_state": true
+      },
+      "candidate_us": 1705.1700353622437,
+      "gdn_us": 450.3699988126755,
+      "gdn_speedup": 0.26412028681761324,
+      "correct": true,
+      "baseline_correct": true,
+      "traces_complete": true,
+      "stage_median_us": {
+        "prepare": 96.53449999999998,
+        "inverse": 386.1945,
+        "basis": 490.385,
+        "state_scan": 545.58,
+        "outputs": 176.27549999999997,
+        "gdr_prologue": 100.4145,
+        "gdr_scan2": 349.4845
+      },
+      "stage_raw_samples_us": {
+        "prepare": [
+          96.49999999999999,
+          96.94,
+          96.13000000000001,
+          96.56899999999999
+        ],
+        "inverse": [
+          385.959,
+          386.99,
+          385.84,
+          386.43
+        ],
+        "basis": [
+          488.7099999999999,
+          490.22,
+          490.54999999999995,
+          491.8599999999999
+        ],
+        "state_scan": [
+          546.8990000000001,
+          544.71,
+          546.45,
+          543.8489999999999
+        ],
+        "outputs": [
+          176.26099999999997,
+          176.28999999999996,
+          177.8499999999999,
+          175.51
+        ],
+        "gdr_prologue": [
+          100.96,
+          99.33,
+          99.86900000000001,
+          101.10999999999999
+        ],
+        "gdr_scan2": [
+          349.499,
+          349.54999999999995,
+          349.26000000000005,
+          349.47
+        ]
+      },
+      "previous_7968_event_us": 1803.5849928855896,
+      "cross_run_7968_speedup": 1.0577156268773154,
+      "cross_run_note": "Separate allocations/jobs; not a paired performance acceptance claim."
+    },
+    {
+      "shape_id": "10",
+      "input_kwargs": {
+        "tokens": 15360,
+        "hq": 4,
+        "hv": 16,
+        "seqlens": [
+          15360
+        ],
+        "state_dtype": "bfloat16",
+        "g_dtype": "bfloat16",
+        "nonzero_state": true
+      },
+      "candidate_us": 3140.5800580978394,
+      "gdn_us": 818.6850249767303,
+      "gdn_speedup": 0.2606795591361504,
+      "correct": true,
+      "baseline_correct": true,
+      "traces_complete": true,
+      "stage_median_us": {
+        "prepare": 169.59449999999998,
+        "inverse": 711.1345,
+        "basis": 928.43,
+        "state_scan": 1017.5740000000001,
+        "outputs": 330.3600000000001,
+        "gdr_prologue": 165.86,
+        "gdr_scan2": 651.635
+      },
+      "stage_raw_samples_us": {
+        "prepare": [
+          169.31900000000002,
+          169.97000000000003,
+          169.86999999999998,
+          168.95000000000002
+        ],
+        "inverse": [
+          708.19,
+          709.759,
+          712.51,
+          712.9300000000001
+        ],
+        "basis": [
+          929.35,
+          927.5099999999999,
+          930.5590000000001,
+          927.059
+        ],
+        "state_scan": [
+          1016.3989999999999,
+          1018.7490000000003,
+          1019.0989999999999,
+          1010.219
+        ],
+        "outputs": [
+          330.19000000000005,
+          330.5300000000002,
+          332.5799999999999,
+          327.55999999999995
+        ],
+        "gdr_prologue": [
+          167.49,
+          165.62,
+          164.87,
+          166.10000000000002
+        ],
+        "gdr_scan2": [
+          651.3599999999999,
+          651.1600000000001,
+          651.91,
+          651.91
+        ]
+      },
+      "previous_7968_event_us": 3345.544934272766,
+      "cross_run_7968_speedup": 1.0652633820451207,
+      "cross_run_note": "Separate allocations/jobs; not a paired performance acceptance claim."
+    },
+    {
+      "shape_id": "11",
+      "input_kwargs": {
+        "tokens": 32768,
+        "hq": 4,
+        "hv": 16,
+        "seqlens": [
+          32768
+        ],
+        "state_dtype": "bfloat16",
+        "g_dtype": "bfloat16",
+        "nonzero_state": true
+      },
+      "candidate_us": 6810.6849193573,
+      "gdn_us": 1708.9300155639648,
+      "gdn_speedup": 0.2509189656838846,
+      "correct": true,
+      "baseline_correct": true,
+      "traces_complete": true,
+      "stage_median_us": {
+        "prepare": 356.78,
+        "inverse": 1505.325,
+        "basis": 2046.3655,
+        "state_scan": 2175.25,
+        "outputs": 708.27,
+        "gdr_prologue": 325.335,
+        "gdr_scan2": 1381.9845
+      },
+      "stage_raw_samples_us": {
+        "prepare": [
+          357.69,
+          358.24,
+          355.87,
+          354.389
+        ],
+        "inverse": [
+          1505.96,
+          1504.3200000000002,
+          1504.69,
+          1510.3999999999999
+        ],
+        "basis": [
+          2044.1,
+          2054.01,
+          2039.0790000000002,
+          2048.6310000000003
+        ],
+        "state_scan": [
+          2187.24,
+          2176.48,
+          2157.78,
+          2174.02
+        ],
+        "outputs": [
+          716.5299999999997,
+          710.3999999999996,
+          705.5599999999995,
+          706.1400000000003
+        ],
+        "gdr_prologue": [
+          324.29,
+          327.84,
+          325.15,
+          325.52
+        ],
+        "gdr_scan2": [
+          1381.73,
+          1382.19,
+          1381.779,
+          1383.18
+        ]
+      },
+      "previous_7968_event_us": 7173.619985580444,
+      "cross_run_7968_speedup": 1.0532890701185738,
+      "cross_run_note": "Separate allocations/jobs; not a paired performance acceptance claim."
+    },
+    {
+      "shape_id": "12",
+      "input_kwargs": {
+        "tokens": 64,
+        "hq": 4,
+        "hv": 16,
+        "seqlens": [
+          64
+        ],
+        "state_dtype": "float32",
+        "g_dtype": "bfloat16",
+        "nonzero_state": true
+      },
+      "candidate_us": 88.83499726653099,
+      "gdn_us": 27.010000310838223,
+      "gdn_speedup": 0.30404684124433884,
+      "correct": true,
+      "baseline_correct": true,
+      "traces_complete": true,
+      "stage_median_us": {
+        "prepare": 27.879999999999995,
+        "inverse": 22.755000000000003,
+        "basis": 23.919999999999987,
+        "state_scan": 7.115000000000009,
+        "outputs": 4.795000000000002,
+        "gdr_prologue": 19.005000000000003,
+        "gdr_scan2": 7.154999999999994
+      },
+      "stage_raw_samples_us": {
+        "prepare": [
+          27.939999999999984,
+          27.820000000000007,
+          27.180000000000007,
+          28.379999999999995
+        ],
+        "inverse": [
+          22.640000000000015,
+          22.710000000000008,
+          22.810000000000016,
+          22.799999999999997
+        ],
+        "basis": [
+          24.74000000000001,
+          23.52000000000001,
+          23.639999999999986,
+          24.19999999999999
+        ],
+        "state_scan": [
+          6.990000000000009,
+          7.310000000000002,
+          7.0,
+          7.230000000000018
+        ],
+        "outputs": [
+          4.740000000000009,
+          4.8700000000000045,
+          4.649999999999977,
+          4.849999999999994
+        ],
+        "gdr_prologue": [
+          20.340000000000003,
+          18.97,
+          18.820000000000007,
+          19.040000000000006
+        ],
+        "gdr_scan2": [
+          7.22999999999999,
+          7.079999999999998,
+          7.040000000000006,
+          7.519999999999996
+        ]
+      },
+      "previous_7968_event_us": 89.7350013256073,
+      "cross_run_7968_speedup": 1.0101311880088883,
+      "cross_run_note": "Separate allocations/jobs; not a paired performance acceptance claim."
+    },
+    {
+      "shape_id": "13",
+      "input_kwargs": {
+        "tokens": 128,
+        "hq": 4,
+        "hv": 16,
+        "seqlens": [
+          128
+        ],
+        "state_dtype": "float32",
+        "g_dtype": "bfloat16",
+        "nonzero_state": true
+      },
+      "candidate_us": 98.34500029683113,
+      "gdn_us": 29.57499958574772,
+      "gdn_speedup": 0.30072702726607936,
+      "correct": true,
+      "baseline_correct": true,
+      "traces_complete": true,
+      "stage_median_us": {
+        "prepare": 28.964999999999996,
+        "inverse": 24.549999999999997,
+        "basis": 25.735,
+        "state_scan": 10.510500000000008,
+        "outputs": 6.52000000000001,
+        "gdr_prologue": 19.3645,
+        "gdr_scan2": 9.905500000000004
+      },
+      "stage_raw_samples_us": {
+        "prepare": [
+          30.58999999999999,
+          28.39,
+          28.64,
+          29.289999999999992
+        ],
+        "inverse": [
+          24.359999999999985,
+          24.750000000000014,
+          24.120000000000005,
+          24.74000000000001
+        ],
+        "basis": [
+          25.209000000000003,
+          26.5,
+          25.72999999999999,
+          25.74000000000001
+        ],
+        "state_scan": [
+          10.531000000000006,
+          10.490000000000009,
+          10.810000000000002,
+          10.490000000000009
+        ],
+        "outputs": [
+          6.739999999999981,
+          6.550000000000011,
+          6.47999999999999,
+          6.490000000000009
+        ],
+        "gdr_prologue": [
+          20.521,
+          19.5,
+          19.229,
+          18.340000000000003
+        ],
+        "gdr_scan2": [
+          9.829000000000008,
+          10.030000000000001,
+          9.841000000000008,
+          9.969999999999999
+        ]
+      },
+      "previous_7968_event_us": 99.95999932289124,
+      "cross_run_7968_speedup": 1.0164217705138605,
+      "cross_run_note": "Separate allocations/jobs; not a paired performance acceptance claim."
+    },
+    {
+      "shape_id": "14",
+      "input_kwargs": {
+        "tokens": 256,
+        "hq": 4,
+        "hv": 16,
+        "seqlens": [
+          256
+        ],
+        "state_dtype": "float32",
+        "g_dtype": "bfloat16",
+        "nonzero_state": true
+      },
+      "candidate_us": 108.52499678730965,
+      "gdn_us": 34.745000302791595,
+      "gdn_speedup": 0.3201566582018503,
+      "correct": true,
+      "baseline_correct": true,
+      "traces_complete": true,
+      "stage_median_us": {
+        "prepare": 31.04999999999999,
+        "inverse": 25.334499999999984,
+        "basis": 25.240499999999983,
+        "state_scan": 16.830000000000013,
+        "outputs": 8.61999999999999,
+        "gdr_prologue": 18.275,
+        "gdr_scan2": 15.545499999999997
+      },
+      "stage_raw_samples_us": {
+        "prepare": [
+          30.929999999999993,
+          31.94999999999999,
+          31.169999999999987,
+          30.47999999999999
+        ],
+        "inverse": [
+          25.59099999999998,
+          25.399999999999977,
+          25.07000000000002,
+          25.26899999999999
+        ],
+        "basis": [
+          25.379999999999995,
+          25.080000000000013,
+          25.109999999999985,
+          25.37099999999998
+        ],
+        "state_scan": [
+          17.049999999999983,
+          16.890000000000015,
+          16.77000000000001,
+          16.60900000000001
+        ],
+        "outputs": [
+          8.490000000000009,
+          8.679999999999978,
+          8.669999999999987,
+          8.569999999999993
+        ],
+        "gdr_prologue": [
+          19.33999999999999,
+          18.35900000000001,
+          18.19099999999999,
+          17.900000000000006
+        ],
+        "gdr_scan2": [
+          15.569000000000017,
+          15.540999999999997,
+          15.549999999999997,
+          15.469999999999999
+        ]
+      },
+      "previous_7968_event_us": 109.17500033974648,
+      "cross_run_7968_speedup": 1.005989436274398,
+      "cross_run_note": "Separate allocations/jobs; not a paired performance acceptance claim."
+    },
+    {
+      "shape_id": "15",
+      "input_kwargs": {
+        "tokens": 512,
+        "hq": 4,
+        "hv": 16,
+        "seqlens": [
+          512
+        ],
+        "state_dtype": "float32",
+        "g_dtype": "bfloat16",
+        "nonzero_state": true
+      },
+      "candidate_us": 155.00999987125397,
+      "gdn_us": 46.229999512434006,
+      "gdn_speedup": 0.29823882040404537,
+      "correct": true,
+      "baseline_correct": true,
+      "traces_complete": true,
+      "stage_median_us": {
+        "prepare": 31.17499999999999,
+        "inverse": 31.05000000000001,
+        "basis": 45.69500000000001,
+        "state_scan": 30.650000000000006,
+        "outputs": 13.740000000000023,
+        "gdr_prologue": 18.800000000000004,
+        "gdr_scan2": 26.549999999999997
+      },
+      "stage_raw_samples_us": {
+        "prepare": [
+          32.03,
+          31.049999999999983,
+          31.299999999999997,
+          30.941000000000003
+        ],
+        "inverse": [
+          31.090000000000003,
+          31.01000000000002,
+          30.78,
+          31.169999999999987
+        ],
+        "basis": [
+          45.22999999999999,
+          45.390000000000015,
+          46.0,
+          46.329999999999984
+        ],
+        "state_scan": [
+          30.660000000000025,
+          30.639999999999986,
+          30.609999999999985,
+          30.789999999999992
+        ],
+        "outputs": [
+          13.670000000000016,
+          13.700000000000045,
+          13.859999999999985,
+          13.780000000000001
+        ],
+        "gdr_prologue": [
+          19.940000000000012,
+          18.78,
+          18.820000000000007,
+          18.370999999999995
+        ],
+        "gdr_scan2": [
+          26.53,
+          26.64999999999999,
+          26.569999999999993,
+          26.430000000000007
+        ]
+      },
+      "previous_7968_event_us": 158.4950014948845,
+      "cross_run_7968_speedup": 1.0224824309820337,
+      "cross_run_note": "Separate allocations/jobs; not a paired performance acceptance claim."
+    },
+    {
+      "shape_id": "16",
+      "input_kwargs": {
+        "tokens": 764,
+        "hq": 4,
+        "hv": 16,
+        "seqlens": [
+          764
+        ],
+        "state_dtype": "float32",
+        "g_dtype": "bfloat16",
+        "nonzero_state": true
+      },
+      "candidate_us": 212.46500313282013,
+      "gdn_us": 58.754999190568924,
+      "gdn_speedup": 0.27653965746932396,
+      "correct": true,
+      "baseline_correct": true,
+      "traces_complete": true,
+      "stage_median_us": {
+        "prepare": 32.16100000000001,
+        "inverse": 58.759,
+        "basis": 53.75,
+        "state_scan": 46.05500000000002,
+        "outputs": 18.86499999999998,
+        "gdr_prologue": 20.3645,
+        "gdr_scan2": 37.205000000000005
+      },
+      "stage_raw_samples_us": {
+        "prepare": [
+          32.321,
+          32.00100000000002,
+          31.789999999999992,
+          33.56999999999999
+        ],
+        "inverse": [
+          58.758999999999986,
+          58.759000000000015,
+          58.84,
+          57.49000000000001
+        ],
+        "basis": [
+          53.72,
+          54.22,
+          53.78,
+          53.48000000000002
+        ],
+        "state_scan": [
+          46.03000000000003,
+          46.08000000000001,
+          45.55000000000001,
+          46.39999999999998
+        ],
+        "outputs": [
+          18.92999999999995,
+          18.80000000000001,
+          19.269999999999982,
+          18.79000000000002
+        ],
+        "gdr_prologue": [
+          20.61,
+          20.209999999999994,
+          20.388999999999996,
+          20.340000000000003
+        ],
+        "gdr_scan2": [
+          37.28,
+          37.2,
+          37.17999999999999,
+          37.21000000000001
+        ]
+      },
+      "previous_7968_event_us": 216.2650004029274,
+      "cross_run_7968_speedup": 1.0178852856426983,
+      "cross_run_note": "Separate allocations/jobs; not a paired performance acceptance claim."
+    },
+    {
+      "shape_id": "17",
+      "input_kwargs": {
+        "tokens": 1024,
+        "hq": 4,
+        "hv": 16,
+        "seqlens": [
+          1024
+        ],
+        "state_dtype": "float32",
+        "g_dtype": "bfloat16",
+        "nonzero_state": true
+      },
+      "candidate_us": 253.34501266479492,
+      "gdn_us": 69.59500163793564,
+      "gdn_speedup": 0.2747044471328037,
+      "correct": true,
+      "baseline_correct": true,
+      "traces_complete": true,
+      "stage_median_us": {
+        "prepare": 33.19050000000001,
+        "inverse": 57.974500000000006,
+        "basis": 73.63499999999999,
+        "state_scan": 62.28899999999999,
+        "outputs": 24.47550000000001,
+        "gdr_prologue": 20.964999999999996,
+        "gdr_scan2": 47.985
+      },
+      "stage_raw_samples_us": {
+        "prepare": [
+          32.80999999999999,
+          34.249999999999986,
+          33.391000000000005,
+          32.99000000000001
+        ],
+        "inverse": [
+          57.900000000000006,
+          58.260999999999996,
+          57.93000000000001,
+          58.019000000000005
+        ],
+        "basis": [
+          75.78,
+          74.21999999999997,
+          73.05000000000001,
+          72.98000000000002
+        ],
+        "state_scan": [
+          62.10999999999996,
+          62.339,
+          62.238999999999976,
+          62.471000000000004
+        ],
+        "outputs": [
+          23.899999999999977,
+          24.650000000000034,
+          24.300999999999988,
+          24.91999999999996
+        ],
+        "gdr_prologue": [
+          21.900999999999982,
+          20.939999999999998,
+          20.989999999999995,
+          20.47
+        ],
+        "gdr_scan2": [
+          47.870000000000005,
+          48.040000000000006,
+          47.92999999999999,
+          48.2
+        ]
+      },
+      "previous_7968_event_us": 262.0749920606613,
+      "cross_run_7968_speedup": 1.0344588563399792,
+      "cross_run_note": "Separate allocations/jobs; not a paired performance acceptance claim."
+    },
+    {
+      "shape_id": "18",
+      "input_kwargs": {
+        "tokens": 1280,
+        "hq": 4,
+        "hv": 16,
+        "seqlens": [
+          1280
+        ],
+        "state_dtype": "float32",
+        "g_dtype": "bfloat16",
+        "nonzero_state": true
+      },
+      "candidate_us": 307.3199987411499,
+      "gdn_us": 85.1450003683567,
+      "gdn_speedup": 0.2770564906843983,
+      "correct": true,
+      "baseline_correct": true,
+      "traces_complete": true,
+      "stage_median_us": {
+        "prepare": 34.415,
+        "inverse": 79.22999999999999,
+        "basis": 77.94000000000003,
+        "state_scan": 83.375,
+        "outputs": 29.24000000000001,
+        "gdr_prologue": 25.179500000000004,
+        "gdr_scan2": 58.90500000000001
+      },
+      "stage_raw_samples_us": {
+        "prepare": [
+          34.620000000000005,
+          33.43000000000001,
+          34.209999999999994,
+          34.97
+        ],
+        "inverse": [
+          79.60999999999999,
+          78.85,
+          80.19999999999999,
+          77.74000000000001
+        ],
+        "basis": [
+          77.60000000000002,
+          76.83999999999997,
+          78.28000000000003,
+          78.34
+        ],
+        "state_scan": [
+          83.57,
+          83.00999999999999,
+          83.94999999999999,
+          83.18
+        ],
+        "outputs": [
+          29.41999999999996,
+          29.049999999999955,
+          29.29000000000002,
+          29.189999999999998
+        ],
+        "gdr_prologue": [
+          26.439999999999984,
+          25.070000000000007,
+          24.909999999999997,
+          25.289
+        ],
+        "gdr_scan2": [
+          58.650000000000006,
+          58.900000000000006,
+          58.999999999999986,
+          58.91000000000001
+        ]
+      },
+      "previous_7968_event_us": 319.67999041080475,
+      "cross_run_7968_speedup": 1.0402186376424707,
+      "cross_run_note": "Separate allocations/jobs; not a paired performance acceptance claim."
+    },
+    {
+      "shape_id": "19",
+      "input_kwargs": {
+        "tokens": 2048,
+        "hq": 4,
+        "hv": 16,
+        "seqlens": [
+          2048
+        ],
+        "state_dtype": "float32",
+        "g_dtype": "bfloat16",
+        "nonzero_state": true
+      },
+      "candidate_us": 468.1299924850464,
+      "gdn_us": 120.12000009417534,
+      "gdn_speedup": 0.2565953944897311,
+      "correct": true,
+      "baseline_correct": true,
+      "traces_complete": true,
+      "stage_median_us": {
+        "prepare": 38.135,
+        "inverse": 108.5105,
+        "basis": 130.46999999999997,
+        "state_scan": 138.98000000000002,
+        "outputs": 47.16550000000001,
+        "gdr_prologue": 28.250000000000007,
+        "gdr_scan2": 90.93
+      },
+      "stage_raw_samples_us": {
+        "prepare": [
+          38.22999999999999,
+          39.32000000000001,
+          37.92,
+          38.040000000000006
+        ],
+        "inverse": [
+          108.42999999999998,
+          108.59100000000001,
+          108.99000000000001,
+          107.27000000000001
+        ],
+        "basis": [
+          131.39099999999996,
+          130.89,
+          130.04999999999998,
+          128.13000000000002
+        ],
+        "state_scan": [
+          137.48900000000003,
+          138.87000000000006,
+          139.08999999999997,
+          139.25
+        ],
+        "outputs": [
+          47.08100000000002,
+          47.319999999999936,
+          46.40999999999997,
+          47.25
+        ],
+        "gdr_prologue": [
+          29.02000000000001,
+          28.30000000000001,
+          27.97,
+          28.200000000000003
+        ],
+        "gdr_scan2": [
+          90.93,
+          90.88899999999998,
+          90.93,
+          91.19999999999999
+        ]
+      },
+      "previous_7968_event_us": 488.15999925136566,
+      "cross_run_7968_speedup": 1.0427872750899614,
+      "cross_run_note": "Separate allocations/jobs; not a paired performance acceptance claim."
+    },
+    {
+      "shape_id": "20",
+      "input_kwargs": {
+        "tokens": 4096,
+        "hq": 4,
+        "hv": 16,
+        "seqlens": [
+          4096
+        ],
+        "state_dtype": "float32",
+        "g_dtype": "bfloat16",
+        "nonzero_state": true
+      },
+      "candidate_us": 868.2949841022491,
+      "gdn_us": 231.97999596595764,
+      "gdn_speedup": 0.2671672648274103,
+      "correct": true,
+      "baseline_correct": true,
+      "traces_complete": true,
+      "stage_median_us": {
+        "prepare": 57.945,
+        "inverse": 191.95999999999998,
+        "basis": 246.60549999999995,
+        "state_scan": 274.185,
+        "outputs": 89.83500000000004,
+        "gdr_prologue": 53.61,
+        "gdr_scan2": 177.345
+      },
+      "stage_raw_samples_us": {
+        "prepare": [
+          58.09,
+          58.228999999999985,
+          57.8,
+          57.77099999999999
+        ],
+        "inverse": [
+          192.29,
+          191.63,
+          192.53000000000003,
+          190.17999999999998
+        ],
+        "basis": [
+          246.88999999999993,
+          246.32099999999997,
+          246.26999999999998,
+          247.01999999999998
+        ],
+        "state_scan": [
+          278.03,
+          273.49,
+          272.3499999999999,
+          274.88
+        ],
+        "outputs": [
+          89.67000000000007,
+          90.06999999999994,
+          89.44099999999992,
+          90.0
+        ],
+        "gdr_prologue": [
+          54.07000000000001,
+          52.83000000000001,
+          53.849999999999994,
+          53.370000000000005
+        ],
+        "gdr_scan2": [
+          177.52,
+          177.61,
+          177.073,
+          177.17
+        ]
+      },
+      "previous_7968_event_us": 915.244996547699,
+      "cross_run_7968_speedup": 1.0540715002448073,
+      "cross_run_note": "Separate allocations/jobs; not a paired performance acceptance claim."
+    },
+    {
+      "shape_id": "21",
+      "input_kwargs": {
+        "tokens": 8192,
+        "hq": 4,
+        "hv": 16,
+        "seqlens": [
+          8192
+        ],
+        "state_dtype": "float32",
+        "g_dtype": "bfloat16",
+        "nonzero_state": true
+      },
+      "candidate_us": 1692.3149824142456,
+      "gdn_us": 449.12999868392944,
+      "gdn_speedup": 0.2653938559612605,
+      "correct": true,
+      "baseline_correct": true,
+      "traces_complete": true,
+      "stage_median_us": {
+        "prepare": 97.75,
+        "inverse": 386.44000000000005,
+        "basis": 489.65500000000003,
+        "state_scan": 543.8099999999998,
+        "outputs": 176.5250000000001,
+        "gdr_prologue": 99.61500000000001,
+        "gdr_scan2": 349.3299999999999
+      },
+      "stage_raw_samples_us": {
+        "prepare": [
+          96.63,
+          97.68,
+          97.82000000000001,
+          97.91999999999999
+        ],
+        "inverse": [
+          386.92,
+          387.51,
+          385.49,
+          385.96000000000004
+        ],
+        "basis": [
+          490.32000000000005,
+          492.87900000000013,
+          488.75,
+          488.99
+        ],
+        "state_scan": [
+          543.4599999999998,
+          544.1599999999999,
+          545.51,
+          539.521
+        ],
+        "outputs": [
+          176.75,
+          178.01999999999998,
+          176.30000000000018,
+          174.44000000000005
+        ],
+        "gdr_prologue": [
+          99.79,
+          99.86100000000002,
+          99.44000000000001,
+          98.83
+        ],
+        "gdr_scan2": [
+          348.96000000000004,
+          350.09,
+          349.0999999999999,
+          349.56
+        ]
+      },
+      "previous_7968_event_us": 1802.150011062622,
+      "cross_run_7968_speedup": 1.0649022373433619,
+      "cross_run_note": "Separate allocations/jobs; not a paired performance acceptance claim."
+    },
+    {
+      "shape_id": "22",
+      "input_kwargs": {
+        "tokens": 15360,
+        "hq": 4,
+        "hv": 16,
+        "seqlens": [
+          15360
+        ],
+        "state_dtype": "float32",
+        "g_dtype": "bfloat16",
+        "nonzero_state": true
+      },
+      "candidate_us": 3177.5649785995483,
+      "gdn_us": 818.0400133132935,
+      "gdn_speedup": 0.2574424185886606,
+      "correct": true,
+      "baseline_correct": true,
+      "traces_complete": true,
+      "stage_median_us": {
+        "prepare": 166.78500000000003,
+        "inverse": 710.8299999999999,
+        "basis": 926.895,
+        "state_scan": 1019.3949999999999,
+        "outputs": 330.88499999999976,
+        "gdr_prologue": 167.35449999999997,
+        "gdr_scan2": 650.665
+      },
+      "stage_raw_samples_us": {
+        "prepare": [
+          166.58999999999997,
+          166.96,
+          166.61,
+          167.24
+        ],
+        "inverse": [
+          710.81,
+          710.8499999999999,
+          710.5999999999999,
+          712.26
+        ],
+        "basis": [
+          921.46,
+          927.2399999999999,
+          927.97,
+          926.5500000000001
+        ],
+        "state_scan": [
+          1017.5899999999997,
+          1017.1210000000001,
+          1021.2,
+          1023.1800000000001
+        ],
+        "outputs": [
+          330.90999999999985,
+          330.8599999999997,
+          329.27,
+          331.22000000000025
+        ],
+        "gdr_prologue": [
+          167.67000000000002,
+          167.23899999999998,
+          167.47,
+          166.57
+        ],
+        "gdr_scan2": [
+          649.941,
+          650.891,
+          650.4499999999999,
+          650.88
+        ]
+      },
+      "previous_7968_event_us": 3346.2300300598145,
+      "cross_run_7968_speedup": 1.0530799692834611,
+      "cross_run_note": "Separate allocations/jobs; not a paired performance acceptance claim."
+    },
+    {
+      "shape_id": "23",
+      "input_kwargs": {
+        "tokens": 32768,
+        "hq": 4,
+        "hv": 16,
+        "seqlens": [
+          32768
+        ],
+        "state_dtype": "float32",
+        "g_dtype": "bfloat16",
+        "nonzero_state": true
+      },
+      "candidate_us": 6839.540004730225,
+      "gdn_us": 1709.0250253677368,
+      "gdn_speedup": 0.24987426408585597,
+      "correct": true,
+      "baseline_correct": true,
+      "traces_complete": true,
+      "stage_median_us": {
+        "prepare": 357.54999999999995,
+        "inverse": 1504.4654999999998,
+        "basis": 2065.3455000000004,
+        "state_scan": 2169.365,
+        "outputs": 706.4454999999998,
+        "gdr_prologue": 325.65,
+        "gdr_scan2": 1382.0400000000002
+      },
+      "stage_raw_samples_us": {
+        "prepare": [
+          356.89,
+          358.21,
+          355.91,
+          358.481
+        ],
+        "inverse": [
+          1503.37,
+          1505.561,
+          1506.05,
+          1503.19
+        ],
+        "basis": [
+          2063.28,
+          2065.01,
+          2068.0209999999997,
+          2065.681
+        ],
+        "state_scan": [
+          2166.78,
+          2167.35,
+          2178.8109999999997,
+          2171.38
+        ],
+        "outputs": [
+          705.9899999999998,
+          706.9009999999998,
+          708.0790000000006,
+          705.4299999999994
+        ],
+        "gdr_prologue": [
+          327.17999999999995,
+          324.681,
+          324.9,
+          326.4
+        ],
+        "gdr_scan2": [
+          1381.8400000000001,
+          1381.48,
+          1382.2400000000002,
+          1382.531
+        ]
+      },
+      "previous_7968_event_us": 7073.899984359741,
+      "cross_run_7968_speedup": 1.0342654592951328,
+      "cross_run_note": "Separate allocations/jobs; not a paired performance acceptance claim."
+    },
+    {
+      "shape_id": "24",
+      "input_kwargs": {
+        "tokens": 1024,
+        "hq": 2,
+        "hv": 8,
+        "seqlens": [
+          1024
+        ],
+        "state_dtype": "bfloat16",
+        "g_dtype": "bfloat16",
+        "nonzero_state": true
+      },
+      "candidate_us": 179.3000027537346,
+      "gdn_us": 67.81499832868576,
+      "gdn_speedup": 0.37822084376556575,
+      "correct": true,
+      "baseline_correct": true,
+      "traces_complete": true,
+      "stage_median_us": {
+        "prepare": 26.859999999999992,
+        "inverse": 30.599999999999994,
+        "basis": 46.985,
+        "state_scan": 57.68000000000001,
+        "outputs": 13.539999999999992,
+        "gdr_prologue": 18.780500000000004,
+        "gdr_scan2": 48.47999999999999
+      },
+      "stage_raw_samples_us": {
+        "prepare": [
+          26.5,
+          27.12999999999998,
+          27.150000000000006,
+          26.590000000000003
+        ],
+        "inverse": [
+          30.47,
+          30.549999999999983,
+          30.860000000000014,
+          30.650000000000006
+        ],
+        "basis": [
+          47.03999999999999,
+          46.78,
+          48.66999999999999,
+          46.93000000000001
+        ],
+        "state_scan": [
+          57.889999999999986,
+          57.70000000000002,
+          57.66,
+          57.609999999999985
+        ],
+        "outputs": [
+          13.599999999999966,
+          13.550000000000011,
+          13.489999999999952,
+          13.529999999999973
+        ],
+        "gdr_prologue": [
+          18.689999999999998,
+          18.97,
+          18.429999999999993,
+          18.87100000000001
+        ],
+        "gdr_scan2": [
+          48.75,
+          48.370000000000005,
+          48.58099999999999,
+          48.37899999999999
+        ]
+      },
+      "previous_7968_event_us": 183.1049993634224,
+      "cross_run_7968_speedup": 1.0212213973856648,
+      "cross_run_note": "Separate allocations/jobs; not a paired performance acceptance claim."
+    },
+    {
+      "shape_id": "25",
+      "input_kwargs": {
+        "tokens": 1024,
+        "hq": 4,
+        "hv": 16,
+        "seqlens": [
+          1024
+        ],
+        "state_dtype": "bfloat16",
+        "g_dtype": "bfloat16",
+        "nonzero_state": true
+      },
+      "candidate_us": 252.85500288009644,
+      "gdn_us": 70.27000188827515,
+      "gdn_speedup": 0.2779063142428592,
+      "correct": true,
+      "baseline_correct": true,
+      "traces_complete": true,
+      "stage_median_us": {
+        "prepare": 33.29,
+        "inverse": 57.97999999999999,
+        "basis": 72.36000000000001,
+        "state_scan": 62.07400000000001,
+        "outputs": 24.22550000000001,
+        "gdr_prologue": 21.000000000000007,
+        "gdr_scan2": 48.550000000000004
+      },
+      "stage_raw_samples_us": {
+        "prepare": [
+          34.44,
+          32.72999999999999,
+          33.849999999999994,
+          32.730000000000004
+        ],
+        "inverse": [
+          57.87899999999999,
+          57.84100000000001,
+          58.08099999999999,
+          58.101
+        ],
+        "basis": [
+          72.77000000000001,
+          76.01999999999998,
+          71.72999999999999,
+          71.95000000000002
+        ],
+        "state_scan": [
+          61.59100000000001,
+          62.19900000000001,
+          62.509000000000015,
+          61.94900000000001
+        ],
+        "outputs": [
+          24.019000000000005,
+          25.010999999999967,
+          24.090000000000032,
+          24.36099999999999
+        ],
+        "gdr_prologue": [
+          21.439999999999984,
+          21.03,
+          20.820000000000007,
+          20.970000000000013
+        ],
+        "gdr_scan2": [
+          48.26999999999998,
+          48.489999999999995,
+          48.610000000000014,
+          48.63000000000001
+        ]
+      },
+      "previous_7968_event_us": 262.4000012874603,
+      "cross_run_7968_speedup": 1.0377489007480312,
+      "cross_run_note": "Separate allocations/jobs; not a paired performance acceptance claim."
+    },
+    {
+      "shape_id": "26",
+      "input_kwargs": {
+        "tokens": 1024,
+        "hq": 4,
+        "hv": 8,
+        "seqlens": [
+          1024
+        ],
+        "state_dtype": "bfloat16",
+        "g_dtype": "bfloat16",
+        "nonzero_state": true
+      },
+      "candidate_us": 179.57499623298645,
+      "gdn_us": 68.15000250935555,
+      "gdn_speedup": 0.3795071916411765,
+      "correct": true,
+      "baseline_correct": true,
+      "traces_complete": true,
+      "stage_median_us": {
+        "prepare": 26.814999999999998,
+        "inverse": 30.875500000000002,
+        "basis": 47.55000000000001,
+        "state_scan": 57.5145,
+        "outputs": 13.475499999999982,
+        "gdr_prologue": 18.634499999999996,
+        "gdr_scan2": 48.189499999999995
+      },
+      "stage_raw_samples_us": {
+        "prepare": [
+          26.810000000000002,
+          26.55000000000001,
+          27.329999999999984,
+          26.819999999999993
+        ],
+        "inverse": [
+          30.87100000000001,
+          30.879999999999995,
+          31.45999999999998,
+          30.50999999999999
+        ],
+        "basis": [
+          47.360000000000014,
+          47.74000000000001,
+          48.380000000000024,
+          47.099999999999994
+        ],
+        "state_scan": [
+          57.46000000000001,
+          57.44,
+          58.02000000000001,
+          57.56899999999999
+        ],
+        "outputs": [
+          13.439999999999998,
+          13.310000000000002,
+          13.57000000000005,
+          13.510999999999967
+        ],
+        "gdr_prologue": [
+          19.680000000000007,
+          18.58,
+          18.688999999999993,
+          18.419999999999987
+        ],
+        "gdr_scan2": [
+          48.16,
+          48.790000000000006,
+          48.218999999999994,
+          48.06
+        ]
+      },
+      "previous_7968_event_us": 182.79500305652618,
+      "cross_run_7968_speedup": 1.0179312648814538,
+      "cross_run_note": "Separate allocations/jobs; not a paired performance acceptance claim."
+    },
+    {
+      "shape_id": "27",
+      "input_kwargs": {
+        "tokens": 1024,
+        "hq": 8,
+        "hv": 16,
+        "seqlens": [
+          1024
+        ],
+        "state_dtype": "bfloat16",
+        "g_dtype": "bfloat16",
+        "nonzero_state": true
+      },
+      "candidate_us": 254.33500111103058,
+      "gdn_us": 70.4599991440773,
+      "gdn_speedup": 0.2770361878478449,
+      "correct": true,
+      "baseline_correct": true,
+      "traces_complete": true,
+      "stage_median_us": {
+        "prepare": 33.815,
+        "inverse": 58.0,
+        "basis": 73.055,
+        "state_scan": 62.714999999999975,
+        "outputs": 24.329499999999996,
+        "gdr_prologue": 20.875,
+        "gdr_scan2": 48.415000000000006
+      },
+      "stage_raw_samples_us": {
+        "prepare": [
+          32.94,
+          35.16,
+          34.69,
+          32.83
+        ],
+        "inverse": [
+          58.139999999999986,
+          57.948999999999984,
+          58.03999999999999,
+          57.96000000000001
+        ],
+        "basis": [
+          72.77000000000001,
+          75.57,
+          73.32000000000002,
+          72.78999999999999
+        ],
+        "state_scan": [
+          62.52999999999997,
+          63.210999999999956,
+          62.410000000000025,
+          62.89999999999998
+        ],
+        "outputs": [
+          24.220000000000027,
+          24.238999999999976,
+          24.420000000000016,
+          24.50999999999999
+        ],
+        "gdr_prologue": [
+          22.350000000000023,
+          20.879999999999995,
+          20.870000000000005,
+          20.809999999999988
+        ],
+        "gdr_scan2": [
+          48.43000000000001,
+          48.400000000000006,
+          48.51899999999999,
+          48.28999999999999
+        ]
+      },
+      "previous_7968_event_us": 264.8549973964691,
+      "cross_run_7968_speedup": 1.0413627547898765,
+      "cross_run_note": "Separate allocations/jobs; not a paired performance acceptance claim."
+    },
+    {
+      "shape_id": "28",
+      "input_kwargs": {
+        "tokens": 1024,
+        "hq": 8,
+        "hv": 24,
+        "seqlens": [
+          1024
+        ],
+        "state_dtype": "bfloat16",
+        "g_dtype": "bfloat16",
+        "nonzero_state": true
+      },
+      "candidate_us": 394.4849967956543,
+      "gdn_us": 122.59500101208687,
+      "gdn_speedup": 0.3107722777999384,
+      "correct": true,
+      "baseline_correct": true,
+      "traces_complete": true,
+      "stage_median_us": {
+        "prepare": 39.785000000000004,
+        "inverse": 83.6,
+        "basis": 101.59549999999999,
+        "state_scan": 135.15,
+        "outputs": 34.450500000000005,
+        "gdr_prologue": 27.4045,
+        "gdr_scan2": 94.1995
+      },
+      "stage_raw_samples_us": {
+        "prepare": [
+          39.43000000000001,
+          41.610000000000014,
+          40.14,
+          39.31000000000002
+        ],
+        "inverse": [
+          83.54999999999998,
+          83.65,
+          83.25,
+          83.69899999999998
+        ],
+        "basis": [
+          102.41999999999999,
+          102.47000000000003,
+          99.29999999999998,
+          100.77099999999999
+        ],
+        "state_scan": [
+          135.51999999999998,
+          134.78000000000003,
+          135.90999999999997,
+          134.019
+        ],
+        "outputs": [
+          34.31,
+          34.74000000000001,
+          34.57099999999997,
+          34.33000000000004
+        ],
+        "gdr_prologue": [
+          29.679999999999993,
+          26.900000000000006,
+          27.439999999999998,
+          27.369
+        ],
+        "gdr_scan2": [
+          94.44,
+          94.26899999999999,
+          94.13000000000001,
+          93.98
+        ]
+      },
+      "previous_7968_event_us": 414.50999677181244,
+      "cross_run_7968_speedup": 1.0507623867544225,
+      "cross_run_note": "Separate allocations/jobs; not a paired performance acceptance claim."
+    },
+    {
+      "shape_id": "29",
+      "input_kwargs": {
+        "tokens": 1024,
+        "hq": 8,
+        "hv": 32,
+        "seqlens": [
+          1024
+        ],
+        "state_dtype": "bfloat16",
+        "g_dtype": "bfloat16",
+        "nonzero_state": true
+      },
+      "candidate_us": 480.21499812602997,
+      "gdn_us": 124.15000051259995,
+      "gdn_speedup": 0.25853003549884424,
+      "correct": true,
+      "baseline_correct": true,
+      "traces_complete": true,
+      "stage_median_us": {
+        "prepare": 48.020500000000006,
+        "inverse": 107.895,
+        "basis": 129.10000000000002,
+        "state_scan": 143.84050000000002,
+        "outputs": 47.54450000000003,
+        "gdr_prologue": 28.740499999999997,
+        "gdr_scan2": 94.5055
+      },
+      "stage_raw_samples_us": {
+        "prepare": [
+          48.15100000000001,
+          47.040000000000006,
+          49.25999999999999,
+          47.89
+        ],
+        "inverse": [
+          108.0,
+          106.57999999999998,
+          107.82999999999998,
+          107.96000000000001
+        ],
+        "basis": [
+          129.88,
+          130.39999999999998,
+          128.32000000000005,
+          126.60000000000002
+        ],
+        "state_scan": [
+          142.34000000000003,
+          144.221,
+          144.32000000000005,
+          143.46000000000004
+        ],
+        "outputs": [
+          47.370000000000005,
+          47.40899999999999,
+          48.180999999999926,
+          47.680000000000064
+        ],
+        "gdr_prologue": [
+          29.849999999999994,
+          28.61,
+          28.37100000000001,
+          28.870999999999995
+        ],
+        "gdr_scan2": [
+          95.02000000000001,
+          94.40999999999998,
+          94.51199999999999,
+          94.49900000000001
+        ]
+      },
+      "previous_7968_event_us": 498.9049881696701,
+      "cross_run_7968_speedup": 1.0389200464720492,
+      "cross_run_note": "Separate allocations/jobs; not a paired performance acceptance claim."
+    },
+    {
+      "shape_id": "30",
+      "input_kwargs": {
+        "tokens": 1024,
+        "hq": 16,
+        "hv": 16,
+        "seqlens": [
+          1024
+        ],
+        "state_dtype": "bfloat16",
+        "g_dtype": "bfloat16",
+        "nonzero_state": true
+      },
+      "candidate_us": 258.5749924182892,
+      "gdn_us": 86.34500205516815,
+      "gdn_speedup": 0.33392634472358557,
+      "correct": true,
+      "baseline_correct": true,
+      "traces_complete": true,
+      "stage_median_us": {
+        "prepare": 34.515,
+        "inverse": 58.33999999999999,
+        "basis": 73.75500000000001,
+        "state_scan": 66.0,
+        "outputs": 24.894999999999982,
+        "gdr_prologue": 37.095000000000006,
+        "gdr_scan2": 48.589999999999996
+      },
+      "stage_raw_samples_us": {
+        "prepare": [
+          34.34,
+          34.81,
+          33.92,
+          34.69
+        ],
+        "inverse": [
+          58.31999999999999,
+          58.22,
+          58.379999999999995,
+          58.359999999999985
+        ],
+        "basis": [
+          73.09,
+          74.45999999999998,
+          71.84,
+          74.42000000000002
+        ],
+        "state_scan": [
+          65.87,
+          65.18,
+          66.55000000000001,
+          66.13
+        ],
+        "outputs": [
+          24.339999999999975,
+          24.089999999999975,
+          25.44999999999999,
+          25.970000000000027
+        ],
+        "gdr_prologue": [
+          36.84,
+          37.32000000000001,
+          37.32000000000001,
+          36.870000000000005
+        ],
+        "gdr_scan2": [
+          48.69,
+          48.36999999999999,
+          48.56,
+          48.61999999999999
+        ]
+      },
+      "previous_7968_event_us": 265.7250016927719,
+      "cross_run_7968_speedup": 1.0276515884525923,
+      "cross_run_note": "Separate allocations/jobs; not a paired performance acceptance claim."
+    },
+    {
+      "shape_id": "31",
+      "input_kwargs": {
+        "tokens": 1024,
+        "hq": 16,
+        "hv": 32,
+        "seqlens": [
+          1024
+        ],
+        "state_dtype": "bfloat16",
+        "g_dtype": "bfloat16",
+        "nonzero_state": true
+      },
+      "candidate_us": 482.2999984025955,
+      "gdn_us": 135.56000590324402,
+      "gdn_speedup": 0.28106988669339894,
+      "correct": true,
+      "baseline_correct": true,
+      "traces_complete": true,
+      "stage_median_us": {
+        "prepare": 49.444999999999986,
+        "inverse": 107.31499999999997,
+        "basis": 129.73000000000002,
+        "state_scan": 143.98499999999999,
+        "outputs": 47.39500000000004,
+        "gdr_prologue": 39.615,
+        "gdr_scan2": 94.64950000000002
+      },
+      "stage_raw_samples_us": {
+        "prepare": [
+          49.83999999999999,
+          50.739999999999995,
+          48.66000000000001,
+          49.04999999999998
+        ],
+        "inverse": [
+          107.91999999999999,
+          107.67999999999998,
+          106.94,
+          106.94999999999996
+        ],
+        "basis": [
+          129.77000000000004,
+          128.23000000000002,
+          129.69,
+          130.2
+        ],
+        "state_scan": [
+          143.36,
+          146.52999999999997,
+          143.56,
+          144.40999999999997
+        ],
+        "outputs": [
+          47.56000000000006,
+          47.23000000000002,
+          48.5,
+          47.14999999999998
+        ],
+        "gdr_prologue": [
+          40.08000000000001,
+          39.21000000000001,
+          39.55,
+          39.68000000000001
+        ],
+        "gdr_scan2": [
+          94.64000000000001,
+          94.56,
+          94.71000000000001,
+          94.659
+        ]
+      },
+      "previous_7968_event_us": 508.899986743927,
+      "cross_run_7968_speedup": 1.0551523707846406,
+      "cross_run_note": "Separate allocations/jobs; not a paired performance acceptance claim."
+    },
+    {
+      "shape_id": "32",
+      "input_kwargs": {
+        "tokens": 1024,
+        "hq": 16,
+        "hv": 48,
+        "seqlens": [
+          1024
+        ],
+        "state_dtype": "bfloat16",
+        "g_dtype": "bfloat16",
+        "nonzero_state": true
+      },
+      "candidate_us": 680.7050108909607,
+      "gdn_us": 193.74000281095505,
+      "gdn_speedup": 0.2846166837487692,
+      "correct": true,
+      "baseline_correct": true,
+      "traces_complete": true,
+      "stage_median_us": {
+        "prepare": 52.16999999999999,
+        "inverse": 150.05,
+        "basis": 187.91000000000003,
+        "state_scan": 216.06,
+        "outputs": 69.46500000000003,
+        "gdr_prologue": 52.410000000000004,
+        "gdr_scan2": 140.385
+      },
+      "stage_raw_samples_us": {
+        "prepare": [
+          52.359999999999985,
+          51.97999999999999,
+          52.49000000000001,
+          51.129999999999995
+        ],
+        "inverse": [
+          151.49,
+          148.711,
+          149.62,
+          150.48
+        ],
+        "basis": [
+          188.33000000000004,
+          186.3,
+          188.47000000000003,
+          187.49
+        ],
+        "state_scan": [
+          215.37,
+          216.20999999999998,
+          215.95999999999998,
+          216.16000000000003
+        ],
+        "outputs": [
+          69.23000000000002,
+          68.88,
+          69.95000000000005,
+          69.70000000000005
+        ],
+        "gdr_prologue": [
+          52.129999999999995,
+          52.35000000000001,
+          53.44,
+          52.47
+        ],
+        "gdr_scan2": [
+          140.31,
+          140.42999999999998,
+          140.38000000000002,
+          140.39
+        ]
+      },
+      "previous_7968_event_us": 706.4949870109558,
+      "cross_run_7968_speedup": 1.0378871547988742,
+      "cross_run_note": "Separate allocations/jobs; not a paired performance acceptance claim."
+    },
+    {
+      "shape_id": "33",
+      "input_kwargs": {
+        "tokens": 1024,
+        "hq": 16,
+        "hv": 64,
+        "seqlens": [
+          1024
+        ],
+        "state_dtype": "bfloat16",
+        "g_dtype": "bfloat16",
+        "nonzero_state": true
+      },
+      "candidate_us": 881.8700015544891,
+      "gdn_us": 242.15000122785568,
+      "gdn_speedup": 0.2745869581695865,
+      "correct": true,
+      "baseline_correct": true,
+      "traces_complete": true,
+      "stage_median_us": {
+        "prepare": 62.0895,
+        "inverse": 190.92,
+        "basis": 241.10999999999999,
+        "state_scan": 288.16949999999997,
+        "outputs": 89.916,
+        "gdr_prologue": 54.23999999999999,
+        "gdr_scan2": 186.57
+      },
+      "stage_raw_samples_us": {
+        "prepare": [
+          62.179000000000016,
+          62.63000000000001,
+          61.78,
+          61.999999999999986
+        ],
+        "inverse": [
+          193.051,
+          190.75,
+          190.85999999999999,
+          190.98
+        ],
+        "basis": [
+          240.23999999999995,
+          240.79000000000002,
+          241.42999999999995,
+          243.05
+        ],
+        "state_scan": [
+          288.279,
+          288.05999999999995,
+          288.87,
+          287.92999999999995
+        ],
+        "outputs": [
+          89.75099999999998,
+          89.32000000000005,
+          90.08100000000002,
+          90.53999999999996
+        ],
+        "gdr_prologue": [
+          55.59999999999998,
+          54.219999999999985,
+          54.25999999999999,
+          53.92999999999999
+        ],
+        "gdr_scan2": [
+          186.32000000000002,
+          186.37999999999997,
+          186.76000000000002,
+          187.309
+        ]
+      },
+      "previous_7968_event_us": 920.2749729156494,
+      "cross_run_7968_speedup": 1.043549470209286,
+      "cross_run_note": "Separate allocations/jobs; not a paired performance acceptance claim."
+    },
+    {
+      "shape_id": "34",
+      "input_kwargs": {
+        "tokens": 1024,
+        "hq": 32,
+        "hv": 32,
+        "seqlens": [
+          1024
+        ],
+        "state_dtype": "bfloat16",
+        "g_dtype": "bfloat16",
+        "nonzero_state": true
+      },
+      "candidate_us": 483.53999853134155,
+      "gdn_us": 163.8299971818924,
+      "gdn_speedup": 0.33881374380505036,
+      "correct": true,
+      "baseline_correct": true,
+      "traces_complete": true,
+      "stage_median_us": {
+        "prepare": 53.5145,
+        "inverse": 107.765,
+        "basis": 132.4155,
+        "state_scan": 143.23,
+        "outputs": 46.67500000000001,
+        "gdr_prologue": 68.07499999999999,
+        "gdr_scan2": 94.80050000000001
+      },
+      "stage_raw_samples_us": {
+        "prepare": [
+          52.63900000000001,
+          55.36,
+          52.629999999999995,
+          54.389999999999986
+        ],
+        "inverse": [
+          106.67099999999999,
+          108.52000000000001,
+          107.27000000000001,
+          108.25999999999999
+        ],
+        "basis": [
+          128.12,
+          132.04000000000002,
+          132.791,
+          133.72000000000003
+        ],
+        "state_scan": [
+          142.32,
+          143.71999999999997,
+          142.74,
+          144.851
+        ],
+        "outputs": [
+          45.700000000000045,
+          46.710000000000036,
+          46.639999999999986,
+          47.03899999999999
+        ],
+        "gdr_prologue": [
+          68.52000000000001,
+          68.02000000000001,
+          68.12999999999998,
+          67.83000000000001
+        ],
+        "gdr_scan2": [
+          94.98100000000002,
+          94.62,
+          95.21000000000001,
+          94.56
+        ]
+      },
+      "previous_7968_event_us": 510.4300081729889,
+      "cross_run_7968_speedup": 1.055610724497085,
+      "cross_run_note": "Separate allocations/jobs; not a paired performance acceptance claim."
+    },
+    {
+      "shape_id": "35",
+      "input_kwargs": {
+        "tokens": 1024,
+        "hq": 2,
+        "hv": 8,
+        "seqlens": [
+          1024
+        ],
+        "state_dtype": "float32",
+        "g_dtype": "bfloat16",
+        "nonzero_state": true
+      },
+      "candidate_us": 177.7149960398674,
+      "gdn_us": 67.06000119447708,
+      "gdn_speedup": 0.3773457653479805,
+      "correct": true,
+      "baseline_correct": true,
+      "traces_complete": true,
+      "stage_median_us": {
+        "prepare": 26.249999999999993,
+        "inverse": 30.724999999999994,
+        "basis": 47.08,
+        "state_scan": 57.254999999999995,
+        "outputs": 13.565000000000026,
+        "gdr_prologue": 18.3155,
+        "gdr_scan2": 47.654999999999994
+      },
+      "stage_raw_samples_us": {
+        "prepare": [
+          26.189999999999998,
+          27.11,
+          26.309999999999988,
+          25.769000000000005
+        ],
+        "inverse": [
+          30.579999999999984,
+          30.870000000000005,
+          30.57000000000002,
+          31.26000000000002
+        ],
+        "basis": [
+          47.16,
+          47.41,
+          46.93000000000001,
+          47.0
+        ],
+        "state_scan": [
+          57.01000000000002,
+          57.629999999999995,
+          57.22,
+          57.28999999999999
+        ],
+        "outputs": [
+          13.560000000000002,
+          13.75,
+          13.379999999999995,
+          13.57000000000005
+        ],
+        "gdr_prologue": [
+          19.439999999999998,
+          18.25,
+          18.381,
+          18.02000000000001
+        ],
+        "gdr_scan2": [
+          47.599999999999994,
+          47.97,
+          47.639999999999986,
+          47.67
+        ]
+      },
+      "previous_7968_event_us": 183.49500000476837,
+      "cross_run_7968_speedup": 1.0325240080674134,
+      "cross_run_note": "Separate allocations/jobs; not a paired performance acceptance claim."
+    },
+    {
+      "shape_id": "36",
+      "input_kwargs": {
+        "tokens": 1024,
+        "hq": 4,
+        "hv": 16,
+        "seqlens": [
+          1024
+        ],
+        "state_dtype": "float32",
+        "g_dtype": "bfloat16",
+        "nonzero_state": true
+      },
+      "candidate_us": 254.7149956226349,
+      "gdn_us": 69.76500153541565,
+      "gdn_speedup": 0.27389436324657473,
+      "correct": true,
+      "baseline_correct": true,
+      "traces_complete": true,
+      "stage_median_us": {
+        "prepare": 32.629999999999995,
+        "inverse": 58.644999999999996,
+        "basis": 71.995,
+        "state_scan": 64.47499999999997,
+        "outputs": 24.58499999999998,
+        "gdr_prologue": 20.619999999999997,
+        "gdr_scan2": 48.06
+      },
+      "stage_raw_samples_us": {
+        "prepare": [
+          32.709999999999994,
+          32.55,
+          32.859999999999985,
+          32.500000000000014
+        ],
+        "inverse": [
+          58.73999999999998,
+          58.349999999999994,
+          58.97,
+          58.55000000000001
+        ],
+        "basis": [
+          73.15,
+          72.38,
+          71.33000000000004,
+          71.61000000000001
+        ],
+        "state_scan": [
+          65.10999999999996,
+          65.98000000000002,
+          63.839999999999975,
+          63.089999999999975
+        ],
+        "outputs": [
+          26.180000000000007,
+          24.579999999999984,
+          24.05000000000001,
+          24.589999999999975
+        ],
+        "gdr_prologue": [
+          21.97,
+          20.310000000000002,
+          20.739999999999995,
+          20.5
+        ],
+        "gdr_scan2": [
+          47.94,
+          47.98000000000002,
+          48.34,
+          48.139999999999986
+        ]
+      },
+      "previous_7968_event_us": 260.75999438762665,
+      "cross_run_7968_speedup": 1.0237324023668695,
+      "cross_run_note": "Separate allocations/jobs; not a paired performance acceptance claim."
+    },
+    {
+      "shape_id": "37",
+      "input_kwargs": {
+        "tokens": 1024,
+        "hq": 4,
+        "hv": 8,
+        "seqlens": [
+          1024
+        ],
+        "state_dtype": "float32",
+        "g_dtype": "bfloat16",
+        "nonzero_state": true
+      },
+      "candidate_us": 178.5149946808815,
+      "gdn_us": 67.12499633431435,
+      "gdn_speedup": 0.37601881261744374,
+      "correct": true,
+      "baseline_correct": true,
+      "traces_complete": true,
+      "stage_median_us": {
+        "prepare": 26.595000000000006,
+        "inverse": 31.129999999999995,
+        "basis": 48.84,
+        "state_scan": 57.235,
+        "outputs": 13.534999999999997,
+        "gdr_prologue": 18.489999999999995,
+        "gdr_scan2": 47.690000000000005
+      },
+      "stage_raw_samples_us": {
+        "prepare": [
+          27.259000000000015,
+          26.470000000000013,
+          26.72,
+          26.459000000000003
+        ],
+        "inverse": [
+          30.879999999999995,
+          31.370000000000005,
+          31.00999999999999,
+          31.25
+        ],
+        "basis": [
+          47.25,
+          49.50999999999999,
+          49.81999999999999,
+          48.170000000000016
+        ],
+        "state_scan": [
+          57.37999999999997,
+          57.56999999999999,
+          57.09000000000003,
+          56.47
+        ],
+        "outputs": [
+          13.310000000000002,
+          13.579999999999984,
+          13.490000000000009,
+          13.680000000000007
+        ],
+        "gdr_prologue": [
+          18.539999999999992,
+          18.439999999999998,
+          18.97,
+          18.36
+        ],
+        "gdr_scan2": [
+          47.67999999999998,
+          47.7,
+          47.68000000000001,
+          48.25
+        ]
+      },
+      "previous_7968_event_us": 184.1449961066246,
+      "cross_run_7968_speedup": 1.0315379749236608,
+      "cross_run_note": "Separate allocations/jobs; not a paired performance acceptance claim."
+    },
+    {
+      "shape_id": "38",
+      "input_kwargs": {
+        "tokens": 1024,
+        "hq": 8,
+        "hv": 16,
+        "seqlens": [
+          1024
+        ],
+        "state_dtype": "float32",
+        "g_dtype": "bfloat16",
+        "nonzero_state": true
+      },
+      "candidate_us": 255.75000047683716,
+      "gdn_us": 70.08499652147293,
+      "gdn_speedup": 0.2740371315378371,
+      "correct": true,
+      "baseline_correct": true,
+      "traces_complete": true,
+      "stage_median_us": {
+        "prepare": 33.28499999999999,
+        "inverse": 58.014999999999986,
+        "basis": 73.13500000000002,
+        "state_scan": 64.41999999999999,
+        "outputs": 24.590000000000032,
+        "gdr_prologue": 21.115000000000002,
+        "gdr_scan2": 48.179999999999986
+      },
+      "stage_raw_samples_us": {
+        "prepare": [
+          32.86999999999999,
+          33.69999999999999,
+          32.81999999999999,
+          33.760000000000005
+        ],
+        "inverse": [
+          58.06999999999999,
+          58.06999999999999,
+          57.95999999999998,
+          57.69
+        ],
+        "basis": [
+          73.58000000000004,
+          75.92999999999998,
+          72.69,
+          72.23000000000002
+        ],
+        "state_scan": [
+          65.57999999999998,
+          65.21999999999997,
+          63.620000000000005,
+          63.39999999999998
+        ],
+        "outputs": [
+          24.50999999999999,
+          24.52000000000004,
+          25.939999999999998,
+          24.660000000000025
+        ],
+        "gdr_prologue": [
+          22.28099999999999,
+          21.08,
+          20.989999999999995,
+          21.150000000000006
+        ],
+        "gdr_scan2": [
+          48.59,
+          48.109999999999985,
+          48.249999999999986,
+          48.10000000000001
+        ]
+      },
+      "previous_7968_event_us": 262.4099999666214,
+      "cross_run_7968_speedup": 1.0260410536749438,
+      "cross_run_note": "Separate allocations/jobs; not a paired performance acceptance claim."
+    },
+    {
+      "shape_id": "39",
+      "input_kwargs": {
+        "tokens": 1024,
+        "hq": 8,
+        "hv": 24,
+        "seqlens": [
+          1024
+        ],
+        "state_dtype": "float32",
+        "g_dtype": "bfloat16",
+        "nonzero_state": true
+      },
+      "candidate_us": 399.48999881744385,
+      "gdn_us": 121.47999927401543,
+      "gdn_speedup": 0.3040877109154578,
+      "correct": true,
+      "baseline_correct": true,
+      "traces_complete": true,
+      "stage_median_us": {
+        "prepare": 39.739999999999995,
+        "inverse": 83.82500000000002,
+        "basis": 101.97050000000003,
+        "state_scan": 135.595,
+        "outputs": 34.44499999999999,
+        "gdr_prologue": 27.515,
+        "gdr_scan2": 93.09050000000002
+      },
+      "stage_raw_samples_us": {
+        "prepare": [
+          39.89,
+          40.2,
+          39.58999999999999,
+          38.81
+        ],
+        "inverse": [
+          85.71000000000001,
+          83.11000000000001,
+          84.51000000000002,
+          83.14000000000001
+        ],
+        "basis": [
+          100.73000000000002,
+          102.66999999999999,
+          102.49000000000004,
+          101.45100000000002
+        ],
+        "state_scan": [
+          136.32,
+          134.87,
+          136.46999999999997,
+          134.80900000000003
+        ],
+        "outputs": [
+          34.620000000000005,
+          34.50999999999999,
+          34.379999999999995,
+          34.339999999999975
+        ],
+        "gdr_prologue": [
+          28.40000000000002,
+          27.439999999999998,
+          27.590000000000003,
+          27.28
+        ],
+        "gdr_scan2": [
+          93.08000000000001,
+          93.17999999999999,
+          93.10100000000001,
+          93.04999999999998
+        ]
+      },
+      "previous_7968_event_us": 409.84000265598297,
+      "cross_run_7968_speedup": 1.0259080424270366,
+      "cross_run_note": "Separate allocations/jobs; not a paired performance acceptance claim."
+    },
+    {
+      "shape_id": "40",
+      "input_kwargs": {
+        "tokens": 1024,
+        "hq": 8,
+        "hv": 32,
+        "seqlens": [
+          1024
+        ],
+        "state_dtype": "float32",
+        "g_dtype": "bfloat16",
+        "nonzero_state": true
+      },
+      "candidate_us": 479.1000038385391,
+      "gdn_us": 123.454999178648,
+      "gdn_speedup": 0.257681064891524,
+      "correct": true,
+      "baseline_correct": true,
+      "traces_complete": true,
+      "stage_median_us": {
+        "prepare": 48.550000000000004,
+        "inverse": 107.14499999999998,
+        "basis": 128.67450000000002,
+        "state_scan": 142.37000000000003,
+        "outputs": 46.89499999999998,
+        "gdr_prologue": 28.31450000000001,
+        "gdr_scan2": 94.085
+      },
+      "stage_raw_samples_us": {
+        "prepare": [
+          47.81,
+          50.190000000000026,
+          47.429,
+          49.290000000000006
+        ],
+        "inverse": [
+          108.89900000000003,
+          107.22999999999999,
+          106.38,
+          107.05999999999997
+        ],
+        "basis": [
+          131.71099999999996,
+          127.66000000000003,
+          128.81,
+          128.53900000000004
+        ],
+        "state_scan": [
+          141.05999999999995,
+          142.70000000000005,
+          143.46000000000004,
+          142.04000000000002
+        ],
+        "outputs": [
+          46.90999999999997,
+          46.31000000000006,
+          47.09000000000003,
+          46.879999999999995
+        ],
+        "gdr_prologue": [
+          28.5,
+          28.12900000000002,
+          28.540000000000006,
+          28.12899999999999
+        ],
+        "gdr_scan2": [
+          94.07,
+          94.101,
+          93.68,
+          94.1
+        ]
+      },
+      "previous_7968_event_us": 504.70998883247375,
+      "cross_run_7968_speedup": 1.0534543619051304,
+      "cross_run_note": "Separate allocations/jobs; not a paired performance acceptance claim."
+    },
+    {
+      "shape_id": "41",
+      "input_kwargs": {
+        "tokens": 1024,
+        "hq": 16,
+        "hv": 16,
+        "seqlens": [
+          1024
+        ],
+        "state_dtype": "float32",
+        "g_dtype": "bfloat16",
+        "nonzero_state": true
+      },
+      "candidate_us": 256.6799968481064,
+      "gdn_us": 86.33499965071678,
+      "gdn_speedup": 0.3363526597742893,
+      "correct": true,
+      "baseline_correct": true,
+      "traces_complete": true,
+      "stage_median_us": {
+        "prepare": 34.39,
+        "inverse": 58.42500000000001,
+        "basis": 72.87499999999999,
+        "state_scan": 63.10050000000001,
+        "outputs": 24.555000000000007,
+        "gdr_prologue": 37.1355,
+        "gdr_scan2": 48.395
+      },
+      "stage_raw_samples_us": {
+        "prepare": [
+          34.36,
+          35.079999999999984,
+          33.96000000000001,
+          34.42
+        ],
+        "inverse": [
+          58.28,
+          58.54000000000002,
+          58.81,
+          58.31
+        ],
+        "basis": [
+          73.13999999999999,
+          72.26999999999998,
+          72.60999999999999,
+          74.15
+        ],
+        "state_scan": [
+          62.89999999999998,
+          64.24000000000001,
+          62.910000000000025,
+          63.291
+        ],
+        "outputs": [
+          24.629999999999995,
+          24.829999999999984,
+          24.480000000000018,
+          24.36899999999997
+        ],
+        "gdr_prologue": [
+          38.43000000000001,
+          37.21000000000001,
+          37.010999999999996,
+          37.06099999999999
+        ],
+        "gdr_scan2": [
+          48.420000000000016,
+          48.20099999999999,
+          48.42,
+          48.370000000000005
+        ]
+      },
+      "previous_7968_event_us": 267.97500252723694,
+      "cross_run_7968_speedup": 1.0440042302393144,
+      "cross_run_note": "Separate allocations/jobs; not a paired performance acceptance claim."
+    },
+    {
+      "shape_id": "42",
+      "input_kwargs": {
+        "tokens": 1024,
+        "hq": 16,
+        "hv": 32,
+        "seqlens": [
+          1024
+        ],
+        "state_dtype": "float32",
+        "g_dtype": "bfloat16",
+        "nonzero_state": true
+      },
+      "candidate_us": 476.74500942230225,
+      "gdn_us": 135.29500365257263,
+      "gdn_speedup": 0.2837890297299953,
+      "correct": true,
+      "baseline_correct": true,
+      "traces_complete": true,
+      "stage_median_us": {
+        "prepare": 49.504999999999995,
+        "inverse": 108.04,
+        "basis": 128.8305,
+        "state_scan": 143.295,
+        "outputs": 47.360000000000014,
+        "gdr_prologue": 39.705,
+        "gdr_scan2": 94.38499999999999
+      },
+      "stage_raw_samples_us": {
+        "prepare": [
+          50.54899999999999,
+          49.16000000000001,
+          49.69,
+          49.31999999999999
+        ],
+        "inverse": [
+          109.01100000000002,
+          107.89000000000001,
+          108.19,
+          107.19
+        ],
+        "basis": [
+          129.07,
+          126.59999999999997,
+          130.62,
+          128.591
+        ],
+        "state_scan": [
+          141.78000000000003,
+          145.55,
+          143.21999999999997,
+          143.37
+        ],
+        "outputs": [
+          48.0,
+          46.440000000000055,
+          46.72000000000003,
+          48.110000000000014
+        ],
+        "gdr_prologue": [
+          39.86999999999999,
+          40.36,
+          39.540000000000006,
+          39.17
+        ],
+        "gdr_scan2": [
+          94.85,
+          94.38999999999999,
+          94.18,
+          94.38000000000001
+        ]
+      },
+      "previous_7968_event_us": 504.7599971294403,
+      "cross_run_7968_speedup": 1.0587630434581483,
+      "cross_run_note": "Separate allocations/jobs; not a paired performance acceptance claim."
+    },
+    {
+      "shape_id": "43",
+      "input_kwargs": {
+        "tokens": 1024,
+        "hq": 16,
+        "hv": 48,
+        "seqlens": [
+          1024
+        ],
+        "state_dtype": "float32",
+        "g_dtype": "bfloat16",
+        "nonzero_state": true
+      },
+      "candidate_us": 678.1900227069855,
+      "gdn_us": 193.05500388145447,
+      "gdn_speedup": 0.2846621115286808,
+      "correct": true,
+      "baseline_correct": true,
+      "traces_complete": true,
+      "stage_median_us": {
+        "prepare": 52.53000000000001,
+        "inverse": 150.5,
+        "basis": 187.79999999999998,
+        "state_scan": 215.05,
+        "outputs": 69.64499999999998,
+        "gdr_prologue": 52.15500000000001,
+        "gdr_scan2": 139.275
+      },
+      "stage_raw_samples_us": {
+        "prepare": [
+          52.05000000000001,
+          50.19,
+          53.010000000000005,
+          53.880999999999986
+        ],
+        "inverse": [
+          150.42999999999998,
+          150.57000000000002,
+          152.82000000000002,
+          149.67
+        ],
+        "basis": [
+          187.90999999999997,
+          188.98000000000002,
+          187.69,
+          187.68
+        ],
+        "state_scan": [
+          213.76999999999998,
+          215.86,
+          215.14,
+          214.96000000000004
+        ],
+        "outputs": [
+          69.25,
+          70.26999999999998,
+          70.03999999999996,
+          69.22000000000003
+        ],
+        "gdr_prologue": [
+          53.49000000000001,
+          52.22000000000001,
+          51.92,
+          52.09
+        ],
+        "gdr_scan2": [
+          139.14,
+          139.41000000000003,
+          139.55999999999997,
+          139.051
+        ]
+      },
+      "previous_7968_event_us": 716.8700098991394,
+      "cross_run_7968_speedup": 1.057034143672246,
+      "cross_run_note": "Separate allocations/jobs; not a paired performance acceptance claim."
+    },
+    {
+      "shape_id": "44",
+      "input_kwargs": {
+        "tokens": 1024,
+        "hq": 16,
+        "hv": 64,
+        "seqlens": [
+          1024
+        ],
+        "state_dtype": "float32",
+        "g_dtype": "bfloat16",
+        "nonzero_state": true
+      },
+      "candidate_us": 882.1199834346771,
+      "gdn_us": 240.495003759861,
+      "gdn_speedup": 0.272632984487501,
+      "correct": true,
+      "baseline_correct": true,
+      "traces_complete": true,
+      "stage_median_us": {
+        "prepare": 61.9,
+        "inverse": 192.36499999999998,
+        "basis": 242.47500000000002,
+        "state_scan": 286.9005000000001,
+        "outputs": 88.98999999999995,
+        "gdr_prologue": 54.1,
+        "gdr_scan2": 184.64499999999998
+      },
+      "stage_raw_samples_us": {
+        "prepare": [
+          61.84,
+          62.780000000000015,
+          61.959999999999994,
+          61.51000000000002
+        ],
+        "inverse": [
+          190.60000000000002,
+          192.99,
+          192.90999999999997,
+          191.82
+        ],
+        "basis": [
+          242.18,
+          242.37000000000006,
+          242.57999999999998,
+          243.68999999999994
+        ],
+        "state_scan": [
+          282.62,
+          286.1700000000001,
+          287.64,
+          287.6310000000001
+        ],
+        "outputs": [
+          88.0200000000001,
+          89.30099999999993,
+          90.48000000000002,
+          88.67899999999997
+        ],
+        "gdr_prologue": [
+          55.23000000000002,
+          53.97999999999999,
+          54.05,
+          54.150000000000006
+        ],
+        "gdr_scan2": [
+          184.27,
+          184.46999999999997,
+          184.82,
+          184.85999999999999
+        ]
+      },
+      "previous_7968_event_us": 931.1699867248535,
+      "cross_run_7968_speedup": 1.0556046844094749,
+      "cross_run_note": "Separate allocations/jobs; not a paired performance acceptance claim."
+    },
+    {
+      "shape_id": "45",
+      "input_kwargs": {
+        "tokens": 1024,
+        "hq": 32,
+        "hv": 32,
+        "seqlens": [
+          1024
+        ],
+        "state_dtype": "float32",
+        "g_dtype": "bfloat16",
+        "nonzero_state": true
+      },
+      "candidate_us": 486.955001950264,
+      "gdn_us": 163.6499986052513,
+      "gdn_speedup": 0.33606801028807587,
+      "correct": true,
+      "baseline_correct": true,
+      "traces_complete": true,
+      "stage_median_us": {
+        "prepare": 55.83999999999999,
+        "inverse": 106.89999999999999,
+        "basis": 130.07999999999998,
+        "state_scan": 143.20499999999998,
+        "outputs": 46.90499999999997,
+        "gdr_prologue": 67.245,
+        "gdr_scan2": 94.83999999999999
+      },
+      "stage_raw_samples_us": {
+        "prepare": [
+          55.91999999999999,
+          55.75999999999999,
+          56.599999999999994,
+          54.65100000000001
+        ],
+        "inverse": [
+          106.89000000000001,
+          106.80000000000001,
+          108.35900000000001,
+          106.90999999999997
+        ],
+        "basis": [
+          130.50099999999998,
+          129.88,
+          130.27999999999997,
+          129.87
+        ],
+        "state_scan": [
+          142.88,
+          143.52999999999997,
+          142.46999999999997,
+          143.69000000000005
+        ],
+        "outputs": [
+          47.14999999999998,
+          47.21899999999994,
+          46.31000000000006,
+          46.65999999999997
+        ],
+        "gdr_prologue": [
+          68.16000000000001,
+          67.8,
+          66.52,
+          66.69
+        ],
+        "gdr_scan2": [
+          94.54099999999997,
+          94.76999999999998,
+          94.91,
+          95.34
+        ]
+      },
+      "previous_7968_event_us": 511.9049847126007,
+      "cross_run_7968_speedup": 1.0512367316536673,
+      "cross_run_note": "Separate allocations/jobs; not a paired performance acceptance claim."
+    },
+    {
+      "shape_id": "46",
+      "input_kwargs": {
+        "tokens": 8192,
+        "hq": 4,
+        "hv": 16,
+        "seqlens": [
+          8192
+        ],
+        "state_dtype": "bfloat16",
+        "g_dtype": "bfloat16",
+        "nonzero_state": true
+      },
+      "candidate_us": 1708.5399627685547,
+      "gdn_us": 449.73500072956085,
+      "gdn_speedup": 0.2632276742305756,
+      "correct": true,
+      "baseline_correct": true,
+      "traces_complete": true,
+      "stage_median_us": {
+        "prepare": 97.14500000000001,
+        "inverse": 386.245,
+        "basis": 491.37,
+        "state_scan": 543.3950000000001,
+        "outputs": 176.7249999999999,
+        "gdr_prologue": 99.3605,
+        "gdr_scan2": 349.78999999999996
+      },
+      "stage_raw_samples_us": {
+        "prepare": [
+          99.85,
+          97.39999999999999,
+          96.89000000000001,
+          96.75000000000001
+        ],
+        "inverse": [
+          385.96000000000004,
+          386.53,
+          388.961,
+          385.87
+        ],
+        "basis": [
+          490.72,
+          492.02,
+          492.03,
+          488.78999999999996
+        ],
+        "state_scan": [
+          541.0400000000002,
+          547.6299999999999,
+          545.75,
+          539.5799999999999
+        ],
+        "outputs": [
+          176.21000000000004,
+          177.76999999999998,
+          177.08999999999992,
+          176.3599999999999
+        ],
+        "gdr_prologue": [
+          99.67,
+          98.36999999999999,
+          99.97999999999999,
+          99.051
+        ],
+        "gdr_scan2": [
+          349.62,
+          350.00000000000006,
+          349.67099999999994,
+          349.909
+        ]
+      },
+      "previous_7968_event_us": 1774.5949625968933,
+      "cross_run_7968_speedup": 1.0386616650870149,
+      "cross_run_note": "Separate allocations/jobs; not a paired performance acceptance claim."
+    },
+    {
+      "shape_id": "47",
+      "input_kwargs": {
+        "tokens": 8192,
+        "hq": 4,
+        "hv": 16,
+        "seqlens": [
+          2730,
+          5462
+        ],
+        "state_dtype": "bfloat16",
+        "g_dtype": "bfloat16",
+        "nonzero_state": true
+      },
+      "candidate_us": 1734.820008277893,
+      "gdn_us": 469.26499903202057,
+      "gdn_speedup": 0.2704978019580525,
+      "correct": true,
+      "baseline_correct": true,
+      "traces_complete": true,
+      "stage_median_us": {
+        "prepare": 96.66499999999999,
+        "inverse": 386.195,
+        "basis": 493.27,
+        "state_scan": 564.8249999999999,
+        "outputs": 181.02499999999998,
+        "gdr_prologue": 113.0205,
+        "gdr_scan2": 355.55949999999996
+      },
+      "stage_raw_samples_us": {
+        "prepare": [
+          97.13,
+          95.68,
+          96.61999999999999,
+          96.71
+        ],
+        "inverse": [
+          386.44,
+          385.95,
+          385.73999999999995,
+          389.01
+        ],
+        "basis": [
+          495.4609999999999,
+          495.20000000000005,
+          491.18000000000006,
+          491.3399999999999
+        ],
+        "state_scan": [
+          571.4699999999998,
+          564.6699999999998,
+          562.0400000000002,
+          564.98
+        ],
+        "outputs": [
+          181.99,
+          179.52999999999997,
+          180.05999999999995,
+          182.1400000000001
+        ],
+        "gdr_prologue": [
+          114.68999999999998,
+          112.601,
+          111.85,
+          113.44
+        ],
+        "gdr_scan2": [
+          355.1600000000001,
+          355.53900000000004,
+          355.5799999999999,
+          355.6909999999999
+        ]
+      },
+      "previous_7968_event_us": 1826.919972896576,
+      "cross_run_7968_speedup": 1.0530890606398458,
+      "cross_run_note": "Separate allocations/jobs; not a paired performance acceptance claim."
+    },
+    {
+      "shape_id": "48",
+      "input_kwargs": {
+        "tokens": 8192,
+        "hq": 4,
+        "hv": 16,
+        "seqlens": [
+          819,
+          1638,
+          2457,
+          3278
+        ],
+        "state_dtype": "bfloat16",
+        "g_dtype": "bfloat16",
+        "nonzero_state": true
+      },
+      "candidate_us": 1770.0700163841248,
+      "gdn_us": 479.5700013637543,
+      "gdn_speedup": 0.2709327862314811,
+      "correct": true,
+      "baseline_correct": true,
+      "traces_complete": true,
+      "stage_median_us": {
+        "prepare": 99.01050000000001,
+        "inverse": 398.3105,
+        "basis": 496.575,
+        "state_scan": 568.9549999999999,
+        "outputs": 191.85000000000002,
+        "gdr_prologue": 114.755,
+        "gdr_scan2": 363.58500000000004
+      },
+      "stage_raw_samples_us": {
+        "prepare": [
+          99.30000000000001,
+          100.129,
+          98.72099999999999,
+          97.499
+        ],
+        "inverse": [
+          397.64,
+          399.231,
+          396.429,
+          398.981
+        ],
+        "basis": [
+          496.80000000000007,
+          496.3499999999999,
+          498.89,
+          495.54999999999995
+        ],
+        "state_scan": [
+          568.3899999999999,
+          569.52,
+          571.3910000000001,
+          567.72
+        ],
+        "outputs": [
+          188.43000000000006,
+          191.94000000000005,
+          192.0,
+          191.76
+        ],
+        "gdr_prologue": [
+          116.05,
+          114.71,
+          113.94,
+          114.8
+        ],
+        "gdr_scan2": [
+          363.35999999999996,
+          363.28999999999996,
+          364.05999999999995,
+          363.81000000000006
+        ]
+      },
+      "previous_7968_event_us": 1865.339994430542,
+      "cross_run_7968_speedup": 1.0538227172736554,
+      "cross_run_note": "Separate allocations/jobs; not a paired performance acceptance claim."
+    },
+    {
+      "shape_id": "49",
+      "input_kwargs": {
+        "tokens": 8192,
+        "hq": 4,
+        "hv": 16,
+        "seqlens": [
+          227,
+          455,
+          682,
+          910,
+          1137,
+          1365,
+          1592,
+          1824
+        ],
+        "state_dtype": "bfloat16",
+        "g_dtype": "bfloat16",
+        "nonzero_state": true
+      },
+      "candidate_us": 1785.7099771499634,
+      "gdn_us": 482.30500519275665,
+      "gdn_speedup": 0.2700914545835305,
+      "correct": true,
+      "baseline_correct": true,
+      "traces_complete": true,
+      "stage_median_us": {
+        "prepare": 103.24000000000001,
+        "inverse": 419.156,
+        "basis": 515.665,
+        "state_scan": 542.99,
+        "outputs": 212.45000000000005,
+        "gdr_prologue": 132.095,
+        "gdr_scan2": 350.31000000000006
+      },
+      "stage_raw_samples_us": {
+        "prepare": [
+          103.31,
+          104.32,
+          103.17000000000002,
+          102.25
+        ],
+        "inverse": [
+          419.371,
+          422.08000000000004,
+          418.94100000000003,
+          417.44
+        ],
+        "basis": [
+          516.1399999999999,
+          518.7099999999999,
+          515.1100000000001,
+          515.19
+        ],
+        "state_scan": [
+          544.02,
+          547.0699999999999,
+          539.5,
+          541.96
+        ],
+        "outputs": [
+          212.07999999999993,
+          212.8610000000001,
+          210.51999999999998,
+          212.82000000000016
+        ],
+        "gdr_prologue": [
+          134.32,
+          132.19,
+          132.0,
+          131.19
+        ],
+        "gdr_scan2": [
+          350.56,
+          349.97999999999996,
+          350.06000000000006,
+          351.13
+        ]
+      },
+      "previous_7968_event_us": 1899.7349739074707,
+      "cross_run_7968_speedup": 1.0638541522512486,
+      "cross_run_note": "Separate allocations/jobs; not a paired performance acceptance claim."
+    },
+    {
+      "shape_id": "50",
+      "input_kwargs": {
+        "tokens": 8192,
+        "hq": 4,
+        "hv": 16,
+        "seqlens": [
+          8192
+        ],
+        "state_dtype": "float32",
+        "g_dtype": "bfloat16",
+        "nonzero_state": true
+      },
+      "candidate_us": 1708.2050442695618,
+      "gdn_us": 448.88000190258026,
+      "gdn_speedup": 0.2627787591474558,
+      "correct": true,
+      "baseline_correct": true,
+      "traces_complete": true,
+      "stage_median_us": {
+        "prepare": 95.58,
+        "inverse": 385.385,
+        "basis": 489.9050000000001,
+        "state_scan": 544.155,
+        "outputs": 177.25,
+        "gdr_prologue": 99.345,
+        "gdr_scan2": 349.47450000000003
+      },
+      "stage_raw_samples_us": {
+        "prepare": [
+          95.33999999999999,
+          95.82000000000001,
+          94.58000000000001,
+          96.139
+        ],
+        "inverse": [
+          386.7900000000001,
+          384.71000000000004,
+          385.13,
+          385.64
+        ],
+        "basis": [
+          489.78999999999996,
+          489.83000000000015,
+          489.98,
+          491.6
+        ],
+        "state_scan": [
+          543.71,
+          544.3299999999999,
+          543.98,
+          547.28
+        ],
+        "outputs": [
+          177.46000000000004,
+          178.8800000000001,
+          176.04999999999995,
+          177.03999999999996
+        ],
+        "gdr_prologue": [
+          98.84,
+          100.35899999999998,
+          98.96000000000001,
+          99.73
+        ],
+        "gdr_scan2": [
+          349.53999999999996,
+          349.18999999999994,
+          349.5,
+          349.449
+        ]
+      },
+      "previous_7968_event_us": 1802.3750185966492,
+      "cross_run_7968_speedup": 1.0551280273073746,
+      "cross_run_note": "Separate allocations/jobs; not a paired performance acceptance claim."
+    },
+    {
+      "shape_id": "51",
+      "input_kwargs": {
+        "tokens": 8192,
+        "hq": 4,
+        "hv": 16,
+        "seqlens": [
+          2730,
+          5462
+        ],
+        "state_dtype": "float32",
+        "g_dtype": "bfloat16",
+        "nonzero_state": true
+      },
+      "candidate_us": 1734.0850234031677,
+      "gdn_us": 468.41999888420105,
+      "gdn_speedup": 0.27012516258569597,
+      "correct": true,
+      "baseline_correct": true,
+      "traces_complete": true,
+      "stage_median_us": {
+        "prepare": 96.65,
+        "inverse": 387.5305,
+        "basis": 492.505,
+        "state_scan": 559.275,
+        "outputs": 182.17500000000007,
+        "gdr_prologue": 113.3355,
+        "gdr_scan2": 354.41499999999996
+      },
+      "stage_raw_samples_us": {
+        "prepare": [
+          97.00900000000001,
+          96.49000000000001,
+          95.02999999999999,
+          96.80999999999999
+        ],
+        "inverse": [
+          387.571,
+          386.5,
+          387.49,
+          387.77000000000004
+        ],
+        "basis": [
+          494.30999999999995,
+          491.77,
+          491.26999999999987,
+          493.24
+        ],
+        "state_scan": [
+          559.45,
+          559.0999999999999,
+          558.78,
+          565.5999999999999
+        ],
+        "outputs": [
+          182.08000000000015,
+          183.22000000000003,
+          181.53999999999996,
+          182.26999999999998
+        ],
+        "gdr_prologue": [
+          113.91999999999999,
+          113.62999999999998,
+          112.85,
+          113.041
+        ],
+        "gdr_scan2": [
+          353.90999999999997,
+          355.02,
+          354.77,
+          354.05999999999995
+        ]
+      },
+      "previous_7968_event_us": 1832.8500390052795,
+      "cross_run_7968_speedup": 1.056955117118931,
+      "cross_run_note": "Separate allocations/jobs; not a paired performance acceptance claim."
+    },
+    {
+      "shape_id": "52",
+      "input_kwargs": {
+        "tokens": 8192,
+        "hq": 4,
+        "hv": 16,
+        "seqlens": [
+          819,
+          1638,
+          2457,
+          3278
+        ],
+        "state_dtype": "float32",
+        "g_dtype": "bfloat16",
+        "nonzero_state": true
+      },
+      "candidate_us": 1771.0649967193604,
+      "gdn_us": 477.49000787734985,
+      "gdn_speedup": 0.2696061458850073,
+      "correct": true,
+      "baseline_correct": true,
+      "traces_complete": true,
+      "stage_median_us": {
+        "prepare": 97.945,
+        "inverse": 398.2205,
+        "basis": 500.19000000000005,
+        "state_scan": 568.3900000000001,
+        "outputs": 190.7349999999999,
+        "gdr_prologue": 114.5,
+        "gdr_scan2": 361.215
+      },
+      "stage_raw_samples_us": {
+        "prepare": [
+          97.92,
+          97.97,
+          97.57,
+          98.66999999999999
+        ],
+        "inverse": [
+          399.87,
+          397.361,
+          399.08,
+          396.88
+        ],
+        "basis": [
+          501.1700000000001,
+          498.99,
+          501.5400000000001,
+          499.21000000000004
+        ],
+        "state_scan": [
+          570.21,
+          568.8600000000001,
+          567.9200000000001,
+          566.3599999999999
+        ],
+        "outputs": [
+          191.0999999999999,
+          189.76,
+          191.80000000000018,
+          190.3699999999999
+        ],
+        "gdr_prologue": [
+          114.5,
+          113.53999999999999,
+          114.74,
+          114.5
+        ],
+        "gdr_scan2": [
+          361.17999999999995,
+          361.03,
+          361.25,
+          361.31999999999994
+        ]
+      },
+      "previous_7968_event_us": 1870.104968547821,
+      "cross_run_7968_speedup": 1.0559211389824303,
+      "cross_run_note": "Separate allocations/jobs; not a paired performance acceptance claim."
+    },
+    {
+      "shape_id": "53",
+      "input_kwargs": {
+        "tokens": 8192,
+        "hq": 4,
+        "hv": 16,
+        "seqlens": [
+          227,
+          455,
+          682,
+          910,
+          1137,
+          1365,
+          1592,
+          1824
+        ],
+        "state_dtype": "float32",
+        "g_dtype": "bfloat16",
+        "nonzero_state": true
+      },
+      "candidate_us": 1772.6150155067444,
+      "gdn_us": 476.2350022792816,
+      "gdn_speedup": 0.26866239883629695,
+      "correct": true,
+      "baseline_correct": true,
+      "traces_complete": true,
+      "stage_median_us": {
+        "prepare": 101.59,
+        "inverse": 418.645,
+        "basis": 510.33000000000004,
+        "state_scan": 536.04,
+        "outputs": 212.06499999999994,
+        "gdr_prologue": 131.6595,
+        "gdr_scan2": 344.98
+      },
+      "stage_raw_samples_us": {
+        "prepare": [
+          102.08000000000001,
+          101.62,
+          101.56,
+          100.30999999999999
+        ],
+        "inverse": [
+          418.98,
+          418.30999999999995,
+          419.4599999999999,
+          417.88
+        ],
+        "basis": [
+          510.91999999999996,
+          512.2699999999999,
+          509.7400000000001,
+          509.74
+        ],
+        "state_scan": [
+          534.8009999999999,
+          537.26,
+          534.8199999999999,
+          537.94
+        ],
+        "outputs": [
+          212.45000000000005,
+          212.07999999999993,
+          209.94000000000005,
+          212.04999999999995
+        ],
+        "gdr_prologue": [
+          130.62,
+          132.95000000000002,
+          130.06,
+          132.699
+        ],
+        "gdr_scan2": [
+          345.17,
+          345.1,
+          344.86,
+          344.06
+        ]
+      },
+      "previous_7968_event_us": 1891.7299509048462,
+      "cross_run_7968_speedup": 1.0671972957219082,
+      "cross_run_note": "Separate allocations/jobs; not a paired performance acceptance claim."
+    },
+    {
+      "shape_id": "54",
+      "input_kwargs": {
+        "tokens": 128,
+        "hq": 4,
+        "hv": 16,
+        "seqlens": [
+          128
+        ],
+        "state_dtype": "bfloat16",
+        "g_dtype": "bfloat16",
+        "nonzero_state": false
+      },
+      "candidate_us": 98.81999716162682,
+      "gdn_us": 29.91499938070774,
+      "gdn_speedup": 0.30272212345624466,
+      "correct": true,
+      "baseline_correct": true,
+      "traces_complete": true,
+      "stage_median_us": {
+        "prepare": 29.470000000000006,
+        "inverse": 24.595,
+        "basis": 25.445000000000007,
+        "state_scan": 11.230000000000004,
+        "outputs": 6.484999999999999,
+        "gdr_prologue": 18.810000000000002,
+        "gdr_scan2": 10.360000000000007
+      },
+      "stage_raw_samples_us": {
+        "prepare": [
+          29.189999999999998,
+          29.750000000000014,
+          30.10000000000001,
+          28.539999999999992
+        ],
+        "inverse": [
+          24.580000000000013,
+          24.370000000000005,
+          24.75,
+          24.609999999999985
+        ],
+        "basis": [
+          26.140000000000015,
+          25.379999999999995,
+          25.51000000000002,
+          24.99000000000001
+        ],
+        "state_scan": [
+          11.259999999999991,
+          11.350000000000023,
+          11.050000000000011,
+          11.200000000000017
+        ],
+        "outputs": [
+          6.659999999999997,
+          6.390000000000015,
+          6.539999999999992,
+          6.430000000000007
+        ],
+        "gdr_prologue": [
+          19.129999999999995,
+          19.05000000000001,
+          18.559999999999988,
+          18.569999999999993
+        ],
+        "gdr_scan2": [
+          10.200000000000017,
+          10.519999999999996,
+          10.420000000000002,
+          10.300000000000011
+        ]
+      },
+      "previous_7968_event_us": 99.50999915599823,
+      "cross_run_7968_speedup": 1.0069824126107074,
+      "cross_run_note": "Separate allocations/jobs; not a paired performance acceptance claim."
+    },
+    {
+      "shape_id": "55",
+      "input_kwargs": {
+        "tokens": 4096,
+        "hq": 4,
+        "hv": 16,
+        "seqlens": [
+          4096
+        ],
+        "state_dtype": "float32",
+        "g_dtype": "float32",
+        "nonzero_state": true,
+        "gate_mode": "zero"
+      },
+      "candidate_us": 870.7799911499023,
+      "gdn_us": 232.04000294208527,
+      "gdn_speedup": 0.2664737422775028,
+      "correct": true,
+      "baseline_correct": true,
+      "traces_complete": true,
+      "stage_median_us": {
+        "prepare": 62.395,
+        "inverse": 190.94,
+        "basis": 245.575,
+        "state_scan": 275.03549999999996,
+        "outputs": 89.67000000000007,
+        "gdr_prologue": 53.649499999999996,
+        "gdr_scan2": 177.97
+      },
+      "stage_raw_samples_us": {
+        "prepare": [
+          62.209999999999994,
+          63.07000000000001,
+          62.56,
+          62.230000000000004
+        ],
+        "inverse": [
+          191.05000000000004,
+          190.82999999999998,
+          190.68999999999997,
+          191.24
+        ],
+        "basis": [
+          246.03000000000003,
+          248.35900000000004,
+          245.11999999999995,
+          244.89000000000004
+        ],
+        "state_scan": [
+          275.29999999999995,
+          274.77099999999996,
+          275.6700000000001,
+          271.94000000000005
+        ],
+        "outputs": [
+          90.51999999999998,
+          89.18000000000006,
+          90.06000000000006,
+          89.28000000000009
+        ],
+        "gdr_prologue": [
+          53.67999999999999,
+          53.619,
+          54.08099999999999,
+          53.480000000000004
+        ],
+        "gdr_scan2": [
+          178.48,
+          177.831,
+          177.04,
+          178.109
+        ]
+      },
+      "previous_7968_event_us": 900.9400010108948,
+      "cross_run_7968_speedup": 1.0346356257235134,
+      "cross_run_note": "Separate allocations/jobs; not a paired performance acceptance claim."
+    },
+    {
+      "shape_id": "56",
+      "input_kwargs": {
+        "tokens": 4096,
+        "hq": 4,
+        "hv": 16,
+        "seqlens": [
+          4096
+        ],
+        "state_dtype": "float32",
+        "g_dtype": "float32",
+        "nonzero_state": true,
+        "gate_mode": "weak"
+      },
+      "candidate_us": 871.5200126171112,
+      "gdn_us": 231.61499947309494,
+      "gdn_speedup": 0.2657598174683011,
+      "correct": true,
+      "baseline_correct": true,
+      "traces_complete": true,
+      "stage_median_us": {
+        "prepare": 62.634499999999996,
+        "inverse": 192.01999999999998,
+        "basis": 244.65550000000002,
+        "state_scan": 274.53950000000003,
+        "outputs": 89.99949999999995,
+        "gdr_prologue": 53.5295,
+        "gdr_scan2": 177.27499999999998
+      },
+      "stage_raw_samples_us": {
+        "prepare": [
+          62.69,
+          62.620000000000005,
+          62.150000000000006,
+          62.64899999999999
+        ],
+        "inverse": [
+          191.4,
+          191.74999999999997,
+          192.29000000000002,
+          193.47100000000003
+        ],
+        "basis": [
+          243.97999999999996,
+          244.46999999999997,
+          244.84100000000007,
+          245.26999999999998
+        ],
+        "state_scan": [
+          274.34000000000003,
+          276.70000000000005,
+          274.73900000000003,
+          272.53999999999996
+        ],
+        "outputs": [
+          89.94899999999996,
+          89.38,
+          90.04999999999995,
+          90.25999999999999
+        ],
+        "gdr_prologue": [
+          54.28,
+          53.468999999999994,
+          53.33,
+          53.59
+        ],
+        "gdr_scan2": [
+          177.30999999999997,
+          177.21,
+          177.24,
+          177.35
+        ]
+      },
+      "previous_7968_event_us": 918.0499911308289,
+      "cross_run_7968_speedup": 1.0533894550212237,
+      "cross_run_note": "Separate allocations/jobs; not a paired performance acceptance claim."
+    },
+    {
+      "shape_id": "57",
+      "input_kwargs": {
+        "tokens": 4096,
+        "hq": 4,
+        "hv": 16,
+        "seqlens": [
+          4096
+        ],
+        "state_dtype": "float32",
+        "g_dtype": "float32",
+        "nonzero_state": true,
+        "gate_mode": "strong"
+      },
+      "candidate_us": 871.6149926185608,
+      "gdn_us": 232.3099970817566,
+      "gdn_speedup": 0.2665282252475215,
+      "correct": true,
+      "baseline_correct": true,
+      "traces_complete": true,
+      "stage_median_us": {
+        "prepare": 62.665000000000006,
+        "inverse": 191.855,
+        "basis": 244.90999999999997,
+        "state_scan": 273.695,
+        "outputs": 90.04500000000002,
+        "gdr_prologue": 53.40999999999999,
+        "gdr_scan2": 177.77999999999997
+      },
+      "stage_raw_samples_us": {
+        "prepare": [
+          62.730000000000004,
+          62.60000000000001,
+          62.83,
+          62.56
+        ],
+        "inverse": [
+          191.92,
+          191.93,
+          191.79,
+          191.39999999999998
+        ],
+        "basis": [
+          243.82000000000005,
+          244.45999999999998,
+          245.35999999999996,
+          247.01999999999998
+        ],
+        "state_scan": [
+          273.61,
+          273.78,
+          275.76,
+          273.1700000000001
+        ],
+        "outputs": [
+          90.01999999999998,
+          89.2399999999999,
+          90.07000000000005,
+          90.19899999999996
+        ],
+        "gdr_prologue": [
+          55.17099999999999,
+          52.93000000000001,
+          53.489999999999995,
+          53.329999999999984
+        ],
+        "gdr_scan2": [
+          178.13899999999998,
+          177.75999999999996,
+          177.32000000000002,
+          177.8
+        ]
+      },
+      "previous_7968_event_us": 917.849987745285,
+      "cross_run_7968_speedup": 1.053045204038795,
+      "cross_run_note": "Separate allocations/jobs; not a paired performance acceptance claim."
+    },
+    {
+      "shape_id": "58",
+      "input_kwargs": {
+        "tokens": 4096,
+        "hq": 4,
+        "hv": 16,
+        "seqlens": [
+          4096
+        ],
+        "state_dtype": "float32",
+        "g_dtype": "float32",
+        "nonzero_state": true,
+        "gate_mode": "mixed"
+      },
+      "candidate_us": 872.2600042819977,
+      "gdn_us": 231.42999410629272,
+      "gdn_speedup": 0.26532225823743316,
+      "correct": true,
+      "baseline_correct": true,
+      "traces_complete": true,
+      "stage_median_us": {
+        "prepare": 62.23449999999999,
+        "inverse": 191.5355,
+        "basis": 244.77,
+        "state_scan": 275.31,
+        "outputs": 90.58500000000004,
+        "gdr_prologue": 53.405,
+        "gdr_scan2": 177.2095
+      },
+      "stage_raw_samples_us": {
+        "prepare": [
+          62.40899999999999,
+          62.55999999999999,
+          62.03999999999999,
+          62.05999999999999
+        ],
+        "inverse": [
+          191.541,
+          192.26999999999998,
+          190.94,
+          191.53000000000003
+        ],
+        "basis": [
+          245.27999999999997,
+          244.65000000000003,
+          244.50000000000006,
+          244.89
+        ],
+        "state_scan": [
+          276.38,
+          273.26,
+          274.24,
+          277.0
+        ],
+        "outputs": [
+          91.31999999999994,
+          88.63999999999999,
+          90.17000000000007,
+          91.0
+        ],
+        "gdr_prologue": [
+          54.91,
+          53.47,
+          53.12000000000002,
+          53.34
+        ],
+        "gdr_scan2": [
+          177.52,
+          177.23,
+          177.18900000000002,
+          176.9
+        ]
+      },
+      "previous_7968_event_us": 917.0899987220764,
+      "cross_run_7968_speedup": 1.0513952195675653,
+      "cross_run_note": "Separate allocations/jobs; not a paired performance acceptance claim."
+    }
+  ]
+}

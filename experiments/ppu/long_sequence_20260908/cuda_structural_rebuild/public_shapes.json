@@ -1,0 +1,163 @@
+{
+  "3": {
+    "init_kwargs": {},
+    "input_kwargs": {
+      "tokens": 131072,
+      "hq": 2,
+      "hv": 8,
+      "seqlens": [
+        131072
+      ],
+      "state_dtype": "float32",
+      "g_dtype": "float32",
+      "nonzero_state": true,
+      "gate_mode": "blog75"
+    }
+  },
+  "7": {
+    "init_kwargs": {},
+    "input_kwargs": {
+      "tokens": 131072,
+      "hq": 4,
+      "hv": 16,
+      "seqlens": [
+        131072
+      ],
+      "state_dtype": "float32",
+      "g_dtype": "float32",
+      "nonzero_state": true,
+      "gate_mode": "blog75"
+    }
+  },
+  "tail_32769": {
+    "input_kwargs": {
+      "tokens": 32769,
+      "hq": 2,
+      "hv": 8,
+      "seqlens": [
+        16385,
+        16384
+      ],
+      "state_dtype": "bfloat16",
+      "g_dtype": "bfloat16",
+      "nonzero_state": true,
+      "gate_mode": "weak"
+    }
+  },
+  "128k_hv64": {
+    "input_kwargs": {
+      "tokens": 131072,
+      "hq": 16,
+      "hv": 64,
+      "seqlens": [
+        131072
+      ],
+      "state_dtype": "float32",
+      "g_dtype": "float32",
+      "nonzero_state": true,
+      "gate_mode": "blog75"
+    }
+  },
+  "small64": {
+    "input_kwargs": {
+      "tokens": 64,
+      "hq": 2,
+      "hv": 8,
+      "seqlens": [
+        64
+      ],
+      "state_dtype": "bfloat16",
+      "g_dtype": "bfloat16",
+      "nonzero_state": true,
+      "gate_mode": "weak"
+    }
+  },
+  "packed_tail65": {
+    "input_kwargs": {
+      "tokens": 65,
+      "hq": 2,
+      "hv": 8,
+      "seqlens": [
+        1,
+        64
+      ],
+      "state_dtype": "bfloat16",
+      "g_dtype": "bfloat16",
+      "nonzero_state": true,
+      "gate_mode": "weak"
+    }
+  },
+  "zero_128k": {
+    "input_kwargs": {
+      "tokens": 131072,
+      "hq": 2,
+      "hv": 8,
+      "gate_mode": "zero",
+      "g_dtype": "float32",
+      "state_dtype": "float32",
+      "nonzero_state": true,
+      "seqlens": [
+        131072
+      ]
+    }
+  },
+  "decay_32k": {
+    "input_kwargs": {
+      "tokens": 32768,
+      "hq": 2,
+      "hv": 8,
+      "gate_mode": "default",
+      "g_dtype": "float32",
+      "state_dtype": "float32",
+      "nonzero_state": true,
+      "seqlens": [
+        32768
+      ]
+    }
+  },
+  "packed_32k_hv16": {
+    "input_kwargs": {
+      "tokens": 32768,
+      "hq": 4,
+      "hv": 16,
+      "gate_mode": "blog75",
+      "g_dtype": "float32",
+      "state_dtype": "float32",
+      "nonzero_state": true,
+      "seqlens": [
+        24576,
+        8192
+      ]
+    }
+  },
+  "256k_hv8": {
+    "init_kwargs": {},
+    "input_kwargs": {
+      "tokens": 262144,
+      "hq": 2,
+      "hv": 8,
+      "seqlens": [
+        262144
+      ],
+      "state_dtype": "float32",
+      "g_dtype": "float32",
+      "nonzero_state": true,
+      "gate_mode": "blog75"
+    }
+  },
+  "256k_hv16": {
+    "init_kwargs": {},
+    "input_kwargs": {
+      "tokens": 262144,
+      "hq": 4,
+      "hv": 16,
+      "seqlens": [
+        262144
+      ],
+      "state_dtype": "float32",
+      "g_dtype": "float32",
+      "nonzero_state": true,
+      "gate_mode": "blog75"
+    }
+  }
+}
